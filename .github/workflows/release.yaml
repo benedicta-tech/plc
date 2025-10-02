@@ -1,0 +1,247 @@
+name: Release
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+          cache: true
+      - name: Flutter version
+        run: flutter --version
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            /opt/hostedtoolcache/flutter
+            ${{ env.PUB_CACHE }}
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-pub-
+      - name: Download pub dependencies
+        run: flutter pub get
+      - name: Testing
+        run: flutter test
+      - name: Run build_runner
+        run: dart run build_runner build --delete-conflicting-outputs
+      # Web
+      # - name: Build Web
+      #   run: flutter build web --release -t lib/main.dart
+      # Linux
+      # - uses: snapcore/action-build@v1
+      #   id: build-snap
+      #   with:
+      #     path: app/snap
+      #     build-info: true
+      #     snapcraft-channel: stable
+      # Android
+      # - name: Setup Java
+      #   uses: actions/setup-java@v4
+      #   with:
+      #     distribution: "temurin"
+      #     java-version: "17"
+      #     cache: "gradle"
+      # - name: Download Android keystore
+      #   id: android_keystore
+      #   uses: timheuer/base64-to-file@v1.2
+      #   with:
+      #     fileName: key.jks
+      #     encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      # - name: Create key.properties
+      #   run: |
+      #     echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+      #     echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+      #     echo "keyPassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+      #     echo "keyAlias=upload" >> android/key.properties
+      # - name: Build Android parent
+      #   run: flutter build appbundle --release --no-tree-shake-icons --verbose --flavor parent
+      #   env:
+      #     GRADLE_OPTS: "-Dorg.gradle.parallel=true -Dorg.gradle.daemon=true"
+      # - name: Build Android child
+      #   run: flutter build appbundle --release --no-tree-shake-icons --verbose --flavor child
+      #   env:
+      #     GRADLE_OPTS: "-Dorg.gradle.parallel=true -Dorg.gradle.daemon=true"
+      # Finish
+      # - name: Save build
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: build
+      #     path: |
+      #       build/app/outputs/bundle/parentRelease
+      #       build/app/outputs/bundle/childRelease
+  # android-parent:
+  #   needs: [build]
+  #   name: Android Parent
+  #   runs-on: ubuntu-latest
+  #   environment: android-alpha
+  #   env:
+  #     BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Download a single artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         path: build
+  #         name: build
+  #     - uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: "3.3"
+  #         bundler-cache: true
+  #     - name: Release to Google Play (alpha)
+  #       env:
+  #         SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+  #       run: |
+  #         cd fastlane && bundle exec fastlane deploy_parent
+  # android-child:
+  #   needs: [build]
+  #   name: Android Child
+  #   runs-on: ubuntu-latest
+  #   environment: android-alpha
+  #   env:
+  #     BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Download a single artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         path: build
+  #         name: build
+  #     - uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: "3.3"
+  #         bundler-cache: true
+  #     - name: Release to Google Play (alpha)
+  #       env:
+  #         SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+  #       run: |
+  #         cd fastlane && bundle exec fastlane deploy_child
+
+  # beta-approval:
+  #   needs: [android-child, android-parent]
+  #   name: Go to beta
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: trstringer/manual-approval@v1
+  #       with:
+  #         secret: ${{ secrets.GITHUB_TOKEN }}
+  #         approvers: dukex
+  #         minimum-approvals: 1
+  #         issue-title: "Deploying to Beta"
+  #         issue-body: "Please approve or deny the deployment to beta"
+  #         exclude-workflow-initiator-as-approver: false
+
+  # android-beta:
+  #   needs: [beta-approval]
+  #   name: Android Beta
+  #   runs-on: ubuntu-latest
+  #   environment: android-beta
+  #   env:
+  #     BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: "3.3"
+  #         bundler-cache: true
+  #     - name: Release to Google Play (beta)
+  #       env:
+  #         SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+  #       run: |
+  #         cd fastlane && bundle exec fastlane promote_to_beta
+
+  # production-approval:
+  #   needs: [android-beta]
+  #   name: Go to production
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: trstringer/manual-approval@v1
+  #       with:
+  #         secret: ${{ secrets.GITHUB_TOKEN }}
+  #         approvers: dukex
+  #         minimum-approvals: 1
+  #         issue-title: "Deploying to Production"
+  #         issue-body: "Please approve or deny the deployment to production"
+  #         exclude-workflow-initiator-as-approver: false
+
+  # android-production:
+  #   needs: [production-approval]
+  #   name: Android Production
+  #   runs-on: ubuntu-latest
+  #   environment: android-production
+  #   env:
+  #     BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: "3.3"
+  #         bundler-cache: true
+  #     - name: Release to Google Play (production)
+  #       env:
+  #         SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+  #       run: |
+  #         cd fastlane && bundle exec fastlane promote_to_production
+
+  # web:
+  #   environment:
+  #     name: web
+  #     url: ${{ steps.deployment.outputs.page_url }}
+  #   needs: [build]
+  #   name: Web
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Download a single artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         path: build
+  #         name: build
+  #     - name: Setup Pages
+  #       uses: actions/configure-pages@v5
+  #     - name: Upload website
+  #       uses: actions/upload-pages-artifact@v3
+  #       with:
+  #         path: "./build/web"
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
+
+  # linux:
+  #   needs: [build]
+  #   name: Linux
+  #   runs-on: ubuntu-latest
+  #   environment: linux
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Download a single artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         path: build
+  #         name: build
