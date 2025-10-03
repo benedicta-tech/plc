@@ -8,8 +8,8 @@ info:
     email: contact@plc.org
 
 servers:
-  - url: /api
-    description: API base path
+  - url: https://plc-app.leigo.fm
+    description: Production server
 
 paths:
   /preachers.json:
