@@ -1,0 +1,194 @@
+openapi: 3.0.0
+info:
+  title: PLC API
+  description: API for accessing PLC (Pregadores do PLC) preachers, managers, cities, and themes data
+  version: 1.0.0
+  contact:
+    name: PLC
+    email: contact@plc.org
+
+servers:
+  - url: /api
+    description: API base path
+
+paths:
+  /preachers.json:
+    get:
+      summary: Get all preachers
+      description: Returns a list of all preachers with their complete information
+      operationId: getPreachers
+      tags:
+        - Preachers
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Person"
+
+  /preachers/{id}.json:
+    get:
+      summary: Get a specific preacher by ID
+      description: Returns detailed information about a specific preacher
+      operationId: getPreacherById
+      tags:
+        - Preachers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Slugified name of the preacher (e.g., "paulo-timoteo")
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Person"
+        "404":
+          description: Preacher not found
+
+  /managers.json:
+    get:
+      summary: Get all managers
+      description: Returns a list of all managers with their complete information
+      operationId: getManagers
+      tags:
+        - Managers
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Person"
+
+  /managers/{id}.json:
+    get:
+      summary: Get a specific manager by ID
+      description: Returns detailed information about a specific manager
+      operationId: getManagerById
+      tags:
+        - Managers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Slugified name of the manager
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Person"
+        "404":
+          description: Manager not found
+
+  /cities.json:
+    get:
+      summary: Get all cities
+      description: Returns a sorted list of all unique cities
+      operationId: getCities
+      tags:
+        - Cities
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Abre Campo"
+                  - "Bom Pastor Manhuaçu"
+                  - "Simonésia"
+
+  /themes.json:
+    get:
+      summary: Get all themes
+      description: Returns a sorted list of all unique preaching themes
+      operationId: getThemes
+      tags:
+        - Themes
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "Fé"
+                  - "Oração"
+                  - "Jesus Cristo"
+
+components:
+  schemas:
+    Person:
+      type: object
+      required:
+        - id
+        - name
+        - phone
+        - city
+        - roles
+        - themes
+      properties:
+        id:
+          type: string
+          description: Slugified name used as unique identifier
+          example: "paulo-timoteo"
+        name:
+          type: string
+          description: Full name of the person
+          example: "Paulo Timoteo"
+        phone:
+          type: string
+          description: Phone number
+          example: "33 98889-1010"
+        city:
+          type: string
+          description: City or parish location
+          example: "Bom Pastor Manhuaçu"
+        roles:
+          type: array
+          items:
+            type: string
+            enum:
+              - Preacher
+              - Manager
+          description: Roles assigned to the person
+          example: ["Preacher"]
+        themes:
+          type: array
+          items:
+            type: string
+          description: Preaching themes associated with the person
+          example:
+            - "Fé"
+            - "Oração"
+            - "Jesus Cristo"
+
+tags:
+  - name: Preachers
+    description: Operations related to preachers
+  - name: Managers
+    description: Operations related to managers
+  - name: Cities
+    description: Operations related to cities
+  - name: Themes
+    description: Operations related to preaching themes

@@ -1,0 +1,996 @@
+[
+  {
+    "name": "Abel Galdino da Silva",
+    "phone": "33 99818-9765",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Bíblia"]
+  },
+  {
+    "name": "Abner",
+    "phone": "31 99846-0617",
+    "city": "Santa Margarida",
+    "roles": ["Preacher"],
+    "themes": [
+      "Fé",
+      "Filme da Vida",
+      "Três Olhares de Cristo",
+      "Jesus Cristo",
+      "A Graça de Deus",
+      "Perdão",
+      "Confissão",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Adair José",
+    "phone": "31 97565-3564",
+    "city": "Santa Margarida",
+    "roles": ["Preacher"],
+    "themes": ["Oração", "Sacramentos", "Confissão"]
+  },
+  {
+    "name": "Ailton Machado",
+    "phone": "33 98460-9485",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": ["Ideal", "Fé"]
+  },
+  {
+    "name": "Alexandre",
+    "phone": "32 8461-3904",
+    "city": "Caparaó",
+    "roles": ["Preacher"],
+    "themes": ["Confissão"]
+  },
+  {
+    "name": "Alício Jr",
+    "phone": "33 99987-3377",
+    "city": "Chalé",
+    "roles": ["Preacher"],
+    "themes": ["Fé"]
+  },
+  {
+    "name": "Alnóbio",
+    "phone": "32 98414-1730",
+    "city": "Orizânia",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Filme da Vida",
+      "Zaqueu",
+      "Três Olhares",
+      "A Graça de Deus"
+    ]
+  },
+  {
+    "name": "Altair Marculino",
+    "phone": "33 98842-7646",
+    "city": "Iapu",
+    "roles": ["Preacher"],
+    "themes": ["Perseverança"]
+  },
+  {
+    "name": "Anderson Rocha",
+    "phone": "33 9 8437-3558",
+    "city": "Bom Pastor - Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Ação da Igreja", "Três Olhares", "Maria", "Adoração", "Perdão"]
+  },
+  {
+    "name": "André Luiz",
+    "phone": "33 99995-4778",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Bíblia"]
+  },
+  {
+    "name": "Antônio Carlos",
+    "phone": "33 999 86-3256",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Sacramentos", "Bíblia"]
+  },
+  {
+    "name": "Bruno José Dutra",
+    "phone": "33 9 9904-6766",
+    "city": "Sacramento",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Jesus Cristo",
+      "Adoração",
+      "A Graça de Deus",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Celestino Januário B.",
+    "phone": "33 98880-5609",
+    "city": "Caratinga",
+    "roles": ["Preacher"],
+    "themes": ["Maria"]
+  },
+  {
+    "name": "Christian Baía",
+    "phone": "33 98424-3565",
+    "city": "Bom Pastor Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Fé",
+      "Oração",
+      "Bíblia",
+      "Três Olhares",
+      "Maria",
+      "Jesus Cristo",
+      "Adoração",
+      "A Graça de Deus",
+      "Confissão",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Clabson Costa",
+    "phone": "33 99907-9911",
+    "city": "Sacramento",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Oração", "Maria"]
+  },
+  {
+    "name": "Claudinho",
+    "phone": "31 99965-9076",
+    "city": "Abre Campo",
+    "roles": ["Preacher"],
+    "themes": [
+      "Missa Explicada",
+      "Sacramentos",
+      "Bíblia",
+      "Espiritualidade",
+      "Via Sacra",
+      "A Graça de Deus",
+      "Estudo do Ambiente"
+    ]
+  },
+  {
+    "name": "Claudio D. (Canjica)",
+    "phone": "33 99975-5941",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": ["Três Olhares", "Perseverança"]
+  },
+  {
+    "name": "Cleone Furtado",
+    "phone": "33 99849-7870",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Oração"]
+  },
+  {
+    "name": "Denis Matos",
+    "phone": "33 99871-9011",
+    "city": "Ubaporanga",
+    "roles": ["Preacher"],
+    "themes": ["Ideal", "Filme da Vida", "A Graça de Deus"]
+  },
+  {
+    "name": "Deolandes",
+    "phone": "33 99969-1979",
+    "city": "São Jose Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Oração",
+      "Missa Explicada",
+      "Zaqueu",
+      "Sacramentos",
+      "Três Olhares",
+      "Confissão",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Diogo Vieira",
+    "phone": "33 99926-3681",
+    "city": "Ubaporanga",
+    "roles": ["Preacher", "Manager"],
+    "themes": ["Oração", "Maria", "Adoração", "Perseverança"]
+  },
+  {
+    "name": "Edielson de Souza",
+    "phone": "33 9 9901-1514",
+    "city": "Bom Pastor-Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Filme da Vida", "A Graça de Deus"]
+  },
+  {
+    "name": "Edney Manoel dos S.",
+    "phone": "33 987 026680",
+    "city": "Iapu",
+    "roles": ["Preacher"],
+    "themes": ["Filme da Vida"]
+  },
+  {
+    "name": "Elis",
+    "phone": "33 98431-5990",
+    "city": "Vilanova",
+    "roles": ["Preacher"],
+    "themes": ["Espiritualidade"]
+  },
+  {
+    "name": "Fabiano Valeriano",
+    "phone": "33 988 54-1505",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": ["Ação da Igreja"]
+  },
+  {
+    "name": "Fabricio Santos",
+    "phone": "33 98432-9472",
+    "city": "Bom Pastor - Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Oração", "Jesus Cristo", "Adoração", "Perdão", "Confissão"]
+  },
+  {
+    "name": "Geraldo Magela de L.",
+    "phone": "33 98464-5664",
+    "city": "Bom Pastor Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Ideal", "Fé", "A Graça de Deus", "Perseverança"]
+  },
+  {
+    "name": "Geraldo Malcélio",
+    "phone": "33 99994-2790",
+    "city": "Santa Barbara",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Fé",
+      "Oração",
+      "Sacramentos",
+      "Espiritualidade",
+      "Ação da Igreja",
+      "Três Olhares",
+      "Via Sacra",
+      "Jesus Cristo",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Geovane",
+    "phone": "33 99949-8100",
+    "city": "Rio Preto Simonésia",
+    "roles": ["Preacher", "Manager"],
+    "themes": [
+      "Ideal",
+      "Filme da Vida",
+      "Ação da Igreja",
+      "Três Olhares",
+      "Jesus Cristo",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Gilmar Bastos",
+    "phone": "31 8432-6767",
+    "city": "São Jose Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": [
+      "Fé",
+      "Missa Explicada",
+      "Zaqueu",
+      "Espiritualidade",
+      "Jesus Cristo",
+      "Perdão",
+      "A Graça de Deus"
+    ]
+  },
+  {
+    "name": "Guilherme Vanildo",
+    "phone": "31 97224-2954",
+    "city": "Santa Margarida",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Oração",
+      "Filme da Vida",
+      "Espiritualidade",
+      "Três Olhares",
+      "Jesus Cristo",
+      "A Graça de Deus",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Gustavo",
+    "phone": "33 99970-7743",
+    "city": "Bom Pastor - Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Oração", "Três Olhares"]
+  },
+  {
+    "name": "Gustavo Pimentel",
+    "phone": "33 9 9119-0672",
+    "city": "Bom Pastor Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Perseverança"]
+  },
+  {
+    "name": "Helder Reis",
+    "phone": "33 98414-3849",
+    "city": "São Jose Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": [
+      "Fé",
+      "Oração",
+      "Espiritualidade",
+      "Jesus Cristo",
+      "Adoração",
+      "Perdão"
+    ]
+  },
+  {
+    "name": "Jânio De Oliveira",
+    "phone": "33 99939-1282",
+    "city": "Ubaporanga",
+    "roles": ["Preacher"],
+    "themes": ["Três Olhares", "Ação da Igreja"]
+  },
+  {
+    "name": "Jefferson Lopes",
+    "phone": "33 99911-5268",
+    "city": "Ubaporanga",
+    "roles": ["Preacher"],
+    "themes": ["Ideal", "Fé", "Oração", "Filme da Vida", "Perseverança"]
+  },
+  {
+    "name": "João Batista",
+    "phone": "33 99828-1958",
+    "city": "Rio Preto Simonésia",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Jesus Cristo"]
+  },
+  {
+    "name": "João Batista Ribeiro",
+    "phone": "33 9 9826-3659",
+    "city": "Bom Pastor - Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Oração", "Ação da Igreja"]
+  },
+  {
+    "name": "Jorge Junior Maria",
+    "phone": "33 98429-5360",
+    "city": "Bom Pastor - Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": [
+      "Fé",
+      "Oração",
+      "Filme da Vida",
+      "Zaqueu",
+      "Espiritualidade",
+      "Maria",
+      "Jesus Cristo",
+      "Adoração",
+      "Perdão"
+    ]
+  },
+  {
+    "name": "Jose Alcir",
+    "phone": "988 17-3262",
+    "city": "Iapu",
+    "roles": ["Preacher"],
+    "themes": ["Espiritualidade", "Confissão"]
+  },
+  {
+    "name": "Jose Celio",
+    "phone": "33 98859-7408",
+    "city": "São J. Batista - Reduto",
+    "roles": ["Preacher"],
+    "themes": [
+      "Oração",
+      "Sacramentos",
+      "Espiritualidade",
+      "Maria",
+      "Jesus Cristo",
+      "Via Sacra",
+      "Adoração",
+      "Perdão"
+    ]
+  },
+  {
+    "name": "Jose Claudio",
+    "phone": "31 98833-0870",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Fé",
+      "Oração",
+      "Sacramentos",
+      "Espiritualidade",
+      "Ação da Igreja",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Jose Galdino de A.",
+    "phone": "33 998 46-9362",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Ação da Igreja"]
+  },
+  {
+    "name": "José Carlos Vitor",
+    "phone": "33 99922-3990",
+    "city": "Caratinga",
+    "roles": ["Preacher"],
+    "themes": ["Zaqueu"]
+  },
+  {
+    "name": "Laurentino Xavier",
+    "phone": "33 99884-4112",
+    "city": "São Jose Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Espiritualidade", "Estudo do Ambiente", "Perseverança"]
+  },
+  {
+    "name": "Leandro da Silva A.",
+    "phone": "33 9 9936-7423",
+    "city": "Lajinha",
+    "roles": ["Preacher"],
+    "themes": ["Filme da Vida"]
+  },
+  {
+    "name": "Lucinho",
+    "phone": "33 99926-6754",
+    "city": "Lajinha",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Oração",
+      "Sacramentos",
+      "Bíblia",
+      "Jesus Cristo",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Luzmar",
+    "phone": "33 98438-0208",
+    "city": "Bom Pastor - Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Fé",
+      "Zaqueu",
+      "Espiritualidade",
+      "Ação da Igreja",
+      "Três Olhares",
+      "Maria",
+      "Jesus Cristo",
+      "Adoração",
+      "Via Sacra",
+      "Confissão",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Marcelino",
+    "phone": "31 9 8477-8439",
+    "city": "Santa Margarida",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Oração", "Ação da Igreja"]
+  },
+  {
+    "name": "Marcello Pechara",
+    "phone": "33 9 9978-6088",
+    "city": "Martins Soares",
+    "roles": ["Preacher"],
+    "themes": ["A Graça de Deus"]
+  },
+  {
+    "name": "Marcelo",
+    "phone": "33 9 9986-3762",
+    "city": "Durandé",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Oração", "Perseverança"]
+  },
+  {
+    "name": "Marcolino José Maia",
+    "phone": "33 8845-7005",
+    "city": "Bom Pastor - Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Ação da Igreja", "Perseverança"]
+  },
+  {
+    "name": "Marco Aurélio",
+    "phone": "33 9998-1926",
+    "city": "Sacramento",
+    "roles": ["Preacher"],
+    "themes": ["Sacramentos"]
+  },
+  {
+    "name": "Marcos Goulart",
+    "phone": "33 98841-9183",
+    "city": "São Jose Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Oração",
+      "Missa Explicada",
+      "Ação da Igreja",
+      "Três Olhares",
+      "Jesus Cristo",
+      "Perdão",
+      "Confissão",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Maxwell Victor",
+    "phone": "33 98421-4774",
+    "city": "Bom Pastor - Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Jesus Cristo"]
+  },
+  {
+    "name": "Pablo Barbosa",
+    "phone": "33 98711-8463",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Ideal", "Três Olhares", "Perseverança"]
+  },
+  {
+    "name": "Pablo Junior Faria B.",
+    "phone": "33 98711-8463",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Maria", "Jesus Cristo", "Adoração"]
+  },
+  {
+    "name": "Paulo Hott",
+    "phone": "33 9 8408 – 1817",
+    "city": "São José- Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Oração", "Missa Explicada", "Bíblia", "Perseverança"]
+  },
+  {
+    "name": "Paulo Timoteo",
+    "phone": "33 98889-1010",
+    "city": "Bom Pastor Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Fé",
+      "Oração",
+      "Filme da Vida",
+      "Missa Explicada",
+      "Zaqueu",
+      "Sacramentos",
+      "Bíblia",
+      "Espiritualidade",
+      "Ação da Igreja",
+      "Três Olhares",
+      "Jesus Cristo",
+      "Via Sacra",
+      "A Graça de Deus",
+      "Estudo do Ambiente",
+      "Perdão",
+      "Confissão",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Pelegrino Wenner",
+    "phone": "33 98434-9398",
+    "city": "Lajinha",
+    "roles": ["Preacher"],
+    "themes": ["Estudo do Ambiente"]
+  },
+  {
+    "name": "Philipe",
+    "phone": "31 99556-8613",
+    "city": "Ipaba",
+    "roles": ["Preacher"],
+    "themes": ["Missa Explicada"]
+  },
+  {
+    "name": "Rafael Medeiros",
+    "phone": "33 9 8897-7270",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": ["Maria"]
+  },
+  {
+    "name": "Reinaldo Lessa",
+    "phone": "33 99916-2882",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Oração", "Filme da Vida", "Perseverança"]
+  },
+  {
+    "name": "Renato Alves",
+    "phone": "33 9 9959-4356",
+    "city": "Santo Ant. Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Espiritualidade"]
+  },
+  {
+    "name": "Renato Bertolace",
+    "phone": "33 998 073408",
+    "city": "Durandé",
+    "roles": ["Preacher"],
+    "themes": ["Filme da Vida"]
+  },
+  {
+    "name": "Renato Campos",
+    "phone": "33 99921-4568",
+    "city": "Durandé",
+    "roles": ["Preacher"],
+    "themes": ["Zaqueu", "Bíblia"]
+  },
+  {
+    "name": "Renato Paiva",
+    "phone": "33 9 9921 – 4568",
+    "city": "Durandé",
+    "roles": ["Preacher"],
+    "themes": ["Filme da Vida", "Zaqueu", "Bíblia"]
+  },
+  {
+    "name": "Ricardo G. da Silva",
+    "phone": "33 9 9910-5173",
+    "city": "Ubaporanga",
+    "roles": ["Preacher"],
+    "themes": ["A Graça de Deus"]
+  },
+  {
+    "name": "Rodrigo Cunha M.",
+    "phone": "33 9 8406-4382",
+    "city": "Ubaporanga",
+    "roles": ["Preacher"],
+    "themes": ["Perseverança"]
+  },
+  {
+    "name": "Rodrigo Dornelas",
+    "phone": "31 98339-9762",
+    "city": "Abre Campo",
+    "roles": ["Preacher"],
+    "themes": ["Ideal", "Sacramentos", "Maria", "Confissão"]
+  },
+  {
+    "name": "Rodrigo Terra",
+    "phone": "33 99969-6362",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Fé",
+      "Oração",
+      "Espiritualidade",
+      "Ação da Igreja",
+      "Três Olhares",
+      "Maria",
+      "Adoração",
+      "Perdão",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Ronaldo Satler",
+    "phone": "33 999 94-1203",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Zaqueu", "Ação da Igreja"]
+  },
+  {
+    "name": "Rony",
+    "phone": "33 9 8413-3979",
+    "city": "Ubaporanga",
+    "roles": ["Preacher"],
+    "themes": ["Bíblia"]
+  },
+  {
+    "name": "Rony Pinel",
+    "phone": "33 98829-9070",
+    "city": "São Jose Do Mant.",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Bíblia",
+      "Ação da Igreja",
+      "Três Olhares",
+      "Maria",
+      "Jesus Cristo",
+      "Adoração",
+      "A Graça de Deus",
+      "Perdão",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Saulo Jose",
+    "phone": "33 99930-9892",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Ideal", "Fé", "Oração"]
+  },
+  {
+    "name": "Sebastião Aquili",
+    "phone": "33 9 9960-6877",
+    "city": "Rio Preto - Simonésia",
+    "roles": ["Preacher"],
+    "themes": ["Perseverança"]
+  },
+  {
+    "name": "Sergio",
+    "phone": "32 99922-6014",
+    "city": "Orizânia",
+    "roles": ["Preacher"],
+    "themes": ["Bíblia", "Confissão"]
+  },
+  {
+    "name": "Silvio César Knupp",
+    "phone": "33 9 9981- 9967",
+    "city": "Luisburgo",
+    "roles": ["Preacher"],
+    "themes": ["Perseverança"]
+  },
+  {
+    "name": "Todinho",
+    "phone": "33 98843-2757",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": ["Jesus Cristo"]
+  },
+  {
+    "name": "Toninho",
+    "phone": "33 997335-699",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": ["Zaqueu"]
+  },
+  {
+    "name": "Ueliton Rodrigues",
+    "phone": "33 98880-8400",
+    "city": "Caratinga",
+    "roles": ["Preacher"],
+    "themes": ["Missa Explicada", "Espiritualidade"]
+  },
+  {
+    "name": "Valter Correa",
+    "phone": "33 9903-7516",
+    "city": "Ubaporanga",
+    "roles": ["Preacher"],
+    "themes": ["Espiritualidade"]
+  },
+  {
+    "name": "Valter Jose Heleno",
+    "phone": "33 99844-9660",
+    "city": "Santa Barbara",
+    "roles": ["Preacher"],
+    "themes": [
+      "Oração",
+      "Missa Explicada",
+      "Sacramentos",
+      "Bíblia",
+      "Espiritualidade",
+      "Via Sacra",
+      "Ação da Igreja",
+      "Confissão"
+    ]
+  },
+  {
+    "name": "Vicente Cunha",
+    "phone": "33 98897-4393",
+    "city": "Simonésia",
+    "roles": ["Preacher"],
+    "themes": [
+      "Fé",
+      "Oração",
+      "Espiritualidade",
+      "Ação da Igreja",
+      "Três Olhares",
+      "Maria",
+      "Jesus Cristo",
+      "Adoração",
+      "Via Sacra",
+      "Estudo do Ambiente"
+    ]
+  },
+  {
+    "name": "Wallace",
+    "phone": "33 99849-0609",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Ideal"]
+  },
+  {
+    "name": "Wallace Bernadino",
+    "phone": "33 99849-0609",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Fé", "Oração", "Espiritualidade", "Ação da Igreja"]
+  },
+  {
+    "name": "Wanderley",
+    "phone": "33 98419-7625",
+    "city": "São Jose Manhuaçu",
+    "roles": ["Preacher", "Manager"],
+    "themes": [
+      "Oração",
+      "Espiritualidade",
+      "Perdão",
+      "Confissão",
+      "Perseverança"
+    ]
+  },
+  {
+    "name": "Wanderson Dutra",
+    "phone": "31 97127-2884",
+    "city": "Vilanova",
+    "roles": ["Preacher", "Manager"],
+    "themes": ["Fé", "Jesus Cristo"]
+  },
+  {
+    "name": "Wendell",
+    "phone": "33 98415-9091",
+    "city": "Bom Pastor",
+    "roles": ["Preacher"],
+    "themes": ["Oração", "Confissão", "Perseverança"]
+  },
+  {
+    "name": "Wesley Gomes",
+    "phone": "33 99730-6672",
+    "city": "Bom Pastor - Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": [
+      "Ideal",
+      "Fé",
+      "Oração",
+      "Filme da Vida",
+      "Zaqueu",
+      "Jesus Cristo",
+      "Adoração"
+    ]
+  },
+  {
+    "name": "Zequinha Galdino",
+    "phone": "33 99846-9362",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Preacher"],
+    "themes": ["Bíblia", "Três Olhares", "Ação da Igreja"]
+  },
+  {
+    "name": "Vanderlei",
+    "phone": "33 8441-0011",
+    "city": "Simonésia",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Walquinei",
+    "phone": "32 8508-9939",
+    "city": "Orizânia",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Geraldo Sobrinho",
+    "phone": "33 8424-9845",
+    "city": "Sacramento",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Lucas Sicarini",
+    "phone": "33 8823-1091",
+    "city": "Bom Pastor Manhuaçu",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Eduardo Alves",
+    "phone": "33 9914-5313",
+    "city": "Santa Barbara",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "José Cláudio",
+    "phone": "32 9814-2559",
+    "city": "Santa Margarida",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Eduardo Oliveira",
+    "phone": "33 8418-9563",
+    "city": "Lajinha",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Fábio Couto",
+    "phone": "33 8883-0160",
+    "city": "Santana do Manhuaçu",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "João Celso",
+    "phone": "31 9582-6130",
+    "city": "Abre Campo",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Ângelo Márcio",
+    "phone": "33 9970-4679",
+    "city": "São Jose Do Mant.",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "José Monarini",
+    "phone": "33 9920-2557",
+    "city": "Chalé",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Paulo Sérgio V.",
+    "phone": "33 8406-1728",
+    "city": "São J. Batista - Reduto",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Ricardo Huebra",
+    "phone": "33 9924-7845",
+    "city": "Durandé",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Alcir",
+    "phone": "33 8817-3262",
+    "city": "Iapu",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Celso Lima",
+    "phone": "31 7126-5704",
+    "city": "Ipaba",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Anderson",
+    "phone": "33 8835-8995",
+    "city": "Caratinga",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Roberto",
+    "phone": "33 9994-2031",
+    "city": "Santo Ant. Manhuaçu",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Renan Sather",
+    "phone": "33 8421-0458",
+    "city": "Martins Soares",
+    "roles": ["Manager"],
+    "themes": []
+  },
+  {
+    "name": "Amintas Borel",
+    "phone": "33 9956-9888",
+    "city": "Luisburgo",
+    "roles": ["Manager"],
+    "themes": []
+  }
+]
