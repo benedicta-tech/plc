@@ -1,11 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:plc/features/preachers/domain/entities/preacher.dart';
 import 'package:plc/features/preachers/domain/repositories/preacher_repository.dart';
 import 'package:plc/features/preachers/domain/usecases/get_preachers.dart';
 
-class MockPreacherRepository extends Mock implements PreacherRepository {}
+import 'get_preachers_test.mocks.dart';
 
+@GenerateMocks([PreacherRepository])
 void main() {
   late GetPreachers usecase;
   late MockPreacherRepository mockPreacherRepository;
