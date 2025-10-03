@@ -8,8 +8,9 @@
       "Manager"
     ],
     "themes": [
+      "Fé",
       "Oração",
-      "Maria",
+      "Maria Mãe de Deus",
       "Adoração",
       "Perseverança"
     ],
@@ -18,7 +19,7 @@
   {
     "name": "Geovane",
     "phone": "33 99949-8100",
-    "city": "Rio Preto Simonésia",
+    "city": "Rio Preto - Simonésia",
     "roles": [
       "Preacher",
       "Manager"
@@ -26,23 +27,38 @@
     "themes": [
       "Ideal",
       "Filme da Vida",
-      "Ação da Igreja",
-      "Três Olhares",
+      "Ação e Igreja",
+      "Três Olhares de Cristo",
       "Jesus Cristo",
       "Perseverança"
     ],
     "id": "geovane"
   },
   {
+    "name": "Jose Alcir",
+    "phone": "33 98817-3262",
+    "city": "Iapu",
+    "roles": [
+      "Preacher",
+      "Manager"
+    ],
+    "themes": [
+      "Espiritualidade",
+      "Confissão"
+    ],
+    "id": "jose-alcir"
+  },
+  {
     "name": "Wanderley",
     "phone": "33 98419-7625",
-    "city": "São Jose Manhuaçu",
+    "city": "São José - Manhuaçu",
     "roles": [
       "Preacher",
       "Manager"
     ],
     "themes": [
       "Oração",
+      "Missa Explicada",
       "Espiritualidade",
       "Perdão",
       "Confissão",
@@ -60,7 +76,8 @@
     ],
     "themes": [
       "Fé",
-      "Jesus Cristo"
+      "Jesus Cristo",
+      "Adoração"
     ],
     "id": "wanderson-dutra"
   },
@@ -97,7 +114,7 @@
   {
     "name": "Lucas Sicarini",
     "phone": "33 8823-1091",
-    "city": "Bom Pastor Manhuaçu",
+    "city": "Bom Pastor - Manhuaçu",
     "roles": [
       "Manager"
     ],
@@ -136,12 +153,15 @@
   },
   {
     "name": "Fábio Couto",
-    "phone": "33 8883-0160",
+    "phone": "33 98883-0160",
     "city": "Santana do Manhuaçu",
     "roles": [
-      "Manager"
+      "Manager",
+      "Preacher"
     ],
-    "themes": [],
+    "themes": [
+      "Zaqueu"
+    ],
     "id": "fabio-couto"
   },
   {
@@ -157,7 +177,7 @@
   {
     "name": "Ângelo Márcio",
     "phone": "33 9970-4679",
-    "city": "São Jose Do Mant.",
+    "city": "São Jose Do Mantimento",
     "roles": [
       "Manager"
     ],

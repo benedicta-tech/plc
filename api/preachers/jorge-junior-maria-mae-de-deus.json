@@ -1,23 +1,21 @@
 {
-  "name": "Luzmar",
-  "phone": "33 98438-0208",
+  "name": "Jorge Junior Maria Mãe de Deus",
+  "phone": "33 98429-5360",
   "city": "Bom Pastor - Manhuaçu",
   "roles": [
     "Preacher"
   ],
   "themes": [
-    "Ideal",
     "Fé",
+    "Oração",
+    "Filme da Vida",
     "Zaqueu",
     "Espiritualidade",
-    "Ação e Igreja",
     "Três Olhares de Cristo",
     "Maria Mãe de Deus",
-    "Via Sacra",
     "Jesus Cristo",
     "Adoração",
-    "Confissão",
-    "Perseverança"
+    "Perdão"
   ],
-  "id": "luzmar"
+  "id": "jorge-junior-maria-mae-de-deus"
 }

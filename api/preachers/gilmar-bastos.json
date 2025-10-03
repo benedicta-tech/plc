@@ -1,18 +1,20 @@
 {
   "name": "Gilmar Bastos",
-  "phone": "31 8432-6767",
-  "city": "São Jose Manhuaçu",
+  "phone": "31 98432-6767",
+  "city": "São José - Manhuaçu",
   "roles": [
     "Preacher"
   ],
   "themes": [
     "Fé",
+    "Oração",
     "Missa Explicada",
     "Zaqueu",
     "Espiritualidade",
-    "Jesus Cristo",
-    "Perdão",
-    "A Graça de Deus"
+    "Três Olhares de Cristo",
+    "Maria Mãe de Deus",
+    "A Graça de Deus",
+    "Perdão"
   ],
   "id": "gilmar-bastos"
 }

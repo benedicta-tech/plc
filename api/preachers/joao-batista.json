@@ -1,13 +1,14 @@
 {
   "name": "João Batista",
   "phone": "33 99828-1958",
-  "city": "Rio Preto Simonésia",
+  "city": "Rio Preto - Simonésia",
   "roles": [
     "Preacher"
   ],
   "themes": [
     "Fé",
-    "Jesus Cristo"
+    "Jesus Cristo",
+    "A Graça de Deus"
   ],
   "id": "joao-batista"
 }
