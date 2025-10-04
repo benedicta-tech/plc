@@ -1,4 +1,4 @@
-package com.example.plc
+package tech.benedicta.plc
 
 import io.flutter.embedding.android.FlutterActivity
 
