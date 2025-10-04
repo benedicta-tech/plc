@@ -48,7 +48,19 @@ class PreacherModel {
       name: name,
       phone: phone,
       city: city,
-      roles: roles,
+      roles:
+          roles.map((role) {
+            switch (role.toLowerCase()) {
+              case 'pregador':
+              case 'preacher':
+                return PreacherRole.preacher;
+              case 'coordenador':
+              case 'manager':
+                return PreacherRole.manager;
+              default:
+                throw Exception('Unknown role: $role');
+            }
+          }).toList(),
       themes: themes,
     );
   }
@@ -60,7 +72,7 @@ class PreacherModel {
       name: preacher.name,
       phone: preacher.phone,
       city: preacher.city,
-      roles: preacher.roles,
+      roles: preacher.roles.map((e) => e.toString()).toList(),
       themes: preacher.themes,
     );
   }

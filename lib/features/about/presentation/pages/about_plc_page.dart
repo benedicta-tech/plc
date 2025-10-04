@@ -32,7 +32,7 @@ class AboutPLCPage extends StatelessWidget {
                     Image(image: AssetImage('images/plc.jpg'), height: 150),
                     const SizedBox(height: defaultSpacing),
                     Text(
-                      'Movimento Eclesial Católico Apostólico Romano',
+                      'Movimento eclesial católico apostólico romano',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Colors.grey[600],
@@ -45,39 +45,48 @@ class AboutPLCPage extends StatelessWidget {
 
               const SizedBox(height: defaultSpacing),
 
+              _buildSection(
+                context,
+                title: 'Coordenação',
+                content:
+                    'Assessor Diocesano - Pe. Joaquim Rocha de Calais\n\nCoordenador Diocesano:\nPLC Masculino - Geraldo Malcélio \nPLC Feminino - Maria Angélica ',
+                icon: Icons.people,
+              ),
+              const SizedBox(height: mediumSpacing),
+
               // Mission Section
               _buildSection(
                 context,
-                title: 'Nossa Missão',
+                title: 'Denominação',
                 content:
-                    'O PLC – Peregrinação de Leigos Cristãos é um Movimento Eclesial Católico Apostólico Romano, constituído por tempo indeterminado, sem fins lucrativos, sujeita à assessoria eclesiástica do pároco e do Conselho de Pastoral Paroquial, a nível paroquial e do bispo em sua atuação na Igreja particular em nível Diocesano.\n\nA missão da PLC consiste em propagar a mensagem cristã, a doutrinada Igreja da Católica Apostólica Romana e as diretrizes de evangelização diocesanas, de maneira catequética e testemunhal, às pessoas que participam dos cursos, das reuniões de perseverança e demais atividades segundo os preceitos evangélicos.',
+                    'A PLC - Peregrinação de Leigos Cristãos é um Movimento Eclesial Católico Apostólico Romano, constituído por tempo indeterminado, sem fins lucrativos, sujeita à assessoria eclesiástica do pároco e do Conselho de Pastoral Paroquial, a nível paroquial e do bispo em sua atuação na Igreja particular em nível Diocesano.\n\nA missão da PLC consiste em propagar a mensagem cristã, a doutrinada Igreja da Católica Apostólica Romana e as diretrizes de evangelização diocesanas, de maneira catequética e testemunhal, às pessoas que participam dos cursos, das reuniões de perseverança e demais atividades segundo os preceitos evangélicos.',
                 icon: Icons.favorite,
               ),
 
-              const SizedBox(height: defaultSpacing),
+              const SizedBox(height: mediumSpacing),
 
               // Purpose Section
               _buildSection(
                 context,
-                title: 'Nossa Finalidade',
+                title: 'Missão',
                 content:
                     'A PLC cumpre com a sua missão através de sua finalidade pastoral específica que é evangelização de maneira catequética, levando os seus membros, a tornarem-se aptos a anunciar a Boa Nova, através de um encontro consigo mesmos, com Jesus Cristo e com as realidades do mundo nas quais estão imersos, sendo, no seio delas, tanto pessoal como comunitariamente, fermento que transforma sal que dá sabor e luz que ilumina, segundo os preceitos do Evangelho.',
                 icon: Icons.lightbulb_outline,
               ),
 
-              const SizedBox(height: defaultSpacing),
+              const SizedBox(height: mediumSpacing),
 
               // Objectives Section
               _buildObjectivesSection(context),
 
-              const SizedBox(height: defaultSpacing),
+              const SizedBox(height: mediumSpacing),
 
               // History Section
               _buildSection(
                 context,
-                title: 'Nossa História',
+                title: 'História',
                 content:
-                    'Teve início em 1969 na cidade de Jaú estado de São Paulo-MG e com a finalidade principal unir as famílias que estão em atrito e busca de pessoas que estão afastadas do meio religioso e inseri-las nas igrejas de comunidades.',
+                    'Teve inicio em 1969 na cidade de Jaú estado de São Paulo e com a finalidade principal unir as famílias que estão em atrito e busca de pessoas que estão afastadas do meio religioso e inseri-las nas igrejas de comunidades.',
                 icon: Icons.history,
               ),
             ],
@@ -170,7 +179,7 @@ class AboutPLCPage extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Finalidades da PLC',
+                    'Finalidades',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,

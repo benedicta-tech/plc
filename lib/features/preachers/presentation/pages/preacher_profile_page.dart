@@ -4,6 +4,7 @@ import 'package:plc/features/preachers/domain/entities/preacher.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_event.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_state.dart';
+import 'package:plc/theme/spacing.dart';
 
 class PreacherProfilePage extends StatefulWidget {
   final String preacherId;
@@ -28,14 +29,10 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'Perfil do Pregador',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
         elevation: 0,
-        centerTitle: true,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.white,
+        forceMaterialTransparency: true,
       ),
       body: BlocBuilder<PreacherProfileBloc, PreacherProfileState>(
         builder: (context, state) {
@@ -59,7 +56,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
   Widget _buildProfileContent(BuildContext context, Preacher preacher) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(defaultSpacing),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -91,7 +88,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Membro da Comunidade PLC',
+                    preacher.roles.join(', '),
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
@@ -100,18 +97,18 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
               ),
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: defaultSpacing),
 
             // Contact Information
             Text(
-              'Informações de Contato',
+              'Contato',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: mediumSpacing),
 
             _buildInfoCard(
               context,
@@ -123,71 +120,162 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                       : 'Não informado',
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: smallSpacing),
 
             _buildInfoCard(
               context,
               icon: Icons.location_city,
-              title: 'Cidade',
+              title: 'Paróquia / Cidade',
               value:
                   preacher.city.isNotEmpty == true
                       ? preacher.city
                       : 'Não informado',
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: defaultSpacing),
 
             // Preaching Themes Section
-            Text(
-              'Temas de Pregação',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(defaultSpacing),
               decoration: BoxDecoration(
-                color: Theme.of(
-                  context,
-                ).colorScheme.primary.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(12),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.08),
+                    Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.03),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(16),
                 border: Border.all(
                   color: Theme.of(
                     context,
-                  ).colorScheme.primary.withValues(alpha: 0.1),
-                  width: 1,
+                  ).colorScheme.primary.withValues(alpha: 0.15),
+                  width: 1.5,
                 ),
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.menu_book,
-                    size: 40,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.6),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(smallSpacing),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Icon(
+                          Icons.auto_stories,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: mediumSpacing),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Temas de Pregação',
+                              style: Theme.of(
+                                context,
+                              ).textTheme.titleLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '${preacher.themes.length} ${preacher.themes.length == 1 ? 'tema' : 'temas'}',
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.grey[600]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Temas em desenvolvimento',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
+                  const SizedBox(height: defaultSpacing),
+                  if (preacher.themes.isEmpty)
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: defaultSpacing,
+                        ),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.menu_book_outlined,
+                              size: 48,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primary.withValues(alpha: 0.4),
+                            ),
+                            const SizedBox(height: smallSpacing),
+                            Text(
+                              'Nenhum tema cadastrado',
+                              style: Theme.of(
+                                context,
+                              ).textTheme.titleMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  else
+                    Wrap(
+                      spacing: smallSpacing,
+                      runSpacing: smallSpacing,
+                      children:
+                          preacher.themes
+                              .map(
+                                (theme) => Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: mediumSpacing,
+                                    vertical: smallSpacing,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary
+                                          .withValues(alpha: 0.3),
+                                      width: 1.5,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary
+                                            .withValues(alpha: 0.08),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Text(
+                                    theme,
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Esta seção mostrará os temas de pregação associados a este membro.',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-                  ),
                 ],
               ),
             ),
@@ -204,10 +292,10 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
     required String value,
   }) {
     return Card(
-      elevation: 1,
+      elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(mediumSpacing),
         child: Row(
           children: [
             Container(
@@ -225,7 +313,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                 size: 20,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: mediumSpacing),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

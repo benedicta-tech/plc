@@ -1,9 +1,24 @@
+enum PreacherRole {
+  preacher,
+  manager;
+
+  @override
+  String toString() {
+    switch (this) {
+      case PreacherRole.preacher:
+        return 'Pregador';
+      case PreacherRole.manager:
+        return 'Coordenador';
+    }
+  }
+}
+
 class Preacher {
   final String id;
   final String name;
   final String phone;
   final String city;
-  final List<String> roles;
+  final List<PreacherRole> roles;
   final List<String> themes;
 
   Preacher({
