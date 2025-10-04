@@ -5,7 +5,7 @@
 ### Preacher
 
 - **id**: `int` (primary key)
-- **fullName**: `String`
+- **name**: `String`
 - **phone**: `String` (unique)
 - **city**: `String`
 - **state**: `String`

@@ -18,19 +18,28 @@ void main() {
     mockPreacherProfileBloc = MockPreacherProfileBloc();
   });
 
-  final tPreacher = Preacher(id: 1, fullName: 'Test Preacher 1', phone: '123', city: 'Test City 1', state: 'TS');
+  final tPreacher = Preacher(
+    id: '1',
+    name: 'Test Preacher 1',
+    phone: '123',
+    city: 'Test City 1',
+    roles: [],
+    themes: [],
+  );
 
   testWidgets('should display preacher profile', (WidgetTester tester) async {
-    when(mockPreacherProfileBloc.state).thenReturn(PreacherProfileLoaded(preacher: tPreacher));
-    when(mockPreacherProfileBloc.stream).thenAnswer((_) => Stream.fromIterable([
-      PreacherProfileLoaded(preacher: tPreacher),
-    ]));
+    when(
+      mockPreacherProfileBloc.state,
+    ).thenReturn(PreacherProfileLoaded(preacher: tPreacher));
+    when(mockPreacherProfileBloc.stream).thenAnswer(
+      (_) => Stream.fromIterable([PreacherProfileLoaded(preacher: tPreacher)]),
+    );
 
     await tester.pumpWidget(
       MaterialApp(
         home: BlocProvider<PreacherProfileBloc>.value(
           value: mockPreacherProfileBloc,
-          child: const PreacherProfilePage(preacherId: 1),
+          child: const PreacherProfilePage(preacherId: '1'),
         ),
       ),
     );
@@ -43,17 +52,19 @@ void main() {
     expect(find.text('TS'), findsOneWidget);
   });
 
-  testWidgets('should display loading indicator when loading', (WidgetTester tester) async {
+  testWidgets('should display loading indicator when loading', (
+    WidgetTester tester,
+  ) async {
     when(mockPreacherProfileBloc.state).thenReturn(PreacherProfileLoading());
-    when(mockPreacherProfileBloc.stream).thenAnswer((_) => Stream.fromIterable([
-      PreacherProfileLoading(),
-    ]));
+    when(
+      mockPreacherProfileBloc.stream,
+    ).thenAnswer((_) => Stream.fromIterable([PreacherProfileLoading()]));
 
     await tester.pumpWidget(
       MaterialApp(
         home: BlocProvider<PreacherProfileBloc>.value(
           value: mockPreacherProfileBloc,
-          child: const PreacherProfilePage(preacherId: 1),
+          child: const PreacherProfilePage(preacherId: '1'),
         ),
       ),
     );

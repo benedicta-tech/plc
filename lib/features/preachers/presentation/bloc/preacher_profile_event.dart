@@ -1,7 +1,7 @@
 abstract class PreacherProfileEvent {}
 
 class LoadPreacherProfile extends PreacherProfileEvent {
-  final int id;
+  final String id;
 
   LoadPreacherProfile({required this.id});
 }

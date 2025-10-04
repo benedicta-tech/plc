@@ -15,22 +15,46 @@ class PreacherRepositoryImpl implements PreacherRepository {
   @override
   Future<List<Preacher>> getPreachers() async {
     try {
-      // For now, we'll use local data only (offline-first approach)
-      // In the future, this can be enhanced to sync with remote data
-      final preacherModels = await localDataSource.getAllPreachers();
-      return preacherModels.map((model) => model.toEntity()).toList();
+      final lastSyncDate = await localDataSource.getLastSyncDate();
+      final now = DateTime.now();
+
+      final shouldFetchRemote = lastSyncDate == null ||
+          now.difference(lastSyncDate).inDays >= 1;
+
+      if (shouldFetchRemote) {
+        try {
+          final remoteModels = await remoteDataSource.getPreachers();
+          await localDataSource.savePreachers(remoteModels);
+          await localDataSource.setLastSyncDate(now);
+          return remoteModels.map((model) => model.toEntity()).toList();
+        } catch (e) {
+          final localModels = await localDataSource.getAllPreachers();
+          if (localModels.isNotEmpty) {
+            return localModels.map((model) => model.toEntity()).toList();
+          }
+          rethrow;
+        }
+      } else {
+        final preacherModels = await localDataSource.getAllPreachers();
+        return preacherModels.map((model) => model.toEntity()).toList();
+      }
     } catch (e) {
       throw Exception('Failed to get preachers: $e');
     }
   }
 
   @override
-  Future<Preacher> getPreacherById(int id) async {
+  Future<Preacher> getPreacherById(String id) async {
     try {
       final preacherModel = await localDataSource.getPreacherById(id);
       if (preacherModel != null) {
         return preacherModel.toEntity();
-      } else {
+      }
+
+      try {
+        final remoteModel = await remoteDataSource.getPreacherById(id);
+        return remoteModel.toEntity();
+      } catch (e) {
         throw Exception('Preacher with id $id not found');
       }
     } catch (e) {

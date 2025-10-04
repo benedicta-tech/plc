@@ -17,12 +17,21 @@ void main() {
     usecase = GetPreacherById(mockPreacherRepository);
   });
 
-  const tId = 1;
-  final tPreacher = Preacher(id: 1, fullName: 'Test Preacher 1', phone: '123', city: 'Test City 1', state: 'TS');
+  const tId = '1';
+  final tPreacher = Preacher(
+    id: '1',
+    name: 'Test Preacher 1',
+    phone: '123',
+    city: 'Test City 1',
+    roles: [],
+    themes: [],
+  );
 
   test('should get preacher by id from the repository', () async {
     // arrange
-    when(mockPreacherRepository.getPreacherById(tId)).thenAnswer((_) async => tPreacher);
+    when(
+      mockPreacherRepository.getPreacherById(tId),
+    ).thenAnswer((_) async => tPreacher);
     // act
     final result = await usecase(tId);
     // assert

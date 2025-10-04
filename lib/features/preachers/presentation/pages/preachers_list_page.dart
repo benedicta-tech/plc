@@ -1,3 +1,4 @@
+import 'package:plc/features/preachers/domain/entities/preacher.dart';
 import 'package:plc/features/preachers/presentation/pages/preacher_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,10 +27,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
       appBar: AppBar(
         title: const Text(
           'Pregadores',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: const Color(0xFF083532),
         foregroundColor: Colors.white,
@@ -40,9 +38,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
         builder: (context, state) {
           if (state is PreachersLoading) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: Color(0xFF083532),
-              ),
+              child: CircularProgressIndicator(color: Color(0xFF083532)),
             );
           } else if (state is PreachersLoaded) {
             if (state.preachers.isEmpty) {
@@ -90,16 +86,17 @@ class _PreachersListPageState extends State<PreachersListPage> {
                       children: [
                         Text(
                           'Nossa Comunidade',
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          style: Theme.of(
+                            context,
+                          ).textTheme.headlineSmall?.copyWith(
                             color: const Color(0xFF083532),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
                           '${preachers.length} pregadores ativos',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey[600],
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: Colors.grey[600]),
                         ),
                       ],
                     ),
@@ -109,7 +106,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
             ],
           ),
         ),
-        
+
         // Preachers List
         Expanded(
           child: ListView.builder(
@@ -128,18 +125,17 @@ class _PreachersListPageState extends State<PreachersListPage> {
     );
   }
 
-  Widget _buildPreacherCard(BuildContext context, dynamic preacher) {
+  Widget _buildPreacherCard(BuildContext context, Preacher preacher) {
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PreacherProfilePage(preacherId: preacher.id),
+              builder:
+                  (context) => PreacherProfilePage(preacherId: preacher.id),
             ),
           );
         },
@@ -167,7 +163,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      preacher.fullName,
+                      preacher.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: const Color(0xFF083532),
                         fontWeight: FontWeight.bold,
@@ -176,7 +172,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
                     if (preacher.city != null && preacher.city.isNotEmpty) ...[
                       const SizedBox(height: 4),
                       Text(
-                        '${preacher.city}${preacher.state != null && preacher.state.isNotEmpty ? ', ${preacher.state}' : ''}',
+                        '${preacher.city}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.grey[600],
                         ),
@@ -229,9 +225,9 @@ class _PreachersListPageState extends State<PreachersListPage> {
             Text(
               'A lista de pregadores está sendo carregada ou ainda não há membros cadastrados.',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
             ),
           ],
         ),
@@ -271,9 +267,9 @@ class _PreachersListPageState extends State<PreachersListPage> {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
             ),
             const SizedBox(height: 24),
             ElevatedButton(

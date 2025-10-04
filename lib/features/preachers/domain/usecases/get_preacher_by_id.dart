@@ -6,7 +6,7 @@ class GetPreacherById {
 
   GetPreacherById(this.repository);
 
-  Future<Preacher> call(int id) async {
+  Future<Preacher> call(String id) async {
     return await repository.getPreacherById(id);
   }
 }

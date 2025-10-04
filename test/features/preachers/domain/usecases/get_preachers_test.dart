@@ -18,13 +18,29 @@ void main() {
   });
 
   final tPreachers = [
-    Preacher(id: 1, fullName: 'Test Preacher 1', phone: '123', city: 'Test City 1', state: 'TS'),
-    Preacher(id: 2, fullName: 'Test Preacher 2', phone: '456', city: 'Test City 2', state: 'TS'),
+    Preacher(
+      id: '1',
+      name: 'Test Preacher 1',
+      phone: '123',
+      city: 'Test City 1',
+      roles: [],
+      themes: [],
+    ),
+    Preacher(
+      id: '2',
+      name: 'Test Preacher 2',
+      phone: '456',
+      city: 'Test City 2',
+      roles: [],
+      themes: [],
+    ),
   ];
 
   test('should get preachers from the repository', () async {
     // arrange
-    when(mockPreacherRepository.getPreachers()).thenAnswer((_) async => tPreachers);
+    when(
+      mockPreacherRepository.getPreachers(),
+    ).thenAnswer((_) async => tPreachers);
     // act
     final result = await usecase();
     // assert

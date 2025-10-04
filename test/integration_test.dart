@@ -16,25 +16,25 @@ void main() {
     test('Storage service loads sample data', () async {
       final storageService = di.sl<LocalStorageService>();
       final preachers = await storageService.getPreachers();
-      
+
       expect(preachers, isNotEmpty);
       expect(preachers.length, equals(8));
-      expect(preachers.first['fullName'], equals('João Silva Santos'));
+      expect(preachers.first['name'], equals('João Silva Santos'));
     });
 
     test('Storage service can retrieve preacher by ID', () async {
       final storageService = di.sl<LocalStorageService>();
       final preacher = await storageService.getPreacherById(1);
-      
+
       expect(preacher, isNotNull);
       expect(preacher!['id'], equals(1));
-      expect(preacher['fullName'], equals('João Silva Santos'));
+      expect(preacher['name'], equals('João Silva Santos'));
     });
 
     test('Storage service handles non-existent preacher', () async {
       final storageService = di.sl<LocalStorageService>();
       final preacher = await storageService.getPreacherById(999);
-      
+
       expect(preacher, isNull);
     });
   });

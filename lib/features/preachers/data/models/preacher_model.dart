@@ -1,28 +1,31 @@
 import 'package:plc/features/preachers/domain/entities/preacher.dart';
 
 class PreacherModel {
-  final int id;
-  final String fullName;
+  final String id;
+  final String name;
   final String phone;
   final String city;
-  final String state;
+  final List<String> roles;
+  final List<String> themes;
 
   PreacherModel({
     required this.id,
-    required this.fullName,
+    required this.name,
     required this.phone,
     required this.city,
-    required this.state,
+    required this.roles,
+    required this.themes,
   });
 
   /// Create PreacherModel from JSON
   factory PreacherModel.fromJson(Map<String, dynamic> json) {
     return PreacherModel(
-      id: json['id'] as int,
-      fullName: json['fullName'] as String,
+      id: json['id'] as String,
+      name: json['name'] as String,
       phone: json['phone'] as String,
       city: json['city'] as String,
-      state: json['state'] as String,
+      roles: List<String>.from(json['roles'] as List),
+      themes: List<String>.from(json['themes'] as List),
     );
   }
 
@@ -30,10 +33,11 @@ class PreacherModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'fullName': fullName,
+      'name': name,
       'phone': phone,
       'city': city,
-      'state': state,
+      'roles': roles,
+      'themes': themes,
     };
   }
 
@@ -41,10 +45,11 @@ class PreacherModel {
   Preacher toEntity() {
     return Preacher(
       id: id,
-      fullName: fullName,
+      name: name,
       phone: phone,
       city: city,
-      state: state,
+      roles: roles,
+      themes: themes,
     );
   }
 
@@ -52,10 +57,11 @@ class PreacherModel {
   factory PreacherModel.fromEntity(Preacher preacher) {
     return PreacherModel(
       id: preacher.id,
-      fullName: preacher.fullName,
+      name: preacher.name,
       phone: preacher.phone,
       city: preacher.city,
-      state: preacher.state,
+      roles: preacher.roles,
+      themes: preacher.themes,
     );
   }
 }

@@ -53,7 +53,7 @@ class MockPreacherRepository extends _i1.Mock
       ) as _i4.Future<List<_i2.Preacher>>);
 
   @override
-  _i4.Future<_i2.Preacher> getPreacherById(int? id) => (super.noSuchMethod(
+  _i4.Future<_i2.Preacher> getPreacherById(String? id) => (super.noSuchMethod(
         Invocation.method(
           #getPreacherById,
           [id],

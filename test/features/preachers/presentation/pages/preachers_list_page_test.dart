@@ -20,19 +20,24 @@ void main() {
 
   final tPreachers = [
     Preacher(
-      id: 1,
-      fullName: 'Test Preacher 1',
+      id: '1',
+      name: 'Test Preacher 1',
       phone: '123',
       city: 'Test City 1',
-      state: 'TS',
+      roles: [],
+      themes: [],
     ),
   ];
 
-  testWidgets('should display a list of preachers', (WidgetTester tester) async {
-    when(mockPreachersBloc.state).thenReturn(PreachersLoaded(preachers: tPreachers));
-    when(mockPreachersBloc.stream).thenAnswer((_) => Stream.fromIterable([
-      PreachersLoaded(preachers: tPreachers),
-    ]));
+  testWidgets('should display a list of preachers', (
+    WidgetTester tester,
+  ) async {
+    when(
+      mockPreachersBloc.state,
+    ).thenReturn(PreachersLoaded(preachers: tPreachers));
+    when(mockPreachersBloc.stream).thenAnswer(
+      (_) => Stream.fromIterable([PreachersLoaded(preachers: tPreachers)]),
+    );
 
     await tester.pumpWidget(
       MaterialApp(
@@ -49,11 +54,13 @@ void main() {
     expect(find.text('Nossa Comunidade'), findsOneWidget);
   });
 
-  testWidgets('should display loading indicator when loading', (WidgetTester tester) async {
+  testWidgets('should display loading indicator when loading', (
+    WidgetTester tester,
+  ) async {
     when(mockPreachersBloc.state).thenReturn(PreachersLoading());
-    when(mockPreachersBloc.stream).thenAnswer((_) => Stream.fromIterable([
-      PreachersLoading(),
-    ]));
+    when(
+      mockPreachersBloc.stream,
+    ).thenAnswer((_) => Stream.fromIterable([PreachersLoading()]));
 
     await tester.pumpWidget(
       MaterialApp(

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:plc/features/preachers/domain/entities/preacher.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_event.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_state.dart';
 
 class PreacherProfilePage extends StatefulWidget {
-  final int preacherId;
+  final String preacherId;
 
   const PreacherProfilePage({super.key, required this.preacherId});
 
@@ -17,7 +18,9 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
   @override
   void initState() {
     super.initState();
-    context.read<PreacherProfileBloc>().add(LoadPreacherProfile(id: widget.preacherId));
+    context.read<PreacherProfileBloc>().add(
+      LoadPreacherProfile(id: widget.preacherId),
+    );
   }
 
   @override
@@ -27,10 +30,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
       appBar: AppBar(
         title: const Text(
           'Perfil do Pregador',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: const Color(0xFF083532),
         foregroundColor: Colors.white,
@@ -41,9 +41,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
         builder: (context, state) {
           if (state is PreacherProfileLoading) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: Color(0xFF083532),
-              ),
+              child: CircularProgressIndicator(color: Color(0xFF083532)),
             );
           } else if (state is PreacherProfileLoaded) {
             return _buildProfileContent(context, state.preacher);
@@ -56,7 +54,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
     );
   }
 
-  Widget _buildProfileContent(BuildContext context, dynamic preacher) {
+  Widget _buildProfileContent(BuildContext context, Preacher preacher) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -82,7 +80,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    preacher.fullName,
+                    preacher.name,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       color: const Color(0xFF083532),
@@ -92,16 +90,16 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                   const SizedBox(height: 8),
                   Text(
                     'Membro da Comunidade PLC',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.grey[600],
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
                   ),
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 32),
-            
+
             // Contact Information
             Text(
               'Informações de Contato',
@@ -110,36 +108,33 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             _buildInfoCard(
               context,
               icon: Icons.phone,
               title: 'Telefone',
-              value: preacher.phone?.isNotEmpty == true ? preacher.phone : 'Não informado',
+              value:
+                  preacher.phone?.isNotEmpty == true
+                      ? preacher.phone
+                      : 'Não informado',
             ),
-            
+
             const SizedBox(height: 12),
-            
+
             _buildInfoCard(
               context,
               icon: Icons.location_city,
               title: 'Cidade',
-              value: preacher.city?.isNotEmpty == true ? preacher.city : 'Não informado',
+              value:
+                  preacher.city?.isNotEmpty == true
+                      ? preacher.city
+                      : 'Não informado',
             ),
-            
-            const SizedBox(height: 12),
-            
-            _buildInfoCard(
-              context,
-              icon: Icons.map,
-              title: 'Estado',
-              value: preacher.state?.isNotEmpty == true ? preacher.state : 'Não informado',
-            ),
-            
+
             const SizedBox(height: 32),
-            
+
             // Preaching Themes Section
             Text(
               'Temas de Pregação',
@@ -148,9 +143,9 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -181,9 +176,9 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                   Text(
                     'Esta seção mostrará os temas de pregação associados a este membro.',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey[600],
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
                   ),
                 ],
               ),
@@ -202,9 +197,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
   }) {
     return Card(
       elevation: 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -216,11 +209,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                 color: const Color(0xFF083532).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Icon(
-                icon,
-                color: const Color(0xFF083532),
-                size: 20,
-              ),
+              child: Icon(icon, color: const Color(0xFF083532), size: 20),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -283,9 +272,9 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
             ),
             const SizedBox(height: 24),
             ElevatedButton(

@@ -1,15 +1,17 @@
 class Preacher {
-  final int id;
-  final String fullName;
+  final String id;
+  final String name;
   final String phone;
   final String city;
-  final String state;
+  final List<String> roles;
+  final List<String> themes;
 
   Preacher({
     required this.id,
-    required this.fullName,
+    required this.name,
     required this.phone,
     required this.city,
-    required this.state,
+    required this.roles,
+    required this.themes,
   });
 }

@@ -18,42 +18,44 @@ class PreacherLocalDataSource {
   }
 
   /// Get preacher by ID from local storage
-  Future<PreacherModel?> getPreacherById(int id) async {
+  Future<PreacherModel?> getPreacherById(String id) async {
     try {
-      final json = await storageService.getPreacherById(id);
-      if (json != null) {
-        return PreacherModel.fromJson(json);
+      final preachers = await getAllPreachers();
+      try {
+        return preachers.firstWhere((p) => p.id == id);
+      } catch (e) {
+        return null;
       }
-      return null;
     } catch (e) {
       throw Exception('Failed to load preacher from local storage: $e');
     }
   }
 
-  /// Add a new preacher to local storage
-  Future<void> addPreacher(PreacherModel preacher) async {
+  /// Save multiple preachers at once (bulk operation)
+  Future<void> savePreachers(List<PreacherModel> preachers) async {
     try {
-      await storageService.addPreacher(preacher.toJson());
+      final jsonList = preachers.map((p) => p.toJson()).toList();
+      await storageService.savePreachers(jsonList);
     } catch (e) {
-      throw Exception('Failed to add preacher to local storage: $e');
+      throw Exception('Failed to save preachers to local storage: $e');
     }
   }
 
-  /// Update an existing preacher in local storage
-  Future<void> updatePreacher(PreacherModel preacher) async {
+  /// Get last sync date
+  Future<DateTime?> getLastSyncDate() async {
     try {
-      await storageService.updatePreacher(preacher.toJson());
+      return await storageService.getLastSyncDate();
     } catch (e) {
-      throw Exception('Failed to update preacher in local storage: $e');
+      throw Exception('Failed to get last sync date: $e');
     }
   }
 
-  /// Delete a preacher from local storage
-  Future<void> deletePreacher(int id) async {
+  /// Set last sync date
+  Future<void> setLastSyncDate(DateTime date) async {
     try {
-      await storageService.deletePreacher(id);
+      await storageService.setLastSyncDate(date);
     } catch (e) {
-      throw Exception('Failed to delete preacher from local storage: $e');
+      throw Exception('Failed to set last sync date: $e');
     }
   }
 }
