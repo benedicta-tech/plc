@@ -1,0 +1,74 @@
+require 'yaml'
+
+update_fastlane
+
+default_platform(:android)
+
+pubspec = YAML.load(File.read("../pubspec.yaml"))
+version_name,version_code = pubspec["version"].split("+")
+
+lane :bump_version do |options|
+  ensure_git_status_clean
+  bump_version_flutter(options)
+  generate_changelog
+
+  pubspec = YAML.load(File.read("../pubspec.yaml"))
+  new_version_name, new_version_code = pubspec["version"].split("+")
+
+  git_add(path: [
+    "pubspec.yaml",
+    "fastlane/metadata/**/*",
+  ])
+
+  git_commit(
+    path: ["pubspec.yaml", "**/*"],
+    message: "Bump version to #{new_version_name}+#{new_version_code}"
+  )
+
+  add_git_tag(
+    tag: "#{new_version_name}+#{new_version_code}",
+    message: "Version #{new_version_name}+#{new_version_code}",
+    grouping: "version",
+    includes_lane: true,
+    prefix: "v",
+  )
+end
+
+platform :android do
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    upload_to_play_store(
+      version_name: version_name, 
+      version_code: version_code, 
+      release_status: "completed", 
+      track: "alpha", 
+      aab: "build/app/outputs/bundle/release/app-release.aab", 
+      package_name: "tech.benedicta.plc",
+      metadata_path: "fastlane/metadata/android"
+    )
+  end
+
+  lane :promote_to_beta do
+    upload_to_play_store(
+      version_name: "#{version_name}-#{version_code}", 
+      version_code: version_code,
+      release_status: "completed", 
+      track: "alpha", 
+      track_promote_to: "beta", 
+      package_name: "tech.benedicta.plc",
+      metadata_path: "fastlane/metadata/android"
+    )
+  end
+
+  lane :promote_to_production do
+    upload_to_play_store(
+      version_name: "#{version_name}-#{version_code}",
+      version_code: version_code,
+      release_status: "completed",
+      track: "alpha",
+      track_promote_to: "production",
+      package_name: "tech.benedicta.plc",
+      metadata_path: "fastlane/metadata/android"
+    )
+  end
+end
