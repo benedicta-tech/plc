@@ -45,51 +45,36 @@ jobs:
         run: flutter test
       - name: Run build_runner
         run: dart run build_runner build --delete-conflicting-outputs
-      # Web
-      # - name: Build Web
-      #   run: flutter build web --release -t lib/main.dart
-      # Linux
-      # - uses: snapcore/action-build@v1
-      #   id: build-snap
-      #   with:
-      #     path: app/snap
-      #     build-info: true
-      #     snapcraft-channel: stable
       # Android
-      # - name: Setup Java
-      #   uses: actions/setup-java@v4
-      #   with:
-      #     distribution: "temurin"
-      #     java-version: "17"
-      #     cache: "gradle"
-      # - name: Download Android keystore
-      #   id: android_keystore
-      #   uses: timheuer/base64-to-file@v1.2
-      #   with:
-      #     fileName: key.jks
-      #     encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-      # - name: Create key.properties
-      #   run: |
-      #     echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
-      #     echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
-      #     echo "keyPassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
-      #     echo "keyAlias=upload" >> android/key.properties
-      # - name: Build Android parent
-      #   run: flutter build appbundle --release --no-tree-shake-icons --verbose --flavor parent
-      #   env:
-      #     GRADLE_OPTS: "-Dorg.gradle.parallel=true -Dorg.gradle.daemon=true"
-      # - name: Build Android child
-      #   run: flutter build appbundle --release --no-tree-shake-icons --verbose --flavor child
-      #   env:
-      #     GRADLE_OPTS: "-Dorg.gradle.parallel=true -Dorg.gradle.daemon=true"
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+      - name: Download Android keystore
+        id: android_keystore
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: key.jks
+          encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      - name: Create key.properties
+        run: |
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+            echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=upload" >> android/key.properties
+      - name: Build Android parent
+        run: flutter build appbundle --release --no-tree-shake-icons
+        env:
+          GRADLE_OPTS: "-Dorg.gradle.parallel=true -Dorg.gradle.daemon=true"
       # Finish
-      # - name: Save build
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: build
-      #     path: |
-      #       build/app/outputs/bundle/parentRelease
-      #       build/app/outputs/bundle/childRelease
+      - name: Save build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: |
+            build/app/outputs/bundle/release
   # android-parent:
   #   needs: [build]
   #   name: Android Parent
