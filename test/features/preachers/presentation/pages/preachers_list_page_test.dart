@@ -51,7 +51,7 @@ void main() {
     await tester.pump();
 
     expect(find.text('Test Preacher 1'), findsOneWidget);
-    expect(find.text('Nossa Comunidade'), findsOneWidget);
+    expect(find.text('Pregadores'), findsOneWidget);
   });
 
   testWidgets('should display loading indicator when loading', (
