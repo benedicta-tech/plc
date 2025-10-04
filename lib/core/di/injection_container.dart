@@ -40,7 +40,4 @@ Future<void> init() async {
   // Core services
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => LocalStorageService());
-  
-  // Initialize storage service
-  await sl<LocalStorageService>().init();
 }

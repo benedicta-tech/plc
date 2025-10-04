@@ -49,7 +49,7 @@ void main() {
     expect(find.text('Test Preacher 1'), findsOneWidget);
     expect(find.text('123'), findsOneWidget);
     expect(find.text('Test City 1'), findsOneWidget);
-    expect(find.text('TS'), findsOneWidget);
+    expect(find.byIcon(Icons.person), findsOneWidget);
   });
 
   testWidgets('should display loading indicator when loading', (

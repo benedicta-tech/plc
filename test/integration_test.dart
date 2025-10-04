@@ -13,22 +13,33 @@ void main() {
       expect(di.sl.isRegistered<LocalStorageService>(), isTrue);
     });
 
-    test('Storage service loads sample data', () async {
+    test('Storage service starts empty', () async {
       final storageService = di.sl<LocalStorageService>();
       final preachers = await storageService.getPreachers();
 
-      expect(preachers, isNotEmpty);
-      expect(preachers.length, equals(8));
-      expect(preachers.first['name'], equals('João Silva Santos'));
+      expect(preachers, isEmpty);
     });
 
-    test('Storage service can retrieve preacher by ID', () async {
+    test('Storage service can save and retrieve preachers', () async {
       final storageService = di.sl<LocalStorageService>();
-      final preacher = await storageService.getPreacherById(1);
 
-      expect(preacher, isNotNull);
-      expect(preacher!['id'], equals(1));
-      expect(preacher['name'], equals('João Silva Santos'));
+      final testPreachers = [
+        {
+          'id': 'test-preacher-1',
+          'name': 'Test Preacher',
+          'phone': '123-456-7890',
+          'city': 'Test City',
+          'roles': ['Preacher'],
+          'themes': ['Fé', 'Oração']
+        }
+      ];
+
+      await storageService.savePreachers(testPreachers);
+      final preachers = await storageService.getPreachers();
+
+      expect(preachers, isNotEmpty);
+      expect(preachers.length, equals(1));
+      expect(preachers.first['name'], equals('Test Preacher'));
     });
 
     test('Storage service handles non-existent preacher', () async {
