@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plc/features/about/presentation/pages/about_plc_page.dart';
 import 'package:plc/features/preachers/presentation/pages/preachers_list_page.dart';
+import 'package:plc/theme/spacing.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,29 +12,32 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: mediumSpacing,
+            vertical: defaultSpacing,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              SizedBox(height: defaultSpacing),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image(image: AssetImage('images/plc.jpg'), height: 50),
-                  SizedBox(height: 20),
+                  Image(image: AssetImage('images/plc.jpg'), height: 40),
+                  SizedBox(height: mediumSpacing),
                   Text(
                     'Olá, a paz de Cristo e o amor de Maria!',
                     textAlign: TextAlign.left,
                     softWrap: true,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: const Color(0xFF083532),
-                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w900,
                       height: 1.2,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 40),
+              SizedBox(height: extraLargeSpacing),
               // Welcome Section
               Center(
                 child: Column(
@@ -48,25 +52,14 @@ class HomePage extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 48),
-
-              // Main Actions Section
-              Text(
-                'Principais Recursos',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: const Color(0xFF083532),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 24),
+              const SizedBox(height: extraLargeSpacing),
 
               // Feature Cards
               _buildFeatureCard(
                 context,
                 icon: Icons.people,
                 title: 'Pregadores',
-                description: 'Conheça os nossos pregadores',
+                description: 'Conheça os pregadores',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -77,7 +70,7 @@ class HomePage extends StatelessWidget {
                 },
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: mediumSpacing),
 
               _buildFeatureCard(
                 context,
@@ -94,14 +87,16 @@ class HomePage extends StatelessWidget {
                 },
               ),
 
-              const SizedBox(height: 48),
+              const SizedBox(height: extraLargeSpacing),
 
               // About Section
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(defaultSpacing),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF083532).withValues(alpha: 0.05),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.primary.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -110,7 +105,7 @@ class HomePage extends StatelessWidget {
                     Text(
                       'Sobre o PLC',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: const Color(0xFF083532),
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -133,7 +128,7 @@ class HomePage extends StatelessWidget {
                         );
                       },
                       style: TextButton.styleFrom(
-                        foregroundColor: const Color(0xFF083532),
+                        foregroundColor: Theme.of(context).colorScheme.primary,
                         padding: EdgeInsets.zero,
                       ),
                       child: Row(
@@ -144,15 +139,15 @@ class HomePage extends StatelessWidget {
                             style: Theme.of(
                               context,
                             ).textTheme.bodyMedium?.copyWith(
-                              color: const Color(0xFF083532),
+                              color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           const SizedBox(width: 4),
-                          const Icon(
+                          Icon(
                             Icons.arrow_forward,
                             size: 16,
-                            color: Color(0xFF083532),
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ],
                       ),
@@ -175,20 +170,20 @@ class HomePage extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return Card(
-      elevation: 2,
+      elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(mediumSpacing),
           child: Row(
             children: [
               Container(
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF083532),
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Icon(icon, color: Colors.white, size: 24),
@@ -201,7 +196,7 @@ class HomePage extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: const Color(0xFF083532),
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -215,9 +210,9 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios,
-                color: Color(0xFF083532),
+                color: Theme.of(context).colorScheme.primary,
                 size: 16,
               ),
             ],

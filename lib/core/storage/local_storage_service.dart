@@ -9,6 +9,8 @@ class LocalStorageService {
   static const String _preachersKey = 'preachers';
   static const String _preachingThemesKey = 'preaching_themes';
   static const String _lastSyncKey = 'last_sync_date';
+  static const String _themesKey = 'themes';
+  static const String _themesLastSyncKey = 'themes_last_sync_date';
 
   /// Get all preachers
   Future<List<Map<String, dynamic>>> getPreachers() async {
@@ -83,6 +85,30 @@ class LocalStorageService {
   /// Set last sync date
   Future<void> setLastSyncDate(DateTime date) async {
     _storage[_lastSyncKey] = date.millisecondsSinceEpoch;
+  }
+
+  /// Get all themes
+  Future<List<String>> getThemes() async {
+    final data = _storage[_themesKey] as List<dynamic>?;
+    return data?.cast<String>() ?? [];
+  }
+
+  /// Save themes
+  Future<void> saveThemes(List<String> themes) async {
+    _storage[_themesKey] = themes;
+  }
+
+  /// Get themes last sync date
+  Future<DateTime?> getThemesLastSyncDate() async {
+    final timestamp = _storage[_themesLastSyncKey] as int?;
+    return timestamp != null
+        ? DateTime.fromMillisecondsSinceEpoch(timestamp)
+        : null;
+  }
+
+  /// Set themes last sync date
+  Future<void> setThemesLastSyncDate(DateTime date) async {
+    _storage[_themesLastSyncKey] = date.millisecondsSinceEpoch;
   }
 
   /// Clear all data (useful for testing)

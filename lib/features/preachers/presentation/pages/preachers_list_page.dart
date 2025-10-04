@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preachers_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preachers_event.dart';
 import 'package:plc/features/preachers/presentation/bloc/preachers_state.dart';
+import 'package:plc/features/preachers/presentation/widgets/search_bar.dart';
+import 'package:plc/theme/spacing.dart';
 
 class PreachersListPage extends StatefulWidget {
   const PreachersListPage({super.key});
@@ -25,26 +27,28 @@ class _PreachersListPageState extends State<PreachersListPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'Pregadores',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        backgroundColor: const Color(0xFF083532),
-        foregroundColor: Colors.white,
         elevation: 0,
-        centerTitle: true,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.white,
+        forceMaterialTransparency: true,
       ),
       body: BlocBuilder<PreachersBloc, PreachersState>(
         builder: (context, state) {
           if (state is PreachersLoading) {
-            return const Center(
-              child: CircularProgressIndicator(color: Color(0xFF083532)),
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.primary,
+              ),
             );
           } else if (state is PreachersLoaded) {
-            if (state.preachers.isEmpty) {
+            if (state.preachers.isEmpty && !state.inSearch) {
               return _buildEmptyState(context);
             }
-            return _buildPreachersList(context, state.preachers);
+            return _buildPreachersList(
+              context,
+              state.preachers,
+              state.inSearch,
+            );
           } else if (state is PreachersError) {
             return _buildErrorState(context, state.message);
           }
@@ -54,50 +58,46 @@ class _PreachersListPageState extends State<PreachersListPage> {
     );
   }
 
-  Widget _buildPreachersList(BuildContext context, List<dynamic> preachers) {
+  Widget _buildPreachersList(
+    BuildContext context,
+    List<dynamic> preachers,
+    bool inSearch,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Header Section
         Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.only(
+            left: mediumSpacing,
+            right: mediumSpacing,
+            bottom: mediumSpacing,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF083532),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: const Icon(
-                      Icons.people,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Nossa Comunidade',
+                          'Pregadores',
                           style: Theme.of(
                             context,
                           ).textTheme.headlineSmall?.copyWith(
-                            color: const Color(0xFF083532),
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          '${preachers.length} pregadores ativos',
+                          '${preachers.length} pregadores ${inSearch ? 'encontrados' : 'ativos'}',
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(color: Colors.grey[600]),
                         ),
+                        const SizedBox(height: smallSpacing),
+                        SearchPreachersBar(inSearch: inSearch),
                       ],
                     ),
                   ),
@@ -110,14 +110,11 @@ class _PreachersListPageState extends State<PreachersListPage> {
         // Preachers List
         Expanded(
           child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: const EdgeInsets.symmetric(horizontal: mediumSpacing),
             itemCount: preachers.length,
             itemBuilder: (context, index) {
               final preacher = preachers[index];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: _buildPreacherCard(context, preacher),
-              );
+              return _buildPreacherCard(context, preacher);
             },
           ),
         ),
@@ -127,8 +124,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
 
   Widget _buildPreacherCard(BuildContext context, Preacher preacher) {
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 0,
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -141,23 +137,22 @@ class _PreachersListPageState extends State<PreachersListPage> {
         },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(
+            vertical: smallSpacing / 2,
+            horizontal: smallSpacing,
+          ),
           child: Row(
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF083532).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: const Icon(
+              SizedBox(
+                width: 30,
+                height: 30,
+                child: Icon(
                   Icons.person,
-                  color: Color(0xFF083532),
-                  size: 24,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 18,
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: smallSpacing),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,25 +160,17 @@ class _PreachersListPageState extends State<PreachersListPage> {
                     Text(
                       preacher.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: const Color(0xFF083532),
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (preacher.city != null && preacher.city.isNotEmpty) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        '${preacher.city}',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
                   ],
                 ),
               ),
-              const Icon(
+              const SizedBox(width: smallSpacing),
+              Icon(
                 Icons.arrow_forward_ios,
-                color: Color(0xFF083532),
+                color: Theme.of(context).colorScheme.primary,
                 size: 16,
               ),
             ],
@@ -204,20 +191,22 @@ class _PreachersListPageState extends State<PreachersListPage> {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: const Color(0xFF083532).withValues(alpha: 0.1),
+                color: Theme.of(
+                  context,
+                ).colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(40),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.people_outline,
                 size: 40,
-                color: Color(0xFF083532),
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             const SizedBox(height: 24),
             Text(
               'Nenhum pregador encontrado',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: const Color(0xFF083532),
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -259,7 +248,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
             Text(
               'Erro ao carregar pregadores',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: const Color(0xFF083532),
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -277,7 +266,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
                 context.read<PreachersBloc>().add(LoadPreachers());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF083532),
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

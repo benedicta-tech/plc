@@ -8,8 +8,16 @@ class PreachersLoading extends PreachersState {}
 
 class PreachersLoaded extends PreachersState {
   final List<Preacher> preachers;
+  final bool inSearch;
+  final String? currentQueryText;
+  final List<String> selectedThemes;
 
-  PreachersLoaded({required this.preachers});
+  PreachersLoaded({
+    required this.preachers,
+    this.inSearch = false,
+    this.currentQueryText,
+    this.selectedThemes = const [],
+  });
 }
 
 class PreachersError extends PreachersState {

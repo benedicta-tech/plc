@@ -18,8 +18,8 @@ class PreacherRepositoryImpl implements PreacherRepository {
       final lastSyncDate = await localDataSource.getLastSyncDate();
       final now = DateTime.now();
 
-      final shouldFetchRemote = lastSyncDate == null ||
-          now.difference(lastSyncDate).inDays >= 1;
+      final shouldFetchRemote =
+          lastSyncDate == null || now.difference(lastSyncDate).inDays >= 1;
 
       if (shouldFetchRemote) {
         try {

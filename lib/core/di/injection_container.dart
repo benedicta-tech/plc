@@ -9,6 +9,11 @@ import 'package:plc/features/preachers/domain/usecases/get_preacher_by_id.dart';
 import 'package:plc/features/preachers/domain/usecases/get_preachers.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preachers_bloc.dart';
+import 'package:plc/features/preaching_themes/data/datasources/local/preaching_theme_local_data_source.dart';
+import 'package:plc/features/preaching_themes/data/datasources/remote/preaching_theme_remote_data_source.dart';
+import 'package:plc/features/preaching_themes/data/repositories/preaching_theme_repository_impl.dart';
+import 'package:plc/features/preaching_themes/domain/repositories/preaching_theme_repository.dart';
+import 'package:plc/features/preaching_themes/domain/usecases/get_preaching_themes.dart';
 
 final sl = GetIt.instance;
 
@@ -20,10 +25,17 @@ Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => GetPreachers(sl()));
   sl.registerLazySingleton(() => GetPreacherById(sl()));
+  sl.registerLazySingleton(() => GetPreachingThemes(sl()));
 
   // Repository
   sl.registerLazySingleton<PreacherRepository>(
     () => PreacherRepositoryImpl(
+      remoteDataSource: sl(),
+      localDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<PreachingThemeRepository>(
+    () => PreachingThemeRepositoryImpl(
       remoteDataSource: sl(),
       localDataSource: sl(),
     ),
@@ -35,6 +47,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<PreacherLocalDataSource>(
     () => PreacherLocalDataSource(storageService: sl()),
+  );
+  sl.registerLazySingleton<PreachingThemeRemoteDataSource>(
+    () => PreachingThemeRemoteDataSourceImpl(dio: sl()),
+  );
+  sl.registerLazySingleton<PreachingThemeLocalDataSource>(
+    () => PreachingThemeLocalDataSource(storageService: sl()),
   );
 
   // Core services

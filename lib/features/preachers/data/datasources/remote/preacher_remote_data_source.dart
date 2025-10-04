@@ -19,7 +19,16 @@ class PreacherRemoteDataSourceImpl implements PreacherRemoteDataSource {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data as List<dynamic>;
-        return data.map((json) => PreacherModel.fromJson(json as Map<String, dynamic>)).toList();
+        var preachers =
+            data
+                .map(
+                  (json) =>
+                      PreacherModel.fromJson(json as Map<String, dynamic>),
+                )
+                .where((preacher) => preacher.roles.contains("Preacher"))
+                .toList();
+        preachers.sort((a, b) => a.name.compareTo(b.name));
+        return preachers;
       } else {
         throw DioException(
           requestOptions: response.requestOptions,

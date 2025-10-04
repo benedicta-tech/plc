@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plc/theme/spacing.dart';
 
 class AboutPLCPage extends StatelessWidget {
   const AboutPLCPage({super.key});
@@ -10,19 +11,16 @@ class AboutPLCPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Sobre a PLC',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF083532),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(defaultSpacing),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -30,30 +28,9 @@ class AboutPLCPage extends StatelessWidget {
               Center(
                 child: Column(
                   children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF083532),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: const Icon(
-                        Icons.church,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Text(
-                      'Peregrinação de\nLeigos Cristãos',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: const Color(0xFF083532),
-                        fontWeight: FontWeight.bold,
-                        height: 1.2,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: defaultSpacing),
+                    Image(image: AssetImage('images/plc.jpg'), height: 150),
+                    const SizedBox(height: defaultSpacing),
                     Text(
                       'Movimento Eclesial Católico Apostólico Romano',
                       textAlign: TextAlign.center,
@@ -65,39 +42,42 @@ class AboutPLCPage extends StatelessWidget {
                   ],
                 ),
               ),
-              
-              const SizedBox(height: 40),
-              
+
+              const SizedBox(height: defaultSpacing),
+
               // Mission Section
               _buildSection(
                 context,
                 title: 'Nossa Missão',
-                content: 'A PLC – Peregrinação de Leigos Cristãos é um Movimento Eclesial Católico Apostólico Romano, constituído por tempo indeterminado, sem fins lucrativos, sujeita à assessoria eclesiástica do pároco e do Conselho de Pastoral Paroquial, a nível paroquial e do bispo em sua atuação na Igreja particular em nível Diocesano.\n\nA missão da PLC consiste em propagar a mensagem cristã, a doutrinada Igreja da Católica Apostólica Romana e as diretrizes de evangelização diocesanas, de maneira catequética e testemunhal, às pessoas que participam dos cursos, das reuniões de perseverança e demais atividades segundo os preceitos evangélicos.',
+                content:
+                    'O PLC – Peregrinação de Leigos Cristãos é um Movimento Eclesial Católico Apostólico Romano, constituído por tempo indeterminado, sem fins lucrativos, sujeita à assessoria eclesiástica do pároco e do Conselho de Pastoral Paroquial, a nível paroquial e do bispo em sua atuação na Igreja particular em nível Diocesano.\n\nA missão da PLC consiste em propagar a mensagem cristã, a doutrinada Igreja da Católica Apostólica Romana e as diretrizes de evangelização diocesanas, de maneira catequética e testemunhal, às pessoas que participam dos cursos, das reuniões de perseverança e demais atividades segundo os preceitos evangélicos.',
                 icon: Icons.favorite,
               ),
-              
-              const SizedBox(height: 32),
-              
+
+              const SizedBox(height: defaultSpacing),
+
               // Purpose Section
               _buildSection(
                 context,
                 title: 'Nossa Finalidade',
-                content: 'A PLC cumpre com a sua missão através de sua finalidade pastoral específica que é evangelização de maneira catequética, levando os seus membros, a tornarem-se aptos a anunciar a Boa Nova, através de um encontro consigo mesmos, com Jesus Cristo e com as realidades do mundo nas quais estão imersos, sendo, no seio delas, tanto pessoal como comunitariamente, fermento que transforma sal que dá sabor e luz que ilumina, segundo os preceitos do Evangelho.',
+                content:
+                    'A PLC cumpre com a sua missão através de sua finalidade pastoral específica que é evangelização de maneira catequética, levando os seus membros, a tornarem-se aptos a anunciar a Boa Nova, através de um encontro consigo mesmos, com Jesus Cristo e com as realidades do mundo nas quais estão imersos, sendo, no seio delas, tanto pessoal como comunitariamente, fermento que transforma sal que dá sabor e luz que ilumina, segundo os preceitos do Evangelho.',
                 icon: Icons.lightbulb_outline,
               ),
-              
-              const SizedBox(height: 32),
-              
+
+              const SizedBox(height: defaultSpacing),
+
               // Objectives Section
               _buildObjectivesSection(context),
-              
-              const SizedBox(height: 32),
-              
+
+              const SizedBox(height: defaultSpacing),
+
               // History Section
               _buildSection(
                 context,
                 title: 'Nossa História',
-                content: 'Teve início em 1969 na cidade de Jaú estado de São Paulo-MG e com a finalidade principal unir as famílias que estão em atrito e busca de pessoas que estão afastadas do meio religioso e inseri-las nas igrejas de comunidades.',
+                content:
+                    'Teve início em 1969 na cidade de Jaú estado de São Paulo-MG e com a finalidade principal unir as famílias que estão em atrito e busca de pessoas que estão afastadas do meio religioso e inseri-las nas igrejas de comunidades.',
                 icon: Icons.history,
               ),
             ],
@@ -114,12 +94,10 @@ class AboutPLCPage extends StatelessWidget {
     required IconData icon,
   }) {
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(mediumSpacing),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -129,21 +107,17 @@ class AboutPLCPage extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF083532),
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
-                    size: 20,
-                  ),
+                  child: Icon(icon, color: Colors.white, size: 20),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: const Color(0xFF083532),
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -175,12 +149,10 @@ class AboutPLCPage extends StatelessWidget {
     ];
 
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(mediumSpacing),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -190,21 +162,17 @@ class AboutPLCPage extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF083532),
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Icon(
-                    Icons.flag,
-                    color: Colors.white,
-                    size: 20,
-                  ),
+                  child: const Icon(Icons.flag, color: Colors.white, size: 20),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     'Finalidades da PLC',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: const Color(0xFF083532),
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -215,9 +183,9 @@ class AboutPLCPage extends StatelessWidget {
             ...objectives.asMap().entries.map((entry) {
               final index = entry.key;
               final objective = entry.value;
-              
+
               return Padding(
-                padding: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.only(bottom: smallSpacing),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -226,14 +194,18 @@ class AboutPLCPage extends StatelessWidget {
                       height: 24,
                       margin: const EdgeInsets.only(right: 12, top: 2),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF083532).withValues(alpha: 0.1),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
                         child: Text(
                           '${index + 1}',
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: const Color(0xFF083532),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.labelSmall?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -11,7 +11,10 @@ class PreacherLocalDataSource {
   Future<List<PreacherModel>> getAllPreachers() async {
     try {
       final jsonList = await storageService.getPreachers();
-      return jsonList.map((json) => PreacherModel.fromJson(json)).toList();
+      return jsonList
+          .map((json) => PreacherModel.fromJson(json))
+          .where((preacher) => preacher.roles.contains("Preacher"))
+          .toList();
     } catch (e) {
       throw Exception('Failed to load preachers from local storage: $e');
     }

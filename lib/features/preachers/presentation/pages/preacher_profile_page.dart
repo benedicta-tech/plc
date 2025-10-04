@@ -32,7 +32,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
           'Perfil do Pregador',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF083532),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
@@ -40,8 +40,10 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
       body: BlocBuilder<PreacherProfileBloc, PreacherProfileState>(
         builder: (context, state) {
           if (state is PreacherProfileLoading) {
-            return const Center(
-              child: CircularProgressIndicator(color: Color(0xFF083532)),
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.primary,
+              ),
             );
           } else if (state is PreacherProfileLoaded) {
             return _buildProfileContent(context, state.preacher);
@@ -69,7 +71,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF083532),
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: const Icon(
@@ -83,7 +85,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                     preacher.name,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: const Color(0xFF083532),
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -104,7 +106,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
             Text(
               'Informações de Contato',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: const Color(0xFF083532),
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -116,7 +118,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
               icon: Icons.phone,
               title: 'Telefone',
               value:
-                  preacher.phone?.isNotEmpty == true
+                  preacher.phone.isNotEmpty == true
                       ? preacher.phone
                       : 'Não informado',
             ),
@@ -128,7 +130,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
               icon: Icons.location_city,
               title: 'Cidade',
               value:
-                  preacher.city?.isNotEmpty == true
+                  preacher.city.isNotEmpty == true
                       ? preacher.city
                       : 'Não informado',
             ),
@@ -139,7 +141,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
             Text(
               'Temas de Pregação',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: const Color(0xFF083532),
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -150,10 +152,14 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: const Color(0xFF083532).withValues(alpha: 0.05),
+                color: Theme.of(
+                  context,
+                ).colorScheme.primary.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: const Color(0xFF083532).withValues(alpha: 0.1),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.primary.withValues(alpha: 0.1),
                   width: 1,
                 ),
               ),
@@ -162,13 +168,15 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                   Icon(
                     Icons.menu_book,
                     size: 40,
-                    color: const Color(0xFF083532).withValues(alpha: 0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.6),
                   ),
                   const SizedBox(height: 12),
                   Text(
                     'Temas em desenvolvimento',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: const Color(0xFF083532),
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -206,10 +214,16 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: const Color(0xFF083532).withValues(alpha: 0.1),
+                color: Theme.of(
+                  context,
+                ).colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Icon(icon, color: const Color(0xFF083532), size: 20),
+              child: Icon(
+                icon,
+                color: Theme.of(context).colorScheme.primary,
+                size: 20,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -227,7 +241,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                   Text(
                     value,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: const Color(0xFF083532),
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -264,7 +278,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
             Text(
               'Erro ao carregar perfil',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: const Color(0xFF083532),
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -284,7 +298,7 @@ class _PreacherProfilePageState extends State<PreacherProfilePage> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF083532),
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

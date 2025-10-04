@@ -26,9 +26,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<PreachersBloc>(
-          create: (_) => di.sl<PreachersBloc>(),
-        ),
+        BlocProvider<PreachersBloc>(create: (_) => di.sl<PreachersBloc>()),
         BlocProvider<PreacherProfileBloc>(
           create: (_) => di.sl<PreacherProfileBloc>(),
         ),
