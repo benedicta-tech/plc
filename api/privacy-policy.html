@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Política de Privacidade - PLC</title>
+    <meta
+      name="description"
+      content="Política de privacidade do aplicativo PLC (Peregrinação de Leigos Cristãos)."
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      :root {
+        --primary: #083532;
+        --secondary: #083532;
+        --accent: #e76f51;
+        --background: #fafff9;
+        --text: #333333;
+        --light: #ffffff;
+        --dark: #222222;
+        --primary-dark: #083532; /* Darker version of primary for better contrast */
+        --on-primary: #333333; /* Dark text on primary background */
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Nunito", sans-serif;
+        line-height: 1.6;
+        color: var(--text);
+        background-color: var(--background);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      header {
+        background-color: var(--light);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo img {
+        height: 48px;
+        width: 48px;
+        margin-right: 10px;
+        border-radius: 10px;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 30px;
+      }
+
+      nav ul li a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: var(--primary);
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: var(--primary);
+        color: var(--on-primary);
+        padding: 10px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      .btn:hover {
+        background-color: var(--secondary);
+        transform: translateY(-3px);
+      }
+
+      /* Hero section */
+      .hero {
+        height: 100vh;
+        padding-top: 100px;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(to bottom right, #f5f7fa, #e8eaf6);
+      }
+
+      .hero-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .hero-text {
+        flex: 1;
+        padding-right: 40px;
+      }
+
+      .hero-text h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: var(--dark);
+      }
+
+      .hero-text p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: var(--text);
+      }
+
+      .hero-image {
+        flex: 1;
+        text-align: center;
+      }
+
+      .app-showcase {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .app-icon {
+        width: 250px;
+        height: 250px;
+        border-radius: 35px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 5px solid white;
+      }
+
+      .parent-app {
+        transform: rotate(-5deg);
+        z-index: 1;
+      }
+
+      .child-app {
+        transform: rotate(5deg);
+        margin-left: -50px;
+      }
+
+      /* Features section */
+      .features {
+        padding: 100px 0;
+        background-color: var(--light);
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--dark);
+        margin-bottom: 20px;
+      }
+
+      .section-title p {
+        font-size: 1.2rem;
+        color: #777;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+      }
+
+      .feature-card {
+        background-color: var(--background);
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        border-bottom: 3px solid var(--primary);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+      }
+
+      .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--dark);
+      }
+
+      .feature-card p {
+        color: #777;
+      }
+
+      /* Benefits section */
+      .benefits {
+        padding: 100px 0;
+        background-color: var(--background);
+      }
+
+      .benefits-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .benefits-image {
+        flex: 1;
+        text-align: center;
+      }
+
+      .benefits-image img {
+        max-width: 100%;
+        border-radius: 30px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        transform: perspective(1000px) rotateY(-15deg);
+        transition: transform 0.5s;
+        border: 8px solid white;
+      }
+
+      .benefits-image img:hover {
+        transform: perspective(1000px) rotateY(0deg);
+      }
+
+      .benefits-content {
+        flex: 1;
+        padding-left: 40px;
+      }
+
+      .benefits-item {
+        margin-bottom: 25px;
+      }
+
+      .benefits-item h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+      }
+
+      .benefits-item h3 i {
+        color: var(--accent);
+        margin-right: 10px;
+      }
+
+      .benefits-item p {
+        color: #777;
+      }
+
+      /* Testimonials section */
+      .testimonials {
+        padding: 100px 0;
+        background-color: var(--light);
+      }
+
+      .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+      }
+
+      .testimonial-card {
+        background-color: var(--background);
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .testimonial-text {
+        font-style: italic;
+        margin-bottom: 20px;
+        color: #555;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+      }
+
+      .testimonial-author img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+
+      .author-info h4 {
+        font-size: 1.1rem;
+        color: var(--dark);
+      }
+
+      .author-info p {
+        font-size: 0.9rem;
+        color: #777;
+      }
+
+      /* FAQ section */
+      .faq {
+        padding: 100px 0;
+        background-color: var(--background);
+      }
+
+      .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        background-color: var(--light);
+      }
+
+      .faq-question {
+        padding: 20px;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--dark);
+      }
+
+      .faq-question i {
+        transition: transform 0.3s;
+      }
+
+      .faq-answer {
+        padding: 0 20px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s;
+        color: #777;
+      }
+
+      .faq-item.active .faq-question i {
+        transform: rotate(180deg);
+      }
+
+      .faq-item.active .faq-answer {
+        max-height: 200px;
+        padding: 0 20px 20px;
+      }
+
+      /* CTA section */
+      .cta {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: var(--on-primary);
+        text-align: center;
+      }
+
+      .cta h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      .cta p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta .btn {
+        background-color: var(--dark);
+        color: var(--light);
+        font-size: 1.1rem;
+        padding: 15px 30px;
+      }
+
+      .cta .btn:hover {
+        background-color: var(--accent);
+        color: var(--light);
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--dark);
+        color: #999;
+        padding: 60px 0 30px;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+
+      .footer-column h3 {
+        color: var(--light);
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer-column ul li a {
+        color: #999;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-column ul li a:hover {
+        color: var(--light);
+      }
+
+      .footer-column p {
+        line-height: 1.8;
+      }
+
+      .social-links {
+        display: flex;
+        margin-top: 20px;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #333;
+        color: var(--light);
+        margin-right: 10px;
+        transition: background-color 0.3s;
+      }
+
+      .social-links a:hover {
+        background-color: var(--primary);
+        color: var(--on-primary);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid #444;
+      }
+
+      .footer-bottom p {
+        font-size: 0.9rem;
+      }
+
+      /* Responsive design */
+      @media (max-width: 992px) {
+        .hero-content,
+        .benefits-container {
+          flex-direction: column;
+        }
+
+        .hero-text,
+        .benefits-content {
+          padding-right: 0;
+          padding-left: 0;
+          margin-bottom: 40px;
+        }
+
+        .hero-text h1 {
+          font-size: 2.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .navbar {
+          flex-direction: column;
+        }
+
+        nav ul {
+          margin-top: 20px;
+        }
+
+        nav ul li {
+          margin-left: 15px;
+          margin-right: 15px;
+        }
+
+        .hero {
+          height: auto;
+          padding: 150px 0 80px;
+        }
+
+        .section-title h2 {
+          font-size: 2rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        nav ul {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        nav ul li {
+          margin: 10px 15px;
+        }
+      }
+
+      .policy-content {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin: 40px 0;
+      }
+
+      .policy-content h2 {
+        color: var(--on-primary);
+        border-left: 4px solid var(--primary);
+        padding-left: 10px;
+        margin: 30px 0 15px;
+      }
+
+      .policy-content h3 {
+        color: var(--dark);
+        margin: 25px 0 10px;
+      }
+
+      .policy-content p,
+      .policy-content ul,
+      .policy-content ol {
+        margin-bottom: 15px;
+      }
+
+      .policy-content ul,
+      .policy-content ol {
+        padding-left: 20px;
+      }
+
+      .policy-content li {
+        margin-bottom: 8px;
+      }
+
+      .policy-content .highlight {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-left: 4px solid var(--primary);
+        margin: 20px 0;
+      }
+
+      .last-updated {
+        font-style: italic;
+        color: #777;
+        margin-bottom: 30px;
+      }
+
+      .page-title {
+        padding-top: 150px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="navbar">
+          <h1>Aplicativo PLC</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- Privacy Policy Content -->
+    <div class="container">
+      <div class="page-title">
+        <h1>Política de Privacidade</h1>
+      </div>
+
+      <div class="policy-content">
+        <p class="last-updated">Última Atualização: 6 de Outubro de 2025</p>
+
+        <div class="highlight">
+          <p>
+            A PLC (Peregrinação de Leigos Cristãos) respeita sua privacidade e
+            está comprometida em proteger seus dados pessoais. Esta Política de
+            Privacidade explica como coletamos, usamos e protegemos suas
+            informações quando você utiliza nosso aplicativo.
+          </p>
+        </div>
+
+        <h2>1. Informações que Coletamos</h2>
+
+        <h3>1.1 Informações de Uso do Aplicativo</h3>
+        <p>
+          O aplicativo PLC foi projetado para ser uma experiência segura e
+          privada. Coletamos informações mínimas necessárias para fornecer
+          nossos serviços:
+        </p>
+        <ul>
+          <li>
+            <strong>Consultas Realizadas:</strong> Pesquisas sobre pregadores,
+            coordenadores e temas de pregação
+          </li>
+          <li>
+            <strong>Informações de Dispositivo:</strong> Tipo de dispositivo,
+            sistema operacional e versão do aplicativo
+          </li>
+          <li>
+            <strong>Dados de Uso:</strong> Tempo de uso, funcionalidades
+            acessadas e estatísticas de navegação
+          </li>
+        </ul>
+
+        <h3>1.2 Dados Armazenados Localmente</h3>
+        <p>
+          Todas as informações sobre pregadores, coordenadores e temas de
+          pregação são armazenadas localmente no seu dispositivo e não são
+          enviadas para servidores externos:
+        </p>
+        <ul>
+          <li>
+            <strong>Lista de Pregadores:</strong> Nomes, contatos e informações
+            dos pregadores
+          </li>
+          <li>
+            <strong>Lista de Coordenadores:</strong> Informações dos
+            coordenadores da PLC
+          </li>
+          <li>
+            <strong>Temas de Pregação:</strong> Catálogo de temas disponíveis
+            para evangelização
+          </li>
+          <li>
+            <strong>Histórico de Consultas:</strong> Registros locais das suas
+            pesquisas (não compartilhados)
+          </li>
+        </ul>
+
+        <h2>2. Como Usamos Suas Informações</h2>
+        <p>Utilizamos as informações coletadas para os seguintes propósitos:</p>
+        <ul>
+          <li>Fornecer e melhorar os serviços do aplicativo PLC</li>
+          <li>Facilitar o acesso às informações sobre pregadores e temas</li>
+          <li>Fornecer suporte técnico aos usuários</li>
+          <li>Garantir a segurança e prevenir uso indevido do aplicativo</li>
+          <li>Analisar o uso para melhorias futuras (dados anonimizados)</li>
+          <li>Manter a funcionalidade offline do aplicativo</li>
+        </ul>
+
+        <p>
+          <strong>Importante:</strong> Não usamos suas informações para
+          publicidade, marketing ou compartilhamento com terceiros.
+        </p>
+
+        <h2>3. Proteção e Segurança dos Dados</h2>
+        <p>
+          O aplicativo PLC foi desenvolvido com foco na privacidade e proteção
+          de dados:
+        </p>
+        <ul>
+          <li>
+            <strong>Armazenamento Local:</strong> Dados pessoais ficam apenas no
+            seu dispositivo
+          </li>
+          <li>
+            <strong>Coleta Mínima:</strong> Coletamos apenas informações
+            essenciais para o funcionamento
+          </li>
+          <li>
+            <strong>Sem Rastreamento:</strong> Não realizamos rastreamento de
+            usuários
+          </li>
+          <li>
+            <strong>Sem Cadastro:</strong> Não é necessário criar conta ou
+            fornecer dados pessoais
+          </li>
+          <li>
+            <strong>Criptografia:</strong> Dados transmitidos são criptografados
+          </li>
+          <li>
+            <strong>Atualizações de Segurança:</strong> Mantemos o aplicativo
+            atualizado com correções de segurança
+          </li>
+        </ul>
+
+        <h2>4. Compartilhamento de Dados</h2>
+        <p>
+          Não compartilhamos suas informações pessoais com terceiros. As únicas
+          exceções são:
+        </p>
+        <ul>
+          <li>
+            <strong>Provedores de Serviços Técnicos:</strong> Para distribuição
+            do aplicativo (Google Play Store)
+          </li>
+          <li>
+            <strong>Requisitos Legais:</strong> Quando exigido por lei ou para
+            proteger direitos e segurança
+          </li>
+        </ul>
+
+        <p>
+          <strong>Importante:</strong> Não vendemos suas informações pessoais
+          para terceiros.
+        </p>
+
+        <h2>5. Seus Direitos e Escolhas</h2>
+        <p>Você tem controle total sobre suas informações no aplicativo PLC:</p>
+        <ul>
+          <li>
+            <strong>Acesso Livre:</strong> Todas as informações estão
+            disponíveis localmente no aplicativo
+          </li>
+          <li>
+            <strong>Exclusão Simples:</strong> Desinstale o aplicativo para
+            remover todos os dados locais
+          </li>
+          <li>
+            <strong>Controle Total:</strong> Você decide quais informações
+            visualizar e quando
+          </li>
+          <li>
+            <strong>Sem Rastros:</strong> Não mantemos histórico de uso em
+            servidores externos
+          </li>
+        </ul>
+
+        <h2>6. Retenção de Dados</h2>
+        <p>
+          Os dados do aplicativo PLC são mantidos apenas localmente no seu
+          dispositivo. Quando você desinstala o aplicativo, todas as informações
+          são automaticamente removidas. Não mantemos cópias dos seus dados em
+          servidores externos ou na nuvem.
+        </p>
+
+        <h2>7. Conformidade com Regulamentações</h2>
+        <p>
+          O aplicativo PLC está em conformidade com as principais
+          regulamentações de proteção de dados:
+        </p>
+        <ul>
+          <li>
+            <strong>LGPD:</strong> Lei Geral de Proteção de Dados Pessoais
+            (Brasil)
+          </li>
+          <li>
+            <strong>GDPR:</strong> Regulamento Geral sobre a Proteção de Dados
+            (União Europeia)
+          </li>
+          <li>
+            <strong>Princípios de Privacidade:</strong> Minimização de dados,
+            transparência e controle do usuário
+          </li>
+        </ul>
+
+        <h2>8. Alterações nesta Política</h2>
+        <p>
+          Esta Política de Privacidade pode ser atualizada periodicamente para
+          refletir mudanças no aplicativo ou na legislação. Notificaremos sobre
+          alterações significativas através de atualizações do aplicativo. Seu
+          uso continuado do aplicativo PLC após tais modificações constitui sua
+          aceitação da política atualizada.
+        </p>
+
+        <h2>9. Contato</h2>
+        <p>
+          Se você tiver dúvidas ou preocupações sobre esta Política de
+          Privacidade ou nossas práticas de dados, entre em contato conosco:
+        </p>
+        <div class="highlight">
+          <p>
+            <strong>Email:</strong>
+            <a href="mailto:emersonalmeidax@gmail.com"
+              >emersonalmeidax@gmail.com</a
+            ><br />
+            <strong>Organização:</strong> PLC - Peregrinação de Leigos
+            Cristãos<br />
+            <strong>Diocese:</strong> Diocese de Caratinga, MG<br />
+            <strong>Responsável:</strong> Coordenação Diocesana da PLC
+          </p>
+        </div>
+
+        <p>
+          <strong>Última revisão:</strong> Esta política foi revisada e
+          atualizada em 6 de outubro de 2025 para garantir conformidade com as
+          melhores práticas de privacidade e proteção de dados.
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>PLC</h3>
+            <p>
+              Aplicativo da Peregrinação de Leigos Cristãos da Diocese de
+              Caratinga, MG. Facilitando o acesso às informações sobre
+              pregadores e temas de pregação.
+            </p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 PLC - Peregrinação de Leigos Cristãos. Todos os direitos
+            reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
