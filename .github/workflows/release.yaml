@@ -90,19 +90,15 @@ jobs:
         with:
           path: build
           name: build
-      - run: |
-          find .
-          echo "Listing build/app/outputs/bundle/release"
-          find build
-      # - uses: ruby/setup-ruby@v1
-      #   with:
-      #     ruby-version: "3.3"
-      #     bundler-cache: true
-      # - name: Release to Google Play (alpha)
-      #   env:
-      #     SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
-      #   run: |
-      #     cd fastlane && bundle exec fastlane deploy
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Release to Google Play (alpha)
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          cd fastlane && bundle exec fastlane deploy
   # beta-approval:
   #   needs: [android]
   #   name: Go to beta
