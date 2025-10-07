@@ -30,10 +30,10 @@ class HomePage extends StatelessWidget {
                     textAlign: TextAlign.left,
                     softWrap: true,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w900,
-                      height: 1.2,
-                    ),
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.w900,
+                          height: 1.2,
+                        ),
                   ),
                 ],
               ),
@@ -105,17 +105,17 @@ class HomePage extends StatelessWidget {
                     Text(
                       'Sobre o PLC',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'A Peregrinação de Leigos Cristãos é um Movimento Eclesial Católico Apostólico Romano, dedicado ao crescimento espiritual e evangelização das comunidades.',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey[700],
-                        height: 1.5,
-                      ),
+                            color: Colors.grey[700],
+                            height: 1.5,
+                          ),
                     ),
                     const SizedBox(height: 12),
                     TextButton(
@@ -139,9 +139,9 @@ class HomePage extends StatelessWidget {
                             style: Theme.of(
                               context,
                             ).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w600,
-                            ),
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                           const SizedBox(width: 4),
                           Icon(
@@ -196,9 +196,9 @@ class HomePage extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     const SizedBox(height: 4),
                     Text(

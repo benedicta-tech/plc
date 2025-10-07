@@ -64,7 +64,7 @@ jobs:
             echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
           echo "keyAlias=upload" >> android/key.properties
-      - name: Build Android parent
+      - name: Build Android
         run: flutter build appbundle --release --no-tree-shake-icons
         env:
           GRADLE_OPTS: "-Dorg.gradle.parallel=true -Dorg.gradle.daemon=true"
@@ -100,7 +100,7 @@ jobs:
         run: |
           cd fastlane && bundle exec fastlane deploy
   # beta-approval:
-  #   needs: [android-child, android-parent]
+  #   needs: [android]
   #   name: Go to beta
   #   runs-on: ubuntu-latest
   #   steps:

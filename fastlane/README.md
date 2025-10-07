@@ -26,21 +26,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Android
 
-### android deploy_parent
+### android deploy
 
 ```sh
-[bundle exec] fastlane android deploy_parent
+[bundle exec] fastlane android deploy
 ```
 
-Deploy a new version parent to the Google Play
-
-### android deploy_child
-
-```sh
-[bundle exec] fastlane android deploy_child
-```
-
-Deploy a new version child to the Google Play
+Deploy a new version to the Google Play
 
 ### android promote_to_beta
 
