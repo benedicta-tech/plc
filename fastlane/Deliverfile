@@ -1,3 +1,53 @@
 # The Deliverfile allows you to store various App Store Connect metadata
-# For more information, check out the docs
+# For more information check out the docs
 # https://docs.fastlane.tools/actions/deliver/
+
+username "emersonalmeidax@gmail.com"
+team_id "128188579"
+app_identifier 'tech.benedicta.plc' 
+metadata_path "./fastlane/metadata/ios"
+automatic_release true
+# api_key_path
+# api_key
+# app_version
+# ipa
+# pkg
+# build_number
+# platform
+# edit_live
+# use_live_version
+# metadata_path
+screenshots_path './fastlane/metadata/ios/pt-BR/screenshots'
+# skip_binary_upload
+# skip_screenshots
+# skip_metadata
+# skip_app_version_update
+force true
+# overwrite_screenshots
+# screenshot_processing_timeout
+# sync_screenshots
+# submit_for_review
+# verify_only
+# reject_if_possible
+# version_check_wait_retry_limit
+# auto_release_date
+phased_release false
+# reset_ratings
+# price_tier
+# app_rating_config_path
+# submission_information
+# team_name
+# dev_portal_team_id
+# dev_portal_team_name
+# itc_provider
+# run_precheck_before_submit
+# precheck_default_rule_level
+# individual_metadata_items
+# app_icon
+# apple_watch_app_icon
+# trade_representative_contact_information
+# app_review_attachment_file
+# languages
+# ignore_language_directory_validation
+precheck_include_in_app_purchases false
+# app
