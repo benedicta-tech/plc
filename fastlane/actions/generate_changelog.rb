@@ -65,7 +65,8 @@ module Fastlane
           puts("")
           puts(changelog)
           puts("")
-      
+
+          Dir.mkdir("fastlane/metadata/android/pt-BR/changelogs") unless Dir.exist?("fastlane/metadata/android/pt-BR/changelogs")
           File.write("fastlane/metadata/android/pt-BR/changelogs/#{version_code}.txt", changelog)
 
           changelog
