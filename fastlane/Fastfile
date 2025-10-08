@@ -42,7 +42,7 @@ platform :android do
       version_code: version_code, 
       release_status: "completed", 
       track: "alpha", 
-      aab: "build/app-release.aab", 
+      aab: "build/app-release.aab",
       package_name: "tech.benedicta.plc",
       metadata_path: "fastlane/metadata/android"
     )
