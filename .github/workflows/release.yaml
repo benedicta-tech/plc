@@ -75,11 +75,10 @@ jobs:
           name: build
           path: |
             build/app/outputs/bundle/release
-  android:
+  android-alpha:
     needs: [build]
     name: Android
     runs-on: ubuntu-latest
-    environment: android-alpha
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
     steps:
@@ -99,109 +98,43 @@ jobs:
           SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
         run: |
           cd fastlane && bundle exec fastlane deploy
-  # beta-approval:
-  #   needs: [android]
-  #   name: Go to beta
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: trstringer/manual-approval@v1
-  #       with:
-  #         secret: ${{ secrets.GITHUB_TOKEN }}
-  #         approvers: dukex
-  #         minimum-approvals: 1
-  #         issue-title: "Deploying to Beta"
-  #         issue-body: "Please approve or deny the deployment to beta"
-  #         exclude-workflow-initiator-as-approver: false
 
-  # android-beta:
-  #   needs: [beta-approval]
-  #   name: Android Beta
-  #   runs-on: ubuntu-latest
-  #   environment: android-beta
-  #   env:
-  #     BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: "3.3"
-  #         bundler-cache: true
-  #     - name: Release to Google Play (beta)
-  #       env:
-  #         SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
-  #       run: |
-  #         cd fastlane && bundle exec fastlane promote_to_beta
+  android-beta:
+    needs: [android-alpha]
+    name: Android Beta
+    runs-on: ubuntu-latest
+    environment: android-beta
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Release to Google Play (beta)
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          cd fastlane && bundle exec fastlane promote_to_beta
 
-  # production-approval:
-  #   needs: [android-beta]
-  #   name: Go to production
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: trstringer/manual-approval@v1
-  #       with:
-  #         secret: ${{ secrets.GITHUB_TOKEN }}
-  #         approvers: dukex
-  #         minimum-approvals: 1
-  #         issue-title: "Deploying to Production"
-  #         issue-body: "Please approve or deny the deployment to production"
-  #         exclude-workflow-initiator-as-approver: false
-
-  # android-production:
-  #   needs: [production-approval]
-  #   name: Android Production
-  #   runs-on: ubuntu-latest
-  #   environment: android-production
-  #   env:
-  #     BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: "3.3"
-  #         bundler-cache: true
-  #     - name: Release to Google Play (production)
-  #       env:
-  #         SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
-  #       run: |
-  #         cd fastlane && bundle exec fastlane promote_to_production
-
-  # web:
-  #   environment:
-  #     name: web
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   needs: [build]
-  #   name: Web
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Download a single artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         path: build
-  #         name: build
-  #     - name: Setup Pages
-  #       uses: actions/configure-pages@v5
-  #     - name: Upload website
-  #       uses: actions/upload-pages-artifact@v3
-  #       with:
-  #         path: "./build/web"
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
-
-  # linux:
-  #   needs: [build]
-  #   name: Linux
-  #   runs-on: ubuntu-latest
-  #   environment: linux
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Download a single artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         path: build
-  #         name: build
+  android-production:
+    needs: [android-beta]
+    name: Android Production
+    runs-on: ubuntu-latest
+    environment: android-production
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Release to Google Play (production)
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          cd fastlane && bundle exec fastlane promote_to_production
