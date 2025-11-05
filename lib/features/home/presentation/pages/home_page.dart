@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plc/features/about/presentation/pages/about_plc_page.dart';
+import 'package:plc/features/parishes/presentation/pages/parishes_list_page.dart';
 import 'package:plc/features/preachers/presentation/pages/preachers_list_page.dart';
 import 'package:plc/theme/spacing.dart';
 
@@ -75,13 +76,30 @@ class HomePage extends StatelessWidget {
               _buildFeatureCard(
                 context,
                 icon: Icons.event,
-                title: 'Retiros',
-                description: 'Acompanhe os próximos retiros',
+                title: 'Próximos encontros',
+                description: 'Acompanhe os próximos encontros',
                 onTap: () {
                   // TODO: Navigate to events page
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Funcionalidade em desenvolvimento'),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: mediumSpacing),
+
+              _buildFeatureCard(
+                context,
+                icon: Icons.church,
+                title: 'Paróquias PLC',
+                description: 'Conheça as paróquias com PLC',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ParishesListPage(),
                     ),
                   );
                 },

@@ -1,7 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:plc/core/storage/local_storage_service.dart';
+import 'package:plc/core/storage/gsheets_storage_service.dart';
+import 'package:plc/features/parishes/data/datasources/parish_remote_data_source.dart';
+import 'package:plc/features/parishes/data/repositories/parishes_repository_impl.dart';
+import 'package:plc/features/parishes/domain/repository/parish_repository.dart';
+import 'package:plc/features/parishes/domain/usercases/get_parishes.dart';
+import 'package:plc/features/parishes/presentation/bloc/parishes_bloc.dart';
 import 'package:plc/features/preachers/data/datasources/local/preacher_local_data_source.dart';
+import 'package:plc/features/preachers/data/datasources/gsheets/preacher_gsheets_data_source.dart';
 import 'package:plc/features/preachers/data/datasources/remote/preacher_remote_data_source.dart';
 import 'package:plc/features/preachers/data/repositories/preacher_repository_impl.dart';
 import 'package:plc/features/preachers/domain/repositories/preacher_repository.dart';
@@ -21,11 +28,13 @@ Future<void> init() async {
   // Blocs
   sl.registerFactory(() => PreachersBloc(getPreachers: sl()));
   sl.registerFactory(() => PreacherProfileBloc(getPreacherById: sl()));
+  sl.registerFactory(() => ParishesBloc(getParishes: sl()));
 
   // Use cases
   sl.registerLazySingleton(() => GetPreachers(sl()));
   sl.registerLazySingleton(() => GetPreacherById(sl()));
   sl.registerLazySingleton(() => GetPreachingThemes(sl()));
+  sl.registerLazySingleton(() => GetParishes(sl()));
 
   // Repository
   sl.registerLazySingleton<PreacherRepository>(
@@ -40,6 +49,12 @@ Future<void> init() async {
       localDataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<ParishRepository>(
+    () => ParishRepositoryImpl(
+      remoteDataSource: sl(),
+      // localDataSource: sl(),
+    ),
+  );
 
   // Data sources
   sl.registerLazySingleton<PreacherRemoteDataSource>(
@@ -48,11 +63,18 @@ Future<void> init() async {
   sl.registerLazySingleton<PreacherLocalDataSource>(
     () => PreacherLocalDataSource(storageService: sl()),
   );
+  sl.registerLazySingleton<PreacherGSheetsDataSource>(
+    () => PreacherGSheetsDataSource(
+        gsheetsService: sl(), gsheetsDataSource: sl()),
+  );
   sl.registerLazySingleton<PreachingThemeRemoteDataSource>(
     () => PreachingThemeRemoteDataSourceImpl(dio: sl()),
   );
   sl.registerLazySingleton<PreachingThemeLocalDataSource>(
     () => PreachingThemeLocalDataSource(storageService: sl()),
+  );
+  sl.registerLazySingleton<ParishDataSource>(
+    () => ParishRemoteDataSource(gsheetsService: sl()),
   );
 
   // Core services

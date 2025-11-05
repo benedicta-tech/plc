@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plc/core/di/injection_container.dart' as di;
 import 'package:plc/features/home/presentation/pages/home_page.dart';
+import 'package:plc/features/parishes/presentation/bloc/parishes_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preachers_bloc.dart';
 import 'package:plc/theme/text.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        BlocProvider<ParishesBloc>(create: (_) => di.sl<ParishesBloc>()),
         BlocProvider<PreachersBloc>(create: (_) => di.sl<PreachersBloc>()),
         BlocProvider<PreacherProfileBloc>(
           create: (_) => di.sl<PreacherProfileBloc>(),
