@@ -1,7 +1,5 @@
 require 'yaml'
 
-update_fastlane
-
 default_platform(:android)
 
 pubspec = YAML.load(File.read("../pubspec.yaml"))

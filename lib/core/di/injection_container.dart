@@ -56,6 +56,11 @@ Future<void> init() async {
   );
 
   // Core services
+  final service = GSheetsStorageService();
+
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => LocalStorageService());
+  sl.registerLazySingleton(() => service);
+
+  await service.initialize();
 }
