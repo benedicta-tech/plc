@@ -4,6 +4,7 @@ import 'package:plc/core/di/injection_container.dart' as di;
 import 'package:plc/core/features/core_features.dart';
 import 'package:plc/features/about/domain/entities/about_screen_section.dart';
 import 'package:plc/features/home/presentation/pages/home_page.dart';
+import 'package:plc/features/parishes/presentation/bloc/parishes_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preachers_bloc.dart';
 import 'package:plc/features/secretary/domain/entities/document.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        BlocProvider<ParishesBloc>(create: (_) => di.sl<ParishesBloc>()),
         BlocProvider<PreachersBloc>(create: (_) => di.sl<PreachersBloc>()),
         BlocProvider<PreacherProfileBloc>(
           create: (_) => di.sl<PreacherProfileBloc>(),

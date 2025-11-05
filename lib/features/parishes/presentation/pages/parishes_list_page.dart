@@ -1,51 +1,46 @@
 import 'package:plc/core/presentation/page.dart';
-import 'package:plc/features/preachers/domain/entities/preacher.dart';
-import 'package:plc/features/preachers/presentation/pages/preacher_profile_page.dart';
+import 'package:plc/features/parishes/domain/entities/parish.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:plc/features/preachers/presentation/bloc/preachers_bloc.dart';
-import 'package:plc/features/preachers/presentation/bloc/preachers_event.dart';
-import 'package:plc/features/preachers/presentation/bloc/preachers_state.dart';
-import 'package:plc/features/preachers/presentation/widgets/search_bar.dart';
+import 'package:plc/features/parishes/presentation/bloc/parishes_bloc.dart';
+import 'package:plc/features/parishes/presentation/bloc/parishes_event.dart';
+import 'package:plc/features/parishes/presentation/bloc/parishes_state.dart';
+import 'package:plc/features/parishes/presentation/pages/parish_profile_page.dart';
 import 'package:plc/theme/spacing.dart';
 
-class PreachersListPage extends StatefulWidget {
-  const PreachersListPage({super.key});
+class ParishesListPage extends StatefulWidget {
+  const ParishesListPage({super.key});
 
   @override
-  State<PreachersListPage> createState() => _PreachersListPageState();
+  State<ParishesListPage> createState() => _ParishesListPageState();
 }
 
-class _PreachersListPageState extends State<PreachersListPage> {
+class _ParishesListPageState extends State<ParishesListPage> {
   @override
   void initState() {
     super.initState();
-    context.read<PreachersBloc>().add(LoadPreachers());
+    context.read<ParishesBloc>().add(LoadParishes());
   }
 
   @override
   Widget build(BuildContext context) {
     return CorePage(
-      title: 'Pregadores',
-      subtitle: 'Lista de pregadores ativos',
-      child: BlocBuilder<PreachersBloc, PreachersState>(
+      title: 'Paróquias',
+      subtitle: 'Lista de paróquias com presença do PLC',
+      child: BlocBuilder<ParishesBloc, ParishesState>(
         builder: (context, state) {
-          if (state is PreachersLoading) {
+          if (state is ParishesLoading) {
             return Center(
               child: CircularProgressIndicator(
                 color: Theme.of(context).colorScheme.primary,
               ),
             );
-          } else if (state is PreachersLoaded) {
-            if (state.preachers.isEmpty && !state.inSearch) {
+          } else if (state is ParishesLoaded) {
+            if (state.parishes.isEmpty) {
               return _buildEmptyState(context);
             }
-            return _buildPreachersList(
-              context,
-              state.preachers,
-              state.inSearch,
-            );
-          } else if (state is PreachersError) {
+            return _buildParishesList(context, state.parishes);
+          } else if (state is ParishesError) {
             return _buildErrorState(context, state.message);
           }
           return Container();
@@ -54,34 +49,26 @@ class _PreachersListPageState extends State<PreachersListPage> {
     );
   }
 
-  Widget _buildPreachersList(
+  Widget _buildParishesList(
     BuildContext context,
-    List<dynamic> preachers,
-    bool inSearch,
+    List<Parish> parishes,
   ) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-        padding: const EdgeInsets.only(
-          left: mediumSpacing,
-          right: mediumSpacing,
-          bottom: mediumSpacing,
-        ),
-        child: SearchPreachersBar(inSearch: inSearch),
-      ),
       Expanded(
         child: ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: mediumSpacing),
-          itemCount: preachers.length,
+          padding: const EdgeInsets.only(
+              left: mediumSpacing, right: mediumSpacing, bottom: mediumSpacing),
+          itemCount: parishes.length,
           itemBuilder: (context, index) {
-            final preacher = preachers[index];
-            return _buildPreacherCard(context, preacher);
+            final parish = parishes[index];
+            return _buildParishCard(context, parish);
           },
         ),
       )
     ]);
   }
 
-  Widget _buildPreacherCard(BuildContext context, Preacher preacher) {
+  Widget _buildParishCard(BuildContext context, Parish parish) {
     return Card(
       elevation: 0,
       child: InkWell(
@@ -89,15 +76,14 @@ class _PreachersListPageState extends State<PreachersListPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  PreacherProfilePage(preacherId: preacher.id),
+              builder: (context) => ParishProfilePage(parish: parish),
             ),
           );
         },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: smallSpacing / 2,
+            vertical: smallSpacing,
             horizontal: smallSpacing,
           ),
           child: Row(
@@ -105,11 +91,31 @@ class _PreachersListPageState extends State<PreachersListPage> {
               SizedBox(
                 width: 30,
                 height: 30,
-                child: Icon(
-                  Icons.person,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 18,
-                ),
+                child: parish.imageUrl != null
+                    ? ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(12 - smallSpacing / 2),
+                        child: Image.network(
+                          parish.imageUrl!,
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Icon(
+                              Icons.church,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 18,
+                            );
+                          },
+                        ),
+                      )
+                    : Icon(
+                        Icons.church,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 18,
+                      ),
               ),
               const SizedBox(width: smallSpacing),
               Expanded(
@@ -117,7 +123,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      preacher.name,
+                      parish.fullName,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
@@ -163,7 +169,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
             ),
             const SizedBox(height: 24),
             Text(
-              'Nenhum pregador encontrado',
+              'Nenhuma paróquia encontrada',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
@@ -171,7 +177,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
             ),
             const SizedBox(height: 8),
             Text(
-              'A lista de pregadores está sendo carregada ou ainda não há membros cadastrados.',
+              'A lista de paróquias está sendo carregada ou ainda não há paróquias cadastradas.',
               textAlign: TextAlign.center,
               style: Theme.of(
                 context,
@@ -205,7 +211,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
             ),
             const SizedBox(height: 24),
             Text(
-              'Erro ao carregar pregadores',
+              'Erro ao carregar paróquias',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
@@ -222,7 +228,7 @@ class _PreachersListPageState extends State<PreachersListPage> {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                context.read<PreachersBloc>().add(LoadPreachers());
+                context.read<ParishesBloc>().add(LoadParishes());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary,
