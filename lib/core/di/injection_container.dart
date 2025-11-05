@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
+import 'package:plc/core/storage/gsheets_storage_service.dart';
 import 'package:plc/core/storage/local_storage_service.dart';
 import 'package:plc/features/preachers/data/datasources/local/preacher_local_data_source.dart';
 import 'package:plc/features/preachers/data/datasources/remote/preacher_remote_data_source.dart';
@@ -56,6 +57,11 @@ Future<void> init() async {
   );
 
   // Core services
+  final service = GSheetsStorageService();
+
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => LocalStorageService());
+  sl.registerLazySingleton(() => service);
+
+  await service.initialize();
 }
