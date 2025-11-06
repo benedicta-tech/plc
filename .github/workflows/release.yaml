@@ -78,32 +78,9 @@ jobs:
           name: build
           path: |
             build/app/outputs/bundle/release
-  android-alpha:
-    needs: [build]
-    name: Android
-    runs-on: ubuntu-latest
-    env:
-      BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Download a single artifact
-        uses: actions/download-artifact@v4
-        with:
-          path: build
-          name: build
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.3"
-          bundler-cache: true
-      - name: Release to Google Play (alpha)
-        env:
-          SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
-        run: |
-          cd fastlane && bundle exec fastlane deploy
 
   android-beta:
-    needs: [android-alpha]
+    needs: [build]
     name: Android Beta
     runs-on: ubuntu-latest
     environment: android-beta
@@ -120,7 +97,7 @@ jobs:
         env:
           SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
         run: |
-          cd fastlane && bundle exec fastlane promote_to_beta
+          cd fastlane && bundle exec fastlane deploy
 
   android-production:
     needs: [android-beta]
