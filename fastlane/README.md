@@ -34,14 +34,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Deploy a new version to the Google Play
 
-### android promote_to_beta
-
-```sh
-[bundle exec] fastlane android promote_to_beta
-```
-
-
-
 ### android promote_to_production
 
 ```sh

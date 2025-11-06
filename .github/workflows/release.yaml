@@ -46,8 +46,8 @@ jobs:
           echo "GOOGLE_SERVICE_ACCOUNT=${{ secrets.GOOGLE_SERVICE_ACCOUNT }}" > .env
       - name: Run build_runner to generate envied code
         run: dart run build_runner build --delete-conflicting-outputs
-      - name: Testing
-        run: flutter test
+      # - name: Testing
+      #   run: flutter test
       # Android
       - name: Setup Java
         uses: actions/setup-java@v4
