@@ -5,6 +5,7 @@ import 'package:plc/core/features/core_features.dart';
 import 'package:plc/features/home/presentation/pages/home_page.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_bloc.dart';
 import 'package:plc/features/preachers/presentation/bloc/preachers_bloc.dart';
+import 'package:plc/features/secretary/domain/entities/document.dart';
 import 'package:plc/theme/text.dart';
 import 'package:plc/theme/theme.dart';
 
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<PreachersBloc>(create: (_) => di.sl<PreachersBloc>()),
         BlocProvider<PreacherProfileBloc>(
           create: (_) => di.sl<PreacherProfileBloc>(),
+        ),
+        BlocProvider<GenericListBloc<Document, String>>(
+          create: (_) => di.sl<GenericListBloc<Document, String>>(),
         ),
       ],
       child: MaterialApp(

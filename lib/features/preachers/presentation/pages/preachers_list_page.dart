@@ -87,13 +87,15 @@ class _PreachersListPageState extends State<PreachersListPage> {
                           style: Theme.of(
                             context,
                           ).textTheme.headlineSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                         Text(
                           '${preachers.length} pregadores ${inSearch ? 'encontrados' : 'ativos'}',
-                          style: Theme.of(context).textTheme.bodyMedium
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
                               ?.copyWith(color: Colors.grey[600]),
                         ),
                         const SizedBox(height: smallSpacing),
@@ -130,8 +132,8 @@ class _PreachersListPageState extends State<PreachersListPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder:
-                  (context) => PreacherProfilePage(preacherId: preacher.id),
+              builder: (context) =>
+                  PreacherProfilePage(preacherId: preacher.id),
             ),
           );
         },
@@ -160,9 +162,9 @@ class _PreachersListPageState extends State<PreachersListPage> {
                     Text(
                       preacher.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ],
                 ),
@@ -206,9 +208,9 @@ class _PreachersListPageState extends State<PreachersListPage> {
             Text(
               'Nenhum pregador encontrado',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 8),
             Text(
@@ -248,9 +250,9 @@ class _PreachersListPageState extends State<PreachersListPage> {
             Text(
               'Erro ao carregar pregadores',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 8),
             Text(

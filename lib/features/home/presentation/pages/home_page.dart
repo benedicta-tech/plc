@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plc/features/about/presentation/pages/about_plc_page.dart';
 import 'package:plc/features/preachers/presentation/pages/preachers_list_page.dart';
+import 'package:plc/features/secretary/presentation/pages/secretary_documents_page.dart';
 import 'package:plc/theme/spacing.dart';
 
 class HomePage extends StatelessWidget {
@@ -52,7 +53,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: extraLargeSpacing),
+              const SizedBox(height: smallSpacing),
 
               // Feature Cards
               _buildFeatureCard(
@@ -70,18 +71,35 @@ class HomePage extends StatelessWidget {
                 },
               ),
 
-              const SizedBox(height: mediumSpacing),
+              const SizedBox(height: smallSpacing),
+
+              // _buildFeatureCard(
+              //   context,
+              //   icon: Icons.event,
+              //   title: 'Retiros',
+              //   description: 'Acompanhe os próximos retiros',
+              //   onTap: () {
+              //     // TODO: Navigate to events page
+              //     ScaffoldMessenger.of(context).showSnackBar(
+              //       const SnackBar(
+              //         content: Text('Funcionalidade em desenvolvimento'),
+              //       ),
+              //     );
+              //   },
+              // ),
+
+              const SizedBox(height: smallSpacing),
 
               _buildFeatureCard(
                 context,
-                icon: Icons.event,
-                title: 'Retiros',
-                description: 'Acompanhe os próximos retiros',
+                icon: Icons.folder,
+                title: "Secretaria",
+                description: "Documentos e informações da secretaria",
                 onTap: () {
-                  // TODO: Navigate to events page
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Funcionalidade em desenvolvimento'),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SecretaryDocumentsPage(),
                     ),
                   );
                 },

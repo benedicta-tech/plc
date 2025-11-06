@@ -26,10 +26,23 @@ Future<void> init() async {
   sl.registerFactory(() => PreachersBloc(getPreachers: sl()));
   sl.registerFactory(() => PreacherProfileBloc(getPreacherById: sl()));
 
+  sl.registerFactory(
+    () => GenericListBloc<Document, String>(
+      getAllUseCase: sl<GetAllUseCase<Document>>(),
+      searchPredicate: (doc, query) =>
+          doc.title.toLowerCase().contains(query.toLowerCase()) ||
+          doc.description.toLowerCase().contains(query.toLowerCase()),
+      filterPredicate: (doc, category) =>
+          category.isEmpty || doc.category == category,
+    ),
+  );
+
   // Use cases
   sl.registerLazySingleton(() => GetPreachers(sl()));
   sl.registerLazySingleton(() => GetPreacherById(sl()));
   sl.registerLazySingleton(() => GetPreachingThemes(sl()));
+
+  sl.registerLazySingleton(() => GetAllUseCase<Document>(sl()));
 
   // Repository
   sl.registerLazySingleton<PreacherRepository>(
@@ -45,6 +58,14 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<GenericRepository<Document>>(
+    () => GenericCachedRepository<Document, DocumentModel>(
+      remoteDataSource: sl<GenericRemoteDataSource<DocumentModel>>(),
+      localDataSource: sl<GenericLocalDataSource<DocumentModel>>(),
+      cacheDurationInDays: 1,
+    ),
+  );
+
   // Data sources
   sl.registerLazySingleton<PreacherRemoteDataSource>(
     () => PreacherRemoteDataSourceImpl(dio: sl()),
@@ -57,6 +78,28 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<PreachingThemeLocalDataSource>(
     () => PreachingThemeLocalDataSource(storageService: sl()),
+  );
+
+  sl.registerLazySingleton<GenericRemoteDataSource<DocumentModel>>(
+    () => GenericGSheetsDataSource<DocumentModel>(
+      gsheetsService: sl(),
+      sheetType: 'main',
+      worksheetName: 'Secretaria',
+      fromJson: DocumentModel.fromJson,
+      sortList: (items) {
+        items.sort((a, b) => a.title.compareTo(b.title));
+        return items;
+      },
+    ),
+  );
+
+  sl.registerLazySingleton<GenericLocalDataSource<DocumentModel>>(
+    () => GenericLocalDataSourceImpl<DocumentModel>(
+      storageService: sl(),
+      storageKey: 'secretary_documents',
+      syncDateKey: 'secretary_documents_last_sync',
+      fromJson: DocumentModel.fromJson,
+    ),
   );
 
   // Core services
