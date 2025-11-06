@@ -108,11 +108,58 @@ flutter test
 ```
 lib/
 ├── core/
+│   ├── features/                          # Generic features library
+│   │   ├── data/
+│   │   │   ├── datasources/               # Generic data source implementations
+│   │   │   ├── models/                    # Base model interfaces
+│   │   │   └── repositories/              # Generic repository implementations
+│   │   ├── domain/
+│   │   │   ├── repositories/              # Repository interfaces
+│   │   │   └── usecases/                  # Generic use cases
+│   │   ├── presentation/
+│   │   │   └── bloc/                      # Generic BLoC components
+│   │   ├── core_features.dart             # Library exports
+│   │   └── USAGE_EXAMPLE.md               # Detailed usage guide
 │   └── storage/
-│       └── gsheets_storage_service.dart  # Google Sheets integration
-├── features/                              # Feature modules
-└── main.dart                             # App entry point
+│       ├── gsheets_storage_service.dart   # Google Sheets integration
+│       └── local_storage_service.dart     # Local caching
+├── features/                               # Feature modules
+│   ├── preachers/                          # Preachers feature (old pattern)
+│   └── secretary/                          # Secretary feature (new pattern)
+└── main.dart                              # App entry point
 ```
+
+## Generic Features Library
+
+This project includes a powerful **Generic Features Library** (`lib/core/features/`) that drastically reduces boilerplate when creating new read-only features.
+
+### Key Benefits
+
+- **~70% less code** per feature
+- **Automatic caching** with 1-day sync by default
+- **Built-in search and filter** support
+- **Type-safe** generic implementations
+- **Google Sheets integration** out of the box
+
+### Quick Start
+
+Creating a new feature only requires:
+
+1. **Define Entity** (domain/entities/your_entity.dart)
+2. **Define Model** that extends `EntityModel` (data/models/your_model.dart)
+3. **Configure DI** in `injection_container.dart`
+4. **Create UI** using `GenericListBloc`
+
+See `lib/core/features/USAGE_EXAMPLE.md` for detailed examples.
+
+### Example: Secretary Feature
+
+The Secretary feature demonstrates the generic library usage. It was created with only:
+- **3 files**: Entity, Model, and UI page (~200 lines total)
+- **DI configuration**: ~40 lines in injection_container.dart
+- **Full functionality**: Caching, error handling, empty states, document opening
+
+Compare this to the older Preachers feature which required ~15 files and ~800 lines of code!
 
 ## CI/CD
 

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
+import 'package:plc/core/features/core_features.dart';
 import 'package:plc/core/storage/gsheets_storage_service.dart';
 import 'package:plc/core/storage/local_storage_service.dart';
 import 'package:plc/features/preachers/data/datasources/local/preacher_local_data_source.dart';
@@ -15,6 +16,8 @@ import 'package:plc/features/preaching_themes/data/datasources/remote/preaching_
 import 'package:plc/features/preaching_themes/data/repositories/preaching_theme_repository_impl.dart';
 import 'package:plc/features/preaching_themes/domain/repositories/preaching_theme_repository.dart';
 import 'package:plc/features/preaching_themes/domain/usecases/get_preaching_themes.dart';
+import 'package:plc/features/secretary/data/models/document_model.dart';
+import 'package:plc/features/secretary/domain/entities/document.dart';
 
 final sl = GetIt.instance;
 

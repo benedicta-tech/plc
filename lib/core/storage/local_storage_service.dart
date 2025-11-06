@@ -111,6 +111,14 @@ class LocalStorageService {
     _storage[_themesLastSyncKey] = date.millisecondsSinceEpoch;
   }
 
+  Future<dynamic> get(String key) async {
+    return _storage[key];
+  }
+
+  Future<void> set(String key, dynamic value) async {
+    _storage[key] = value;
+  }
+
   /// Clear all data (useful for testing)
   Future<void> clear() async {
     _storage.clear();
