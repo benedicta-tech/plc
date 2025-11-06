@@ -46,7 +46,7 @@ module Fastlane
                 when "feat"
                   "## Funcionalidades"
                 when "fix"
-                  "## Correções de Bugs"
+                  "## Correções de problemas"
                 when "perf"
                   "## Melhorias de Performance"
                 when "security"
