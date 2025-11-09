@@ -78,8 +78,6 @@ jobs:
         with:
           name: build
           path: |
-            lib/core/config/env.g.dart
-            .env
             build/app/outputs/bundle/release
 
   android-beta:
