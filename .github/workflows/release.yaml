@@ -70,6 +70,7 @@ jobs:
       - name: Build Android
         run: flutter build appbundle --release --no-tree-shake-icons
         env:
+          GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
           GRADLE_OPTS: "-Dorg.gradle.parallel=true -Dorg.gradle.daemon=true"
       # Finish
       - name: Save build
