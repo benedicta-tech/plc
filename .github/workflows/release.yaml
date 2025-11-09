@@ -83,6 +83,7 @@ jobs:
     needs: [build]
     name: Android
     runs-on: ubuntu-latest
+    environment: android-beta
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/fastlane/Gemfile
     steps:
