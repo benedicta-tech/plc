@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:plc/features/home/domain/entities/about_screen_section.dart';
+import 'package:plc/features/about/domain/entities/about_screen_section.dart';
 import 'package:plc/theme/spacing.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plc/core/features/core_features.dart';

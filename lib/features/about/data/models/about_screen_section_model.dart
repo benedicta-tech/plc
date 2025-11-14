@@ -1,5 +1,5 @@
 import 'package:plc/core/features/data/models/entity_model.dart';
-import 'package:plc/features/home/domain/entities/about_screen_section.dart';
+import 'package:plc/features/about/domain/entities/about_screen_section.dart';
 
 class AboutScreenSectionModel extends EntityModel<AboutScreenSection> {
   @override
