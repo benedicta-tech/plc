@@ -1,0 +1,2 @@
+## Correções de problemas
+- Atualização da tela sobre a PLC
