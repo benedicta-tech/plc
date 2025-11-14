@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:plc/core/features/core_features.dart';
 import 'package:plc/core/storage/gsheets_storage_service.dart';
 import 'package:plc/core/storage/local_storage_service.dart';
+import 'package:plc/features/home/data/models/about_screen_section_model.dart';
+import 'package:plc/features/home/domain/entities/about_screen_section.dart';
 import 'package:plc/features/preachers/data/datasources/local/preacher_local_data_source.dart';
 import 'package:plc/features/preachers/data/datasources/remote/preacher_remote_data_source.dart';
 import 'package:plc/features/preachers/data/repositories/preacher_repository_impl.dart';
@@ -37,12 +39,25 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerFactory(
+    () => GenericListBloc<AboutScreenSection, String>(
+      getAllUseCase: sl<GetAllUseCase<AboutScreenSection>>(),
+      searchPredicate: (doc, query) =>
+          doc.title.toLowerCase().contains(query.toLowerCase()) ||
+          doc.content.toLowerCase().contains(query.toLowerCase()),
+      filterPredicate: (doc, category) =>
+          category.isEmpty || doc.id == category,
+    ),
+  );
+
   // Use cases
   sl.registerLazySingleton(() => GetPreachers(sl()));
   sl.registerLazySingleton(() => GetPreacherById(sl()));
   sl.registerLazySingleton(() => GetPreachingThemes(sl()));
 
   sl.registerLazySingleton(() => GetAllUseCase<Document>(sl()));
+
+  sl.registerLazySingleton(() => GetAllUseCase<AboutScreenSection>(sl()));
 
   // Repository
   sl.registerLazySingleton<PreacherRepository>(
@@ -63,6 +78,14 @@ Future<void> init() async {
       remoteDataSource: sl<GenericRemoteDataSource<DocumentModel>>(),
       localDataSource: sl<GenericLocalDataSource<DocumentModel>>(),
       cacheDurationInDays: 1,
+    ),
+  );
+
+  sl.registerLazySingleton<GenericRepository<AboutScreenSection>>(
+    () => GenericCachedRepository<AboutScreenSection, AboutScreenSectionModel>(
+      remoteDataSource: sl<GenericRemoteDataSource<AboutScreenSectionModel>>(),
+      localDataSource: sl<GenericLocalDataSource<AboutScreenSectionModel>>(),
+      cacheDurationInDays: 7,
     ),
   );
 
@@ -99,6 +122,28 @@ Future<void> init() async {
       storageKey: 'secretary_documents',
       syncDateKey: 'secretary_documents_last_sync',
       fromJson: DocumentModel.fromJson,
+    ),
+  );
+
+  sl.registerLazySingleton<GenericRemoteDataSource<AboutScreenSectionModel>>(
+    () => GenericGSheetsDataSource<AboutScreenSectionModel>(
+      gsheetsService: sl(),
+      sheetType: 'main',
+      worksheetName: 'Sobre o PLC',
+      fromJson: AboutScreenSectionModel.fromJson,
+      sortList: (items) {
+        items.sort((a, b) => a.order.compareTo(b.order));
+        return items;
+      },
+    ),
+  );
+
+  sl.registerLazySingleton<GenericLocalDataSource<AboutScreenSectionModel>>(
+    () => GenericLocalDataSourceImpl<AboutScreenSectionModel>(
+      storageService: sl(),
+      storageKey: 'about_plc_sections',
+      syncDateKey: 'about_plc_sections_last_sync',
+      fromJson: AboutScreenSectionModel.fromJson,
     ),
   );
 

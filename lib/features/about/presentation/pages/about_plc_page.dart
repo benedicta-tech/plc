@@ -1,96 +1,200 @@
 import 'package:flutter/material.dart';
+import 'package:plc/features/home/domain/entities/about_screen_section.dart';
 import 'package:plc/theme/spacing.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:plc/core/features/core_features.dart';
 
-class AboutPLCPage extends StatelessWidget {
+class AboutPLCPage extends StatefulWidget {
   const AboutPLCPage({super.key});
+
+  @override
+  State<AboutPLCPage> createState() => _AboutPLCPageState();
+}
+
+const iconMapping = {
+  'favorite': Icons.favorite,
+  'lightbulb_outline': Icons.lightbulb_outline,
+  'flag': Icons.flag,
+  'history': Icons.history,
+  'people': Icons.people,
+};
+
+class _AboutPLCPageState extends State<AboutPLCPage> {
+  @override
+  void initState() {
+    super.initState();
+    context
+        .read<GenericListBloc<AboutScreenSection, String>>()
+        .add(LoadItems());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'Sobre a PLC',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
         elevation: 0,
-        centerTitle: true,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.white,
+        forceMaterialTransparency: true,
+        title: Text(
+          'Sobre a PLC',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(defaultSpacing),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header Section
-              Center(
+      body: BlocBuilder<GenericListBloc<AboutScreenSection, String>,
+          GenericListState<AboutScreenSection>>(
+        builder: (context, state) {
+          if (state is ListLoading<AboutScreenSection>) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            );
+          } else if (state is ListLoaded<AboutScreenSection, String>) {
+            if (state.items.isEmpty) {
+              return _buildErrorState(context, "Nenhum conteúdo disponível.");
+            }
+
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(defaultSpacing),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Header Section
+                    Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: defaultSpacing),
+                          Image(
+                              image: AssetImage('images/plc.jpg'), height: 150),
+                          const SizedBox(height: defaultSpacing),
+                          Text(
+                            'Movimento eclesial católico apostólico romano',
+                            textAlign: TextAlign.center,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: Colors.grey[600],
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                          ),
+                        ],
+                      ),
+                    ),
+
                     const SizedBox(height: defaultSpacing),
-                    Image(image: AssetImage('images/plc.jpg'), height: 150),
-                    const SizedBox(height: defaultSpacing),
-                    Text(
-                      'Movimento eclesial católico apostólico romano',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.grey[600],
-                        fontStyle: FontStyle.italic,
+
+                    ...state.items.expand((section) => [
+                          if (section.id == "finalidades")
+                            _buildObjectivesSection(context, section: section)
+                          else
+                            _buildSection(
+                              context,
+                              title: section.title,
+                              content: section.content.replaceAll('\\n', "\n"),
+                              icon: iconMapping[section.icon] ?? Icons.info,
+                            ),
+                          const SizedBox(height: mediumSpacing),
+                        ]),
+                  ],
+                ),
+              ),
+            );
+          } else if (state is ListError<AboutScreenSection>) {
+            return _buildErrorState(context, state.message);
+          }
+          return Container();
+        },
+      ),
+    );
+  }
+
+  Widget _buildObjectivesSection(BuildContext context,
+      {required AboutScreenSection section}) {
+    final objectives = section.content.split('\\n');
+
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(mediumSpacing),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Icon(Icons.flag, color: Colors.white, size: 20),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    section.title,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            ...objectives.asMap().entries.map((entry) {
+              final index = entry.key;
+              final objective = entry.value;
+
+              return Padding(
+                padding: const EdgeInsets.only(bottom: smallSpacing),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 24,
+                      height: 24,
+                      margin: const EdgeInsets.only(right: 12, top: 2),
+                      decoration: BoxDecoration(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${index + 1}',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.labelSmall?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        objective,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Colors.grey[700],
+                              height: 1.5,
+                            ),
+                        textAlign: TextAlign.justify,
                       ),
                     ),
                   ],
                 ),
-              ),
-
-              const SizedBox(height: defaultSpacing),
-
-              _buildSection(
-                context,
-                title: 'Coordenação',
-                content:
-                    'Assessor Diocesano - Pe. Joaquim Rocha de Calais\n\nCoordenador Diocesano:\nPLC Masculino - Geraldo Malcélio \nPLC Feminino - Maria Angélica ',
-                icon: Icons.people,
-              ),
-              const SizedBox(height: mediumSpacing),
-
-              // Mission Section
-              _buildSection(
-                context,
-                title: 'Denominação',
-                content:
-                    'A PLC - Peregrinação de Leigos Cristãos é um Movimento Eclesial Católico Apostólico Romano, constituído por tempo indeterminado, sem fins lucrativos, sujeita à assessoria eclesiástica do pároco e do Conselho de Pastoral Paroquial, a nível paroquial e do bispo em sua atuação na Igreja particular em nível Diocesano.\n\nA missão da PLC consiste em propagar a mensagem cristã, a doutrinada Igreja da Católica Apostólica Romana e as diretrizes de evangelização diocesanas, de maneira catequética e testemunhal, às pessoas que participam dos cursos, das reuniões de perseverança e demais atividades segundo os preceitos evangélicos.',
-                icon: Icons.favorite,
-              ),
-
-              const SizedBox(height: mediumSpacing),
-
-              // Purpose Section
-              _buildSection(
-                context,
-                title: 'Missão',
-                content:
-                    'A PLC cumpre com a sua missão através de sua finalidade pastoral específica que é evangelização de maneira catequética, levando os seus membros, a tornarem-se aptos a anunciar a Boa Nova, através de um encontro consigo mesmos, com Jesus Cristo e com as realidades do mundo nas quais estão imersos, sendo, no seio delas, tanto pessoal como comunitariamente, fermento que transforma sal que dá sabor e luz que ilumina, segundo os preceitos do Evangelho.',
-                icon: Icons.lightbulb_outline,
-              ),
-
-              const SizedBox(height: mediumSpacing),
-
-              // Objectives Section
-              _buildObjectivesSection(context),
-
-              const SizedBox(height: mediumSpacing),
-
-              // History Section
-              _buildSection(
-                context,
-                title: 'História',
-                content:
-                    'Teve inicio em 1969 na cidade de Jaú estado de São Paulo e com a finalidade principal unir as famílias que estão em atrito e busca de pessoas que estão afastadas do meio religioso e inseri-las nas igrejas de comunidades.',
-                icon: Icons.history,
-              ),
-            ],
-          ),
+              );
+            }),
+          ],
         ),
       ),
     );
@@ -126,9 +230,9 @@ class AboutPLCPage extends StatelessWidget {
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ),
               ],
@@ -137,9 +241,9 @@ class AboutPLCPage extends StatelessWidget {
             Text(
               content,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[700],
-                height: 1.6,
-              ),
+                    color: Colors.grey[700],
+                    height: 1.6,
+                  ),
               textAlign: TextAlign.justify,
             ),
           ],
@@ -148,92 +252,59 @@ class AboutPLCPage extends StatelessWidget {
     );
   }
 
-  Widget _buildObjectivesSection(BuildContext context) {
-    final objectives = [
-      'Preparar os fiéis leigos para uma inserção e vivência na vida das comunidades eclesiais de base.',
-      'Levar cristãos católicos para atuar nas famílias e estruturas sociais, conforme a Pastoral Orgânica de cada Paróquia e Igreja Diocesana de Caratinga-MG.',
-      'Fomentar Evangelho nos ambientes e estruturas sociais, pelo testemunho e pela ação pessoal e organizada de seus membros.',
-      'Formar líderes para a expansão da PLC em todos os níveis.',
-      'Zelar pela fidelidade à sua própria mentalidade, finalidade, método estratégia, contida em seu carisma.',
-    ];
-
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+  Widget _buildErrorState(BuildContext context, String message) {
+    return Center(
       child: Padding(
-        padding: const EdgeInsets.all(mediumSpacing),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Icon(Icons.flag, color: Colors.white, size: 20),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    'Finalidades',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.red.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(40),
+              ),
+              child: const Icon(
+                Icons.error_outline,
+                size: 40,
+                color: Colors.red,
+              ),
             ),
-            const SizedBox(height: 16),
-            ...objectives.asMap().entries.map((entry) {
-              final index = entry.key;
-              final objective = entry.value;
-
-              return Padding(
-                padding: const EdgeInsets.only(bottom: smallSpacing),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 24,
-                      height: 24,
-                      margin: const EdgeInsets.only(right: 12, top: 2),
-                      decoration: BoxDecoration(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.primary.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '${index + 1}',
-                          style: Theme.of(
-                            context,
-                          ).textTheme.labelSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        objective,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[700],
-                          height: 1.5,
-                        ),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  ],
+            const SizedBox(height: 24),
+            Text(
+              'Erro ao carregar conteúdo',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: Colors.grey[600]),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                context.read<GenericListBloc<AboutScreenSection, String>>().add(
+                      LoadItems(),
+                    );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-              );
-            }),
+              ),
+              child: const Text('Tentar novamente'),
+            ),
           ],
         ),
       ),
