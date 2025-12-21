@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'PLC - Peregrinação de Leigos Cristãos',
         theme: brightness == Brightness.light ? theme.light() : theme.dark(),
         home: const HomePage(),
