@@ -15,9 +15,6 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
   @override
   void initState() {
     super.initState();
-    // context.read<ParishProfileBloc>().add(
-    //       LoadParishProfile(id: widget.parish.id),
-    //     );
   }
 
   @override
@@ -31,22 +28,6 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
         forceMaterialTransparency: true,
       ),
       body: _buildProfileContent(context, widget.parish),
-      // BlocBuilder<PreacherProfileBloc, PreacherProfileState>(
-      //   builder: (context, state) {
-      //     if (state is PreacherProfileLoading) {
-      //       return Center(
-      //         child: CircularProgressIndicator(
-      //           color: Theme.of(context).colorScheme.primary,
-      //         ),
-      //       );
-      //     } else if (state is PreacherProfileLoaded) {
-      //       return _buildProfileContent(context, state.preacher);
-      //     } else if (state is PreacherProfileError) {
-      //       return _buildErrorState(context, state.message);
-      //     }
-      //     return Container();
-      //   },
-      // ),
     );
   }
 
@@ -133,7 +114,26 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
             // ),
 
             const SizedBox(height: defaultSpacing),
-
+            parish.perseverance.male != null
+                ? _buildInfoCard(
+                    context,
+                    icon: Icons.location_city,
+                    title: 'Perseverança Masculina',
+                    value: parish.perseverance.male != null
+                        ? parish.perseverance.male!
+                        : 'Não informado',
+                  )
+                : SizedBox.shrink(),
+            parish.perseverance.female != null
+                ? _buildInfoCard(
+                    context,
+                    icon: Icons.location_city,
+                    title: 'Perseverança Feminina',
+                    value: parish.perseverance.female != null
+                        ? parish.perseverance.female!
+                        : 'Não informado',
+                  )
+                : SizedBox.shrink(),
             // Preaching Themes Section
             // Container(
             //   width: double.infinity,
@@ -337,64 +337,6 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildErrorState(BuildContext context, String message) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: const Icon(
-                Icons.error_outline,
-                size: 40,
-                color: Colors.red,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Erro ao carregar perfil',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                // context.read<PreacherProfileBloc>().add(
-                //       LoadPreacherProfile(id: widget.preacherId),
-                //     );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text('Tentar novamente'),
             ),
           ],
         ),

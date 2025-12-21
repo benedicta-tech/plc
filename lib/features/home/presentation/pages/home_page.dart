@@ -111,8 +111,8 @@ class HomePage extends StatelessWidget {
               _buildFeatureCard(
                 context,
                 icon: Icons.church,
-                title: 'Paróquias PLC',
-                description: 'Conheça as paróquias com PLC',
+                title: 'Paróquias',
+                description: 'Conheça as paróquias com atuação da PLC',
                 onTap: () {
                   Navigator.push(
                     context,

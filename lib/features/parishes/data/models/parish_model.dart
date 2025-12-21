@@ -27,7 +27,7 @@ class ParishModel extends EntityModel<Parish> {
       id: json['Identificação'] as String? ?? '',
       name: json['Nome'] as String? ?? '',
       city: json['Cidade'] as String? ?? '',
-      perseverance: PerseveranceModel(
+      perseverance: PerseveranceModel.fromParishJson(
           id: id,
           male: json['Perseverança Masculina'],
           female: json['Perseverança Feminina']),
@@ -37,8 +37,7 @@ class ParishModel extends EntityModel<Parish> {
   }
 
   bool get hasPerseverance =>
-      (perseverance.male != null && perseverance.male!.isNotEmpty) ||
-      (perseverance.female != null && perseverance.female!.isNotEmpty);
+      perseverance.male != null || perseverance.female != null;
 
   @override
   Map<String, dynamic> toJson() {

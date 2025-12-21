@@ -14,6 +14,14 @@ class PerseveranceModel extends EntityModel<Perseverance> {
     return Perseverance(male: male, female: female);
   }
 
+  factory PerseveranceModel.fromParishJson(
+      {required String id, String? male, String? female}) {
+    return PerseveranceModel(
+        id: id,
+        male: male != null && male.isNotEmpty ? male : null,
+        female: female != null && female.isNotEmpty ? female : null);
+  }
+
   @override
   Map<String, dynamic> toJson() {
     return {
