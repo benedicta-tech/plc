@@ -1,6 +1,7 @@
 import 'package:plc/features/preachers/domain/entities/preacher.dart';
 import 'package:plc/features/preachers/domain/repositories/preacher_repository.dart';
 
+// TODO: remove it when GenericListUseCase is implemented
 class GetPreachers {
   final PreacherRepository repository;
 

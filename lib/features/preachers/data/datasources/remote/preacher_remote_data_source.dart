@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:plc/features/preachers/data/models/preacher_model.dart';
 
+// TODO: remove this class and use GenericRemoteDataSource<PreacherModel> instead
 abstract class PreacherRemoteDataSource {
   Future<List<PreacherModel>> getPreachers();
   Future<PreacherModel> getPreacherById(String id);
 }
 
+// TODO: remove it and use generic implementation
 class PreacherRemoteDataSourceImpl implements PreacherRemoteDataSource {
   final Dio dio;
   static const String baseUrl = 'https://plc-app.leigo.fm';
