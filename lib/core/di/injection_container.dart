@@ -5,11 +5,8 @@ import 'package:plc/core/storage/gsheets_storage_service.dart';
 import 'package:plc/core/storage/local_storage_service.dart';
 import 'package:plc/features/about/data/models/about_screen_section_model.dart';
 import 'package:plc/features/about/domain/entities/about_screen_section.dart';
-import 'package:plc/features/parishes/data/datasources/parish_remote_data_source.dart';
-import 'package:plc/features/parishes/data/repositories/parishes_repository_impl.dart';
-import 'package:plc/features/parishes/domain/repository/parish_repository.dart';
-import 'package:plc/features/parishes/domain/usercases/get_parishes.dart';
-import 'package:plc/features/parishes/presentation/bloc/parishes_bloc.dart';
+import 'package:plc/features/parishes/data/models/parish_model.dart';
+import 'package:plc/features/parishes/domain/entities/parish.dart';
 import 'package:plc/features/preachers/data/datasources/local/preacher_local_data_source.dart';
 import 'package:plc/features/preachers/data/datasources/gsheets/preacher_gsheets_data_source.dart';
 import 'package:plc/features/preachers/data/datasources/remote/preacher_remote_data_source.dart';
@@ -33,7 +30,6 @@ Future<void> init() async {
   // Blocs
   sl.registerFactory(() => PreachersBloc(getPreachers: sl()));
   sl.registerFactory(() => PreacherProfileBloc(getPreacherById: sl()));
-  sl.registerFactory(() => ParishesBloc(getParishes: sl()));
 
   sl.registerFactory(
     () => GenericListBloc<Document, String>(
@@ -57,14 +53,24 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerFactory(
+    () => GenericListBloc<Parish, String>(
+      getAllUseCase: sl<GetAllUseCase<Parish>>(),
+      searchPredicate: (doc, query) =>
+          doc.fullName.toLowerCase().contains(query.toLowerCase()) ||
+          doc.fullName.toLowerCase().contains(query.toLowerCase()),
+      filterPredicate: (doc, category) =>
+          category.isEmpty || doc.location == category,
+    ),
+  );
+
   // Use cases
   sl.registerLazySingleton(() => GetPreachers(sl()));
   sl.registerLazySingleton(() => GetPreacherById(sl()));
   sl.registerLazySingleton(() => GetPreachingThemes(sl()));
-  sl.registerLazySingleton(() => GetParishes(sl()));
 
   sl.registerLazySingleton(() => GetAllUseCase<Document>(sl()));
-
+  sl.registerLazySingleton(() => GetAllUseCase<Parish>(sl()));
   sl.registerLazySingleton(() => GetAllUseCase<AboutScreenSection>(sl()));
 
   // Repository
@@ -80,17 +86,18 @@ Future<void> init() async {
       localDataSource: sl(),
     ),
   );
-  sl.registerLazySingleton<ParishRepository>(
-    () => ParishRepositoryImpl(
-      remoteDataSource: sl(),
-      // localDataSource: sl(),
-    ),
-  );
 
   sl.registerLazySingleton<GenericRepository<Document>>(
     () => GenericCachedRepository<Document, DocumentModel>(
       remoteDataSource: sl<GenericRemoteDataSource<DocumentModel>>(),
       localDataSource: sl<GenericLocalDataSource<DocumentModel>>(),
+      cacheDurationInDays: 1,
+    ),
+  );
+  sl.registerLazySingleton<GenericRepository<Parish>>(
+    () => GenericCachedRepository<Parish, ParishModel>(
+      remoteDataSource: sl<GenericRemoteDataSource<ParishModel>>(),
+      localDataSource: sl<GenericLocalDataSource<ParishModel>>(),
       cacheDurationInDays: 1,
     ),
   );
@@ -120,9 +127,6 @@ Future<void> init() async {
   sl.registerLazySingleton<PreachingThemeLocalDataSource>(
     () => PreachingThemeLocalDataSource(storageService: sl()),
   );
-  sl.registerLazySingleton<ParishDataSource>(
-    () => ParishRemoteDataSource(gsheetsService: sl()),
-  );
 
   sl.registerLazySingleton<GenericRemoteDataSource<DocumentModel>>(
     () => GenericGSheetsDataSource<DocumentModel>(
@@ -137,12 +141,34 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<GenericRemoteDataSource<ParishModel>>(
+    () => GenericGSheetsDataSource<ParishModel>(
+      gsheetsService: sl(),
+      sheetType: 'main',
+      worksheetName: 'Paroquias',
+      fromJson: ParishModel.fromJson,
+      sortList: (items) {
+        items.sort((a, b) => a.order.compareTo(b.order));
+        return items;
+      },
+    ),
+  );
+
   sl.registerLazySingleton<GenericLocalDataSource<DocumentModel>>(
     () => GenericLocalDataSourceImpl<DocumentModel>(
       storageService: sl(),
       storageKey: 'secretary_documents',
       syncDateKey: 'secretary_documents_last_sync',
       fromJson: DocumentModel.fromJson,
+    ),
+  );
+
+  sl.registerLazySingleton<GenericLocalDataSource<ParishModel>>(
+    () => GenericLocalDataSourceImpl<ParishModel>(
+      storageService: sl(),
+      storageKey: 'parish_documents',
+      syncDateKey: 'parish_documents_last_sync',
+      fromJson: ParishModel.fromJson,
     ),
   );
 

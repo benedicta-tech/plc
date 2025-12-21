@@ -1,10 +1,9 @@
-import 'package:plc/core/presentation/page.dart';
+import 'package:plc/core/features/presentation/bloc/generic_list_bloc.dart';
+import 'package:plc/core/features/presentation/bloc/generic_list_event.dart';
+import 'package:plc/core/features/presentation/bloc/generic_list_state.dart';
 import 'package:plc/features/parishes/domain/entities/parish.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:plc/features/parishes/presentation/bloc/parishes_bloc.dart';
-import 'package:plc/features/parishes/presentation/bloc/parishes_event.dart';
-import 'package:plc/features/parishes/presentation/bloc/parishes_state.dart';
 import 'package:plc/features/parishes/presentation/pages/parish_profile_page.dart';
 import 'package:plc/theme/spacing.dart';
 
@@ -19,28 +18,41 @@ class _ParishesListPageState extends State<ParishesListPage> {
   @override
   void initState() {
     super.initState();
-    context.read<ParishesBloc>().add(LoadParishes());
+    context.read<GenericListBloc<Parish, String>>().add(LoadItems());
   }
 
   @override
   Widget build(BuildContext context) {
-    return CorePage(
-      title: 'Paróquias',
-      subtitle: 'Lista de paróquias com presença do PLC',
-      child: BlocBuilder<ParishesBloc, ParishesState>(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.white,
+        forceMaterialTransparency: true,
+        title: Text(
+          'Paróquias',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+      ),
+      body: BlocBuilder<GenericListBloc<Parish, String>,
+          GenericListState<Parish>>(
         builder: (context, state) {
-          if (state is ParishesLoading) {
+          if (state is ListLoading<Parish>) {
             return Center(
               child: CircularProgressIndicator(
                 color: Theme.of(context).colorScheme.primary,
               ),
             );
-          } else if (state is ParishesLoaded) {
-            if (state.parishes.isEmpty) {
+          } else if (state is ListLoaded<Parish, String>) {
+            if (state.items.isEmpty) {
               return _buildEmptyState(context);
             }
-            return _buildParishesList(context, state.parishes);
-          } else if (state is ParishesError) {
+            return _buildParishesList(context, state.items);
+          } else if (state is ListError<Parish>) {
             return _buildErrorState(context, state.message);
           }
           return Container();
@@ -228,7 +240,9 @@ class _ParishesListPageState extends State<ParishesListPage> {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                context.read<ParishesBloc>().add(LoadParishes());
+                context.read<GenericListBloc<Parish, String>>().add(
+                      LoadItems(),
+                    );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary,
