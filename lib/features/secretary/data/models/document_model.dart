@@ -8,6 +8,7 @@ class DocumentModel extends EntityModel<Document> {
   final String description;
   final String category;
   final String url;
+  final int order;
 
   DocumentModel({
     required this.id,
@@ -15,15 +16,19 @@ class DocumentModel extends EntityModel<Document> {
     required this.description,
     required this.category,
     required this.url,
+    required this.order,
   });
 
   factory DocumentModel.fromJson(Map<String, dynamic> json) {
+    final order = int.tryParse(json['Ordem']?.toString() ?? '') ?? 0;
+
     return DocumentModel(
       id: json['Identificação'] as String? ?? '',
       title: json['Nome'] as String? ?? '',
       description: json['Descrição'] as String? ?? '',
       category: json['Categoria'] as String? ?? '',
       url: json['URL'] as String? ?? '',
+      order: order,
     );
   }
 
@@ -35,6 +40,7 @@ class DocumentModel extends EntityModel<Document> {
       'Descrição': description,
       'Categoria': category,
       'URL': url,
+      'Ordem': order,
     };
   }
 

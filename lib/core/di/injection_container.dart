@@ -110,7 +110,7 @@ Future<void> init() async {
       worksheetName: 'Secretaria',
       fromJson: DocumentModel.fromJson,
       sortList: (items) {
-        items.sort((a, b) => a.title.compareTo(b.title));
+        items.sort((a, b) => a.order.compareTo(b.order));
         return items;
       },
     ),
