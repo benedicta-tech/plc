@@ -2,6 +2,7 @@ import 'package:plc/features/preaching_themes/data/datasources/local/preaching_t
 import 'package:plc/features/preaching_themes/data/datasources/remote/preaching_theme_remote_data_source.dart';
 import 'package:plc/features/preaching_themes/domain/repositories/preaching_theme_repository.dart';
 
+// TODO: remove it to use generic repository implementation
 class PreachingThemeRepositoryImpl implements PreachingThemeRepository {
   final PreachingThemeRemoteDataSource remoteDataSource;
   final PreachingThemeLocalDataSource localDataSource;

@@ -1,7 +1,7 @@
 import 'package:plc/core/storage/local_storage_service.dart';
 import 'package:plc/features/preachers/data/models/preacher_model.dart';
 
-/// Local data source for preacher data using simple storage
+// TODO: remove it and use generic implementation
 class PreacherLocalDataSource {
   final LocalStorageService storageService;
 

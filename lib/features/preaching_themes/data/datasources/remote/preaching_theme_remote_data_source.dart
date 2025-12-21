@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 
+// TODO: remove it and use generic implementation
 abstract class PreachingThemeRemoteDataSource {
   Future<List<String>> getPreachingThemes();
 }
 
-class PreachingThemeRemoteDataSourceImpl implements PreachingThemeRemoteDataSource {
+// TODO: remove it and use generic implementation
+class PreachingThemeRemoteDataSourceImpl
+    implements PreachingThemeRemoteDataSource {
   final Dio dio;
   static const String baseUrl = 'https://plc-app.leigo.fm';
 

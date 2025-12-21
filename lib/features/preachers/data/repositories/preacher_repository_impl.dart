@@ -3,6 +3,7 @@ import 'package:plc/features/preachers/data/datasources/remote/preacher_remote_d
 import 'package:plc/features/preachers/domain/entities/preacher.dart';
 import 'package:plc/features/preachers/domain/repositories/preacher_repository.dart';
 
+// TODO: remove it to use generic repository implementation
 class PreacherRepositoryImpl implements PreacherRepository {
   final PreacherRemoteDataSource remoteDataSource;
   final PreacherLocalDataSource localDataSource;

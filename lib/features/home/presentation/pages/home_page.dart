@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plc/features/about/presentation/pages/about_plc_page.dart';
+import 'package:plc/features/parishes/presentation/pages/parishes_list_page.dart';
 import 'package:plc/features/preachers/presentation/pages/preachers_list_page.dart';
 import 'package:plc/features/secretary/presentation/pages/secretary_documents_page.dart';
 import 'package:plc/theme/spacing.dart';
@@ -100,6 +101,23 @@ class HomePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const SecretaryDocumentsPage(),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: mediumSpacing),
+
+              _buildFeatureCard(
+                context,
+                icon: Icons.church,
+                title: 'Paróquias',
+                description: 'Conheça as paróquias com atuação da PLC',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ParishesListPage(),
                     ),
                   );
                 },

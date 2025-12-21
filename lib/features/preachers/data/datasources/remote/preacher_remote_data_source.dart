@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:plc/features/preachers/data/models/preacher_model.dart';
 
+// TODO: remove this class and use GenericRemoteDataSource<PreacherModel> instead
 abstract class PreacherRemoteDataSource {
   Future<List<PreacherModel>> getPreachers();
   Future<PreacherModel> getPreacherById(String id);
 }
 
+// TODO: remove it and use generic implementation
 class PreacherRemoteDataSourceImpl implements PreacherRemoteDataSource {
   final Dio dio;
   static const String baseUrl = 'https://plc-app.leigo.fm';
@@ -19,14 +21,12 @@ class PreacherRemoteDataSourceImpl implements PreacherRemoteDataSource {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data as List<dynamic>;
-        var preachers =
-            data
-                .map(
-                  (json) =>
-                      PreacherModel.fromJson(json as Map<String, dynamic>),
-                )
-                .where((preacher) => preacher.roles.contains("Preacher"))
-                .toList();
+        var preachers = data
+            .map(
+              (json) => PreacherModel.fromJson(json as Map<String, dynamic>),
+            )
+            .where((preacher) => preacher.roles.contains("Preacher"))
+            .toList();
         preachers.sort((a, b) => a.name.compareTo(b.name));
         return preachers;
       } else {
