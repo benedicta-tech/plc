@@ -1,4 +1,3 @@
-import 'package:plc/core/presentation/page.dart';
 import 'package:plc/features/preachers/domain/entities/preacher.dart';
 import 'package:plc/features/preachers/presentation/pages/preacher_profile_page.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +24,15 @@ class _PreachersListPageState extends State<PreachersListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CorePage(
-      title: 'Pregadores',
-      subtitle: 'Lista de pregadores ativos',
-      child: BlocBuilder<PreachersBloc, PreachersState>(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.white,
+        forceMaterialTransparency: true,
+      ),
+      body: BlocBuilder<PreachersBloc, PreachersState>(
         builder: (context, state) {
           if (state is PreachersLoading) {
             return Center(
@@ -59,26 +63,65 @@ class _PreachersListPageState extends State<PreachersListPage> {
     List<dynamic> preachers,
     bool inSearch,
   ) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-        padding: const EdgeInsets.only(
-          left: mediumSpacing,
-          right: mediumSpacing,
-          bottom: mediumSpacing,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Header Section
+        Padding(
+          padding: const EdgeInsets.only(
+            left: mediumSpacing,
+            right: mediumSpacing,
+            bottom: mediumSpacing,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Pregadores',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.headlineSmall?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                        Text(
+                          '${preachers.length} pregadores ${inSearch ? 'encontrados' : 'ativos'}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey[600]),
+                        ),
+                        const SizedBox(height: smallSpacing),
+                        SearchPreachersBar(inSearch: inSearch),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        child: SearchPreachersBar(inSearch: inSearch),
-      ),
-      Expanded(
-        child: ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: mediumSpacing),
-          itemCount: preachers.length,
-          itemBuilder: (context, index) {
-            final preacher = preachers[index];
-            return _buildPreacherCard(context, preacher);
-          },
+
+        // Preachers List
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: mediumSpacing),
+            itemCount: preachers.length,
+            itemBuilder: (context, index) {
+              final preacher = preachers[index];
+              return _buildPreacherCard(context, preacher);
+            },
+          ),
         ),
-      )
-    ]);
+      ],
+    );
   }
 
   Widget _buildPreacherCard(BuildContext context, Preacher preacher) {

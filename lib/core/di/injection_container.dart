@@ -8,7 +8,6 @@ import 'package:plc/features/about/domain/entities/about_screen_section.dart';
 import 'package:plc/features/parishes/data/models/parish_model.dart';
 import 'package:plc/features/parishes/domain/entities/parish.dart';
 import 'package:plc/features/preachers/data/datasources/local/preacher_local_data_source.dart';
-import 'package:plc/features/preachers/data/datasources/gsheets/preacher_gsheets_data_source.dart';
 import 'package:plc/features/preachers/data/datasources/remote/preacher_remote_data_source.dart';
 import 'package:plc/features/preachers/data/repositories/preacher_repository_impl.dart';
 import 'package:plc/features/preachers/domain/repositories/preacher_repository.dart';
@@ -116,10 +115,6 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<PreacherLocalDataSource>(
     () => PreacherLocalDataSource(storageService: sl()),
-  );
-  sl.registerLazySingleton<PreacherGSheetsDataSource>(
-    () => PreacherGSheetsDataSource(
-        gsheetsService: sl(), gsheetsDataSource: sl()),
   );
   sl.registerLazySingleton<PreachingThemeRemoteDataSource>(
     () => PreachingThemeRemoteDataSourceImpl(dio: sl()),
