@@ -31,7 +31,7 @@ class ParishModel extends EntityModel<Parish> {
           id: id,
           male: json['Perseverança Masculina'],
           female: json['Perseverança Feminina']),
-      imageUrl: json['URL Imagem'] as String?,
+      imageUrl: json['Imagem'] as String?,
       order: order,
     );
   }
@@ -48,7 +48,7 @@ class ParishModel extends EntityModel<Parish> {
       'Cidade': city,
       'Perseverança Masculina': perseverance.male,
       'Perseverança Feminina': perseverance.female,
-      'URL Imagem': imageUrl,
+      'Imagem': imageUrl,
       'Ordem': order,
     };
   }

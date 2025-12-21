@@ -65,24 +65,27 @@ class _ParishesListPageState extends State<ParishesListPage> {
     BuildContext context,
     List<Parish> parishes,
   ) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Expanded(
-        child: ListView.builder(
-          padding: const EdgeInsets.only(
-              left: mediumSpacing, right: mediumSpacing, bottom: mediumSpacing),
-          itemCount: parishes.length,
-          itemBuilder: (context, index) {
-            final parish = parishes[index];
-            return _buildParishCard(context, parish);
-          },
-        ),
-      )
+    return ListView(padding: const EdgeInsets.all(mediumSpacing), children: [
+      Text(
+        'Paróquias com atuação do movimento da PLC.',
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium
+            ?.copyWith(color: Colors.grey[600]),
+      ),
+      const SizedBox(height: mediumSpacing),
+      Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: parishes
+              .map((parish) => _buildParishCard(context, parish))
+              .toList())
     ]);
   }
 
   Widget _buildParishCard(BuildContext context, Parish parish) {
     return Card(
       elevation: 0,
+      margin: const EdgeInsets.only(bottom: smallSpacing),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -94,23 +97,27 @@ class _ParishesListPageState extends State<ParishesListPage> {
         },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: smallSpacing,
-            horizontal: smallSpacing,
-          ),
+          padding: const EdgeInsets.all(mediumSpacing),
           child: Row(
             children: [
-              SizedBox(
-                width: 30,
-                height: 30,
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: parish.imageUrl != null
                     ? ClipRRect(
                         borderRadius:
                             BorderRadius.circular(12 - smallSpacing / 2),
                         child: Image.network(
                           parish.imageUrl!,
-                          width: 30,
-                          height: 30,
+                          width: 24,
+                          height: 24,
                           fit: BoxFit.cover,
                           loadingBuilder: (BuildContext context, Widget child,
                               ImageChunkEvent? loadingProgress) {
@@ -118,7 +125,7 @@ class _ParishesListPageState extends State<ParishesListPage> {
                             return Icon(
                               Icons.church,
                               color: Theme.of(context).colorScheme.primary,
-                              size: 18,
+                              size: 24,
                             );
                           },
                         ),
@@ -126,20 +133,30 @@ class _ParishesListPageState extends State<ParishesListPage> {
                     : Icon(
                         Icons.church,
                         color: Theme.of(context).colorScheme.primary,
-                        size: 18,
+                        size: 24,
                       ),
               ),
-              const SizedBox(width: smallSpacing),
+              const SizedBox(width: mediumSpacing),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      parish.fullName,
+                      parish.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                           ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      parish.city,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Colors.grey[600]),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
@@ -148,7 +165,7 @@ class _ParishesListPageState extends State<ParishesListPage> {
               Icon(
                 Icons.arrow_forward_ios,
                 color: Theme.of(context).colorScheme.primary,
-                size: 16,
+                size: 20,
               ),
             ],
           ),
