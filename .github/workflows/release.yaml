@@ -97,7 +97,7 @@ jobs:
           name: build
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          ruby-version: "3.1"
           bundler-cache: true
       - name: Release to Google Play (beta)
         env:
@@ -117,7 +117,7 @@ jobs:
         uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          ruby-version: "3.1"
           bundler-cache: true
       - name: Release to Google Play (production)
         env:
