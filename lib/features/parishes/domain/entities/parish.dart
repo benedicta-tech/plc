@@ -1,17 +1,19 @@
+import 'package:plc/features/parishes/domain/entities/perseverance.dart';
+
 class Parish {
   final String id;
   final String name;
-  final String location;
-  final String perseverance;
+  final String city;
+  final Perseverance perseverance;
   final String? imageUrl;
 
   Parish({
     required this.id,
     required this.name,
-    required this.location,
+    required this.city,
     required this.perseverance,
     this.imageUrl,
   });
 
-  String get fullName => '$location - $name';
+  String get fullName => '$name - $city';
 }

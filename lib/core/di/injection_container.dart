@@ -59,7 +59,7 @@ Future<void> init() async {
           doc.fullName.toLowerCase().contains(query.toLowerCase()) ||
           doc.fullName.toLowerCase().contains(query.toLowerCase()),
       filterPredicate: (doc, category) =>
-          category.isEmpty || doc.location == category,
+          category.isEmpty || doc.city == category,
     ),
   );
 
@@ -142,6 +142,8 @@ Future<void> init() async {
       sheetType: 'main',
       worksheetName: 'Paroquias',
       fromJson: ParishModel.fromJson,
+      filterList: (items) =>
+          items.where((item) => item.hasPerseverance).toList(),
       sortList: (items) {
         items.sort((a, b) => a.order.compareTo(b.order));
         return items;

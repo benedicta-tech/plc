@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plc/features/parishes/domain/entities/parish.dart';
-import 'package:plc/features/preachers/domain/entities/preacher.dart';
-import 'package:plc/features/preachers/presentation/bloc/preacher_profile_bloc.dart';
-import 'package:plc/features/preachers/presentation/bloc/preacher_profile_event.dart';
-import 'package:plc/features/preachers/presentation/bloc/preacher_profile_state.dart';
 import 'package:plc/theme/spacing.dart';
 
 class ParishProfilePage extends StatefulWidget {
@@ -95,7 +90,7 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    parish.location,
+                    parish.city,
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
