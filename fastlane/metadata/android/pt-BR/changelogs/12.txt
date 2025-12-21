@@ -1,12 +1,4 @@
 ## Funcionalidades
-### Adicionando paroquias
-* feat: Adicionando paroquias
-* use new generic setup
-* add comments to remove old structure
-* back to old
-* remove page for now
-* add perseverance and filters
-* improve parish list
-* improve parish page
 
+- Adicionando paroquias
 - Ordenando documentos da secretaria
