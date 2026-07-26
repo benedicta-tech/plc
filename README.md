@@ -103,6 +103,14 @@ flutter build appbundle --release
 flutter test
 ```
 
+## Features
+
+- **Daily Reading (Liturgia Diária)**: View today's liturgical readings with liturgical color indicator
+- **Preachers**: Browse community preachers and their information
+- **Secretary Documents**: Access official documents and materials
+- **Parishes**: Discover parishes with PLC presence
+- **About PLC**: Learn about the Peregrinação de Leigos Cristãos movement
+
 ## Project Structure
 
 ```
