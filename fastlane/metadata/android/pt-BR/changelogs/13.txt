@@ -1,0 +1,8 @@
+## Funcionalidades
+### Leitura do dia em destaque na tela inicial
+A tela inicial mostra a liturgia de hoje com a cor do dia, a celebração
+e as leituras. Toque no card para abrir a liturgia completa.
+
+### Liturgia diária com as leituras, o salmo e o evangelho do dia
+Acompanhe a liturgia completa de cada dia no app: a cor litúrgica, a
+celebração, as leituras e os textos na íntegra, prontos para a oração.
