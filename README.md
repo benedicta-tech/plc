@@ -103,6 +103,65 @@ flutter build appbundle --release
 flutter test
 ```
 
+## Release
+
+Nada é publicado automaticamente. O bump de versão roda na sua máquina e o
+build é disparado à mão: o workflow `Release` é `workflow_dispatch` puro, sem
+gatilho por push ou por tag.
+
+1. Deixe a `main` atualizada, com tudo mergeado e o working tree limpo. O lane
+   aborta em `ensure_git_status_clean` se houver qualquer alteração pendente.
+2. Rode o bump informando o nome da nova versão. O build number é incrementado
+   sozinho (`1.3.0+12` → `1.4.0+13`):
+
+   ```bash
+   cd fastlane && bundle exec fastlane bump_version version:1.4.0
+   ```
+
+   O lane escreve a versão em `pubspec.yaml`, gera
+   `fastlane/metadata/android/pt-BR/changelogs/<build number>.txt` com os
+   commits desde a última tag, commita `Bump version to 1.4.0+13` e cria a tag
+   `1.4.0+13`. Ele não faz push.
+3. **Revise o changelog gerado.** Esse arquivo é o texto que aparece na Play
+   Store.
+4. Publique o commit e a tag:
+
+   ```bash
+   git push --follow-tags
+   ```
+
+5. Dispare o build:
+
+   ```bash
+   gh workflow run release.yaml
+   ```
+
+   Ou em Actions > Release > Run workflow.
+
+O workflow compila o appbundle, publica na track **beta** e, depois que o
+environment `android-production` for aprovado, promove para produção.
+
+### O que entra no changelog
+
+`generate_changelog` (em `fastlane/actions/`) pega os commits entre a última
+tag e o `HEAD` e mantém só os tipos `feat:`, `fix:`, `perf:` e `security:`,
+agrupados sob "Funcionalidades", "Correções de problemas", "Melhorias de
+Performance" e "Correções de Segurança".
+
+O título do commit vira o item da lista. Quando o commit tem corpo, o corpo é
+publicado logo abaixo do título. Escreva esses commits para quem usa o app:
+nada de nome de arquivo, de função ou de decisão de implementação. O que for
+técnico vai em `chore:`, `refactor:`, `test:` ou `docs:`, que o gerador ignora.
+
+### Versões da toolchain
+
+- Flutter: o CI usa `flutter-version-file: pubspec.yaml`, ou seja, o valor de
+  `environment.flutter`. Rodar `flutter pub get` com outra versão reescreve o
+  `pubspec.lock` e gera diff desnecessário.
+- Ruby: o CI usa 3.1 (`release.yaml`), enquanto `fastlane/mise.toml` usa o
+  `latest` da máquina. O `Gemfile.lock` versionado precisa continuar
+  instalável nas duas versões.
+
 ## Features
 
 - **Daily Reading (Liturgia Diária)**: View today's liturgical readings with liturgical color indicator

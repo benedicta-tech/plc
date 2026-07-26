@@ -79,3 +79,18 @@ Corpo -> body
 - No custom use cases or repositories needed (uses generic implementations)
 - Total implementation: ~500 lines across 4 files
 - Follows the 70% code reduction pattern from generic features library
+
+## Release
+
+Full steps in the "Release" section of README.md. Short version:
+`cd fastlane && bundle exec fastlane bump_version version:X.Y.Z` on a clean
+`main`, review the generated changelog, `git push --follow-tags`, then
+`gh workflow run release.yaml`. Nothing is triggered automatically.
+
+`feat:`, `fix:`, `perf:` and `security:` commits are published verbatim in the
+Play Store changelog, **title and body**. Keep implementation detail out of
+them; use `chore:`/`refactor:`/`test:`/`docs:` for that.
+
+Run `flutter pub get` with the version pinned in `environment.flutter`
+(`pubspec.yaml`) — that is what CI uses. Another version rewrites
+`pubspec.lock` and creates noise in the diff.
