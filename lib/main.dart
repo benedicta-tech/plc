@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plc/core/di/injection_container.dart' as di;
 import 'package:plc/core/features/core_features.dart';
 import 'package:plc/features/about/domain/entities/about_screen_section.dart';
+import 'package:plc/features/daily_reading/domain/entities/daily_reading.dart';
 import 'package:plc/features/home/presentation/pages/home_page.dart';
 import 'package:plc/features/parishes/domain/entities/parish.dart';
 import 'package:plc/features/preachers/presentation/bloc/preacher_profile_bloc.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<GenericListBloc<AboutScreenSection, String>>(
           create: (_) => di.sl<GenericListBloc<AboutScreenSection, String>>(),
+        ),
+        BlocProvider<GenericListBloc<DailyReading, String>>(
+          create: (_) => di.sl<GenericListBloc<DailyReading, String>>(),
         ),
       ],
       child: MaterialApp(

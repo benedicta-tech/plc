@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plc/features/about/presentation/pages/about_plc_page.dart';
+import 'package:plc/features/daily_reading/presentation/widgets/daily_reading_card.dart';
 import 'package:plc/features/parishes/presentation/pages/parishes_list_page.dart';
 import 'package:plc/features/preachers/presentation/pages/preachers_list_page.dart';
 import 'package:plc/features/secretary/presentation/pages/secretary_documents_page.dart';
@@ -53,6 +54,11 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
+
+              const SizedBox(height: mediumSpacing),
+
+              // Daily Reading Card
+              const DailyReadingCard(),
 
               const SizedBox(height: smallSpacing),
 

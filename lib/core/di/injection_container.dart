@@ -22,6 +22,8 @@ import 'package:plc/features/preaching_themes/domain/repositories/preaching_them
 import 'package:plc/features/preaching_themes/domain/usecases/get_preaching_themes.dart';
 import 'package:plc/features/secretary/data/models/document_model.dart';
 import 'package:plc/features/secretary/domain/entities/document.dart';
+import 'package:plc/features/daily_reading/data/models/daily_reading_model.dart';
+import 'package:plc/features/daily_reading/domain/entities/daily_reading.dart';
 
 final sl = GetIt.instance;
 
@@ -63,6 +65,16 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerFactory(
+    () => GenericListBloc<DailyReading, String>(
+      getAllUseCase: sl<GetAllUseCase<DailyReading>>(),
+      searchPredicate: (reading, query) =>
+          reading.title.toLowerCase().contains(query.toLowerCase()) ||
+          reading.details.toLowerCase().contains(query.toLowerCase()),
+      filterPredicate: (reading, filter) => true,
+    ),
+  );
+
   // Use cases
   sl.registerLazySingleton(() => GetPreachers(sl()));
   sl.registerLazySingleton(() => GetPreacherById(sl()));
@@ -71,6 +83,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetAllUseCase<Document>(sl()));
   sl.registerLazySingleton(() => GetAllUseCase<Parish>(sl()));
   sl.registerLazySingleton(() => GetAllUseCase<AboutScreenSection>(sl()));
+  sl.registerLazySingleton(() => GetAllUseCase<DailyReading>(sl()));
 
   // Repository
   sl.registerLazySingleton<PreacherRepository>(
@@ -106,6 +119,14 @@ Future<void> init() async {
       remoteDataSource: sl<GenericRemoteDataSource<AboutScreenSectionModel>>(),
       localDataSource: sl<GenericLocalDataSource<AboutScreenSectionModel>>(),
       cacheDurationInDays: 7,
+    ),
+  );
+
+  sl.registerLazySingleton<GenericRepository<DailyReading>>(
+    () => GenericCachedRepository<DailyReading, DailyReadingModel>(
+      remoteDataSource: sl<GenericRemoteDataSource<DailyReadingModel>>(),
+      localDataSource: sl<GenericLocalDataSource<DailyReadingModel>>(),
+      cacheDurationInDays: 1,
     ),
   );
 
@@ -188,6 +209,24 @@ Future<void> init() async {
       storageKey: 'about_plc_sections',
       syncDateKey: 'about_plc_sections_last_sync',
       fromJson: AboutScreenSectionModel.fromJson,
+    ),
+  );
+
+  sl.registerLazySingleton<GenericRemoteDataSource<DailyReadingModel>>(
+    () => GenericGSheetsDataSource<DailyReadingModel>(
+      gsheetsService: sl(),
+      sheetType: 'main',
+      worksheetName: 'Liturgia Diaria',
+      fromJson: DailyReadingModel.fromJson,
+    ),
+  );
+
+  sl.registerLazySingleton<GenericLocalDataSource<DailyReadingModel>>(
+    () => GenericLocalDataSourceImpl<DailyReadingModel>(
+      storageService: sl(),
+      storageKey: 'daily_readings',
+      syncDateKey: 'daily_readings_last_sync',
+      fromJson: DailyReadingModel.fromJson,
     ),
   );
 
