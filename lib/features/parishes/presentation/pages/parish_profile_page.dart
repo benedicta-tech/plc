@@ -13,11 +13,6 @@ class ParishProfilePage extends StatefulWidget {
 
 class _ParishProfilePageState extends State<ParishProfilePage> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -92,39 +87,6 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
             ),
 
             const SizedBox(height: defaultSpacing),
-
-            // // Contact Information
-            // Text(
-            //   'Contato',
-            //   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            //         color: Theme.of(context).colorScheme.primary,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            // ),
-
-            // const SizedBox(height: mediumSpacing),
-
-            // _buildInfoCard(
-            //   context,
-            //   icon: Icons.phone,
-            //   title: 'Telefone',
-            //   value: preacher.phone.isNotEmpty == true
-            //       ? preacher.phone
-            //       : 'Não informado',
-            // ),
-
-            // const SizedBox(height: smallSpacing),
-
-            // _buildInfoCard(
-            //   context,
-            //   icon: Icons.location_city,
-            //   title: 'Paróquia / Cidade',
-            //   value: preacher.city.isNotEmpty == true
-            //       ? preacher.city
-            //       : 'Não informado',
-            // ),
-
-            const SizedBox(height: defaultSpacing),
             parish.perseverance.male != null
                 ? _buildInfoCard(
                     context,
@@ -145,153 +107,6 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
                         : 'Não informado',
                   )
                 : SizedBox.shrink(),
-            // Preaching Themes Section
-            // Container(
-            //   width: double.infinity,
-            //   padding: const EdgeInsets.all(defaultSpacing),
-            //   decoration: BoxDecoration(
-            //     gradient: LinearGradient(
-            //       begin: Alignment.topLeft,
-            //       end: Alignment.bottomRight,
-            //       colors: [
-            //         Theme.of(
-            //           context,
-            //         ).colorScheme.primary.withValues(alpha: 0.08),
-            //         Theme.of(
-            //           context,
-            //         ).colorScheme.primary.withValues(alpha: 0.03),
-            //       ],
-            //     ),
-            //     borderRadius: BorderRadius.circular(16),
-            //     border: Border.all(
-            //       color: Theme.of(
-            //         context,
-            //       ).colorScheme.primary.withValues(alpha: 0.15),
-            //       width: 1.5,
-            //     ),
-            //   ),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Row(
-            //         children: [
-            //           Container(
-            //             padding: const EdgeInsets.all(smallSpacing),
-            //             decoration: BoxDecoration(
-            //               color: Theme.of(context).colorScheme.primary,
-            //               borderRadius: BorderRadius.circular(8),
-            //             ),
-            //             child: const Icon(
-            //               Icons.auto_stories,
-            //               color: Colors.white,
-            //               size: 24,
-            //             ),
-            //           ),
-            //           const SizedBox(width: mediumSpacing),
-            //           Expanded(
-            //             child: Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 Text(
-            //                   'Temas de Pregação',
-            //                   style: Theme.of(
-            //                     context,
-            //                   ).textTheme.titleLarge?.copyWith(
-            //                         color:
-            //                             Theme.of(context).colorScheme.primary,
-            //                         fontWeight: FontWeight.bold,
-            //                       ),
-            //                 ),
-            //                 Text(
-            //                   '${preacher.themes.length} ${preacher.themes.length == 1 ? 'tema' : 'temas'}',
-            //                   style: Theme.of(context)
-            //                       .textTheme
-            //                       .bodyMedium
-            //                       ?.copyWith(color: Colors.grey[600]),
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //       const SizedBox(height: defaultSpacing),
-            //       if (preacher.themes.isEmpty)
-            //         Center(
-            //           child: Padding(
-            //             padding: const EdgeInsets.symmetric(
-            //               vertical: defaultSpacing,
-            //             ),
-            //             child: Column(
-            //               children: [
-            //                 Icon(
-            //                   Icons.menu_book_outlined,
-            //                   size: 48,
-            //                   color: Theme.of(
-            //                     context,
-            //                   ).colorScheme.primary.withValues(alpha: 0.4),
-            //                 ),
-            //                 const SizedBox(height: smallSpacing),
-            //                 Text(
-            //                   'Nenhum tema cadastrado',
-            //                   style: Theme.of(
-            //                     context,
-            //                   ).textTheme.titleMedium?.copyWith(
-            //                         color:
-            //                             Theme.of(context).colorScheme.primary,
-            //                         fontWeight: FontWeight.w600,
-            //                       ),
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //         )
-            //       else
-            //         Wrap(
-            //           spacing: smallSpacing,
-            //           runSpacing: smallSpacing,
-            //           children: preacher.themes
-            //               .map(
-            //                 (theme) => Container(
-            //                   padding: const EdgeInsets.symmetric(
-            //                     horizontal: mediumSpacing,
-            //                     vertical: smallSpacing,
-            //                   ),
-            //                   decoration: BoxDecoration(
-            //                     color: Colors.white,
-            //                     borderRadius: BorderRadius.circular(20),
-            //                     border: Border.all(
-            //                       color: Theme.of(context)
-            //                           .colorScheme
-            //                           .primary
-            //                           .withValues(alpha: 0.3),
-            //                       width: 1.5,
-            //                     ),
-            //                     boxShadow: [
-            //                       BoxShadow(
-            //                         color: Theme.of(context)
-            //                             .colorScheme
-            //                             .primary
-            //                             .withValues(alpha: 0.08),
-            //                         blurRadius: 4,
-            //                         offset: const Offset(0, 2),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                   child: Text(
-            //                     theme,
-            //                     style: TextStyle(
-            //                       color: Theme.of(context).colorScheme.primary,
-            //                       fontWeight: FontWeight.w600,
-            //                       fontSize: 14,
-            //                     ),
-            //                   ),
-            //                 ),
-            //               )
-            //               .toList(),
-            //         ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),
