@@ -10,6 +10,9 @@ class ParishModel extends EntityModel<Parish> {
   final PerseveranceModel perseverance;
   final String? imageUrl;
   final int order;
+  final String? foundation;
+  final String? plcArrival;
+  final String? membersSheet;
 
   ParishModel(
       {required this.id,
@@ -17,28 +20,42 @@ class ParishModel extends EntityModel<Parish> {
       required this.city,
       required this.perseverance,
       required this.order,
-      this.imageUrl});
+      this.imageUrl,
+      this.foundation,
+      this.plcArrival,
+      this.membersSheet});
 
   factory ParishModel.fromJson(Map<String, dynamic> json) {
     final order = int.tryParse(json['Ordem']?.toString() ?? '') ?? 0;
     final id = json['Identificação'] as String? ?? '';
-    final imagem = json['Imagem'] as String?;
+
+    /// O Sheets trunca células vazias à direita, então a coluna some da linha
+    /// em vez de vir como string vazia.
+    String? opcional(String coluna) {
+      final valor = (json[coluna] as String?)?.trim();
+      return valor != null && valor.isNotEmpty ? valor : null;
+    }
 
     return ParishModel(
-      id: json['Identificação'] as String? ?? '',
+      id: id,
       name: json['Nome'] as String? ?? '',
       city: json['Cidade'] as String? ?? '',
       perseverance: PerseveranceModel.fromParishJson(
           id: id,
           male: json['Perseverança Masculina'],
           female: json['Perseverança Feminina']),
-      imageUrl: imagem != null && imagem.isNotEmpty ? imagem : null,
+      imageUrl: opcional('Imagem'),
       order: order,
+      foundation: opcional('Fundação da paróquia'),
+      plcArrival: opcional('Chegada do PLC'),
+      membersSheet: opcional('Aba de membros'),
     );
   }
 
   bool get hasPerseverance =>
       perseverance.male != null || perseverance.female != null;
+
+  bool get hasMembers => membersSheet != null;
 
   @override
   Map<String, dynamic> toJson() {
@@ -50,6 +67,9 @@ class ParishModel extends EntityModel<Parish> {
       'Perseverança Feminina': perseverance.female,
       'Imagem': imageUrl,
       'Ordem': order,
+      'Fundação da paróquia': foundation,
+      'Chegada do PLC': plcArrival,
+      'Aba de membros': membersSheet,
     };
   }
 
@@ -61,6 +81,9 @@ class ParishModel extends EntityModel<Parish> {
       city: city,
       perseverance: perseverance.toEntity(),
       imageUrl: imageUrl,
+      foundation: foundation,
+      plcArrival: plcArrival,
+      membersSheet: membersSheet,
     );
   }
 }

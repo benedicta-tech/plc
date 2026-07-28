@@ -6,6 +6,7 @@ import 'package:plc/core/storage/local_storage_service.dart';
 import 'package:plc/features/about/data/models/about_screen_section_model.dart';
 import 'package:plc/features/about/domain/entities/about_screen_section.dart';
 import 'package:plc/features/parishes/data/models/parish_model.dart';
+import 'package:plc/features/parishes/data/repositories/members_repository_factory.dart';
 import 'package:plc/features/parishes/domain/entities/parish.dart';
 import 'package:plc/features/preachers/data/datasources/local/preacher_local_data_source.dart';
 import 'package:plc/features/preachers/data/datasources/remote/preacher_remote_data_source.dart';
@@ -187,6 +188,14 @@ Future<void> init() async {
       storageKey: 'parish_documents',
       syncDateKey: 'parish_documents_last_sync',
       fromJson: ParishModel.fromJson,
+    ),
+  );
+
+  // Uma aba de membros por paróquia, carregada quando o perfil abre.
+  sl.registerLazySingleton(
+    () => MembersRepositoryFactory(
+      gsheetsService: sl(),
+      storageService: sl(),
     ),
   );
 

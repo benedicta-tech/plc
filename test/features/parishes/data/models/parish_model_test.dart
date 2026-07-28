@@ -4,6 +4,9 @@ import 'package:plc/features/parishes/data/models/parish_model.dart';
 Map<String, dynamic> row({
   String imagem = 'https://exemplo.org/foto.jpg',
   String masculina = 'Sexta, 19h',
+  String fundacao = '1932',
+  String chegadaPlc = '2023',
+  String abaMembros = 'Pedra Bonita - São José',
 }) =>
     {
       'Nome': 'São José',
@@ -13,6 +16,9 @@ Map<String, dynamic> row({
       'Perseverança Feminina': '',
       'Ordem': '46',
       'Identificação': 'sãojosépedrabonitamg',
+      'Fundação da paróquia': fundacao,
+      'Chegada do PLC': chegadaPlc,
+      'Aba de membros': abaMembros,
     };
 
 void main() {
@@ -54,6 +60,50 @@ void main() {
       final parish = ParishModel.fromJson(row(masculina: ''));
 
       expect(parish.hasPerseverance, isFalse);
+    });
+
+    test('lê fundação, chegada do PLC e a aba de membros', () {
+      final parish = ParishModel.fromJson(row());
+
+      expect(parish.foundation, '1932');
+      expect(parish.plcArrival, '2023');
+      expect(parish.membersSheet, 'Pedra Bonita - São José');
+    });
+
+    test('colunas históricas vazias viram null', () {
+      final parish = ParishModel.fromJson(
+          row(fundacao: '', chegadaPlc: '', abaMembros: ''));
+
+      expect(parish.foundation, isNull);
+      expect(parish.plcArrival, isNull);
+      expect(parish.membersSheet, isNull);
+      expect(parish.hasMembers, isFalse);
+    });
+
+    test('colunas históricas ausentes viram null', () {
+      // o Sheets trunca células vazias à direita, então a chave some da linha
+      final curta = row()
+        ..remove('Fundação da paróquia')
+        ..remove('Chegada do PLC')
+        ..remove('Aba de membros');
+      final parish = ParishModel.fromJson(curta);
+
+      expect(parish.foundation, isNull);
+      expect(parish.plcArrival, isNull);
+      expect(parish.membersSheet, isNull);
+    });
+
+    test('só tem membros quando a aba está apontada', () {
+      expect(ParishModel.fromJson(row()).hasMembers, isTrue);
+      expect(ParishModel.fromJson(row(abaMembros: '')).hasMembers, isFalse);
+    });
+
+    test('preserva o histórico na volta por toJson', () {
+      final ida = ParishModel.fromJson(ParishModel.fromJson(row()).toJson());
+
+      expect(ida.foundation, '1932');
+      expect(ida.plcArrival, '2023');
+      expect(ida.membersSheet, 'Pedra Bonita - São José');
     });
   });
 }
