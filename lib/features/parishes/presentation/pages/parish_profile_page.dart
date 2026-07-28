@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:plc/core/di/injection_container.dart';
+import 'package:plc/features/parishes/data/repositories/members_repository_factory.dart';
+import 'package:plc/features/parishes/domain/entities/member.dart';
 import 'package:plc/features/parishes/domain/entities/parish.dart';
+import 'package:plc/features/parishes/presentation/widgets/parish_members_view.dart';
 import 'package:plc/theme/spacing.dart';
 
 class ParishProfilePage extends StatefulWidget {
@@ -12,6 +16,17 @@ class ParishProfilePage extends StatefulWidget {
 }
 
 class _ParishProfilePageState extends State<ParishProfilePage> {
+  Future<List<Member>>? _members;
+
+  @override
+  void initState() {
+    super.initState();
+    final sheet = widget.parish.membersSheet;
+    if (sheet != null) {
+      _members = sl<MembersRepositoryFactory>().forSheet(sheet).getAll();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,29 +102,49 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
             ),
 
             const SizedBox(height: defaultSpacing),
-            parish.perseverance.male != null
-                ? _buildInfoCard(
-                    context,
-                    icon: Icons.location_city,
-                    title: 'Perseverança Masculina',
-                    value: parish.perseverance.male != null
-                        ? parish.perseverance.male!
-                        : 'Não informado',
-                  )
-                : SizedBox.shrink(),
-            parish.perseverance.female != null
-                ? _buildInfoCard(
-                    context,
-                    icon: Icons.location_city,
-                    title: 'Perseverança Feminina',
-                    value: parish.perseverance.female != null
-                        ? parish.perseverance.female!
-                        : 'Não informado',
-                  )
-                : SizedBox.shrink(),
+            if (parish.perseverance.male != null)
+              _buildInfoCard(
+                context,
+                icon: Icons.event_available,
+                title: 'Perseverança masculina',
+                value: parish.perseverance.male!,
+                color: ParishMembersView.masculineColor,
+              ),
+            if (parish.perseverance.female != null)
+              _buildInfoCard(
+                context,
+                icon: Icons.event_available,
+                title: 'Perseverança feminina',
+                value: parish.perseverance.female!,
+                color: ParishMembersView.feminineColor,
+              ),
+            const SizedBox(height: defaultSpacing),
+            _buildMembers(context),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildMembers(BuildContext context) {
+    if (_members == null) return const SizedBox.shrink();
+
+    return FutureBuilder<List<Member>>(
+      future: _members,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Padding(
+            padding: EdgeInsets.only(bottom: defaultSpacing),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+        // sem membros a página segue útil: horário e histórico já estão lá
+        final members = snapshot.data;
+        if (snapshot.hasError || members == null || members.isEmpty) {
+          return const SizedBox.shrink();
+        }
+        return ParishMembersView(members: members);
+      },
     );
   }
 
@@ -118,7 +153,10 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
     required IconData icon,
     required String title,
     required String value,
+    Color? color,
   }) {
+    final cor = color ?? Theme.of(context).colorScheme.primary;
+
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -130,16 +168,10 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: Theme.of(
-                  context,
-                ).colorScheme.primary.withValues(alpha: 0.1),
+                color: cor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Icon(
-                icon,
-                color: Theme.of(context).colorScheme.primary,
-                size: 20,
-              ),
+              child: Icon(icon, color: cor, size: 20),
             ),
             const SizedBox(width: mediumSpacing),
             Expanded(
@@ -157,7 +189,7 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
                   Text(
                     value,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: cor,
                           fontWeight: FontWeight.w500,
                         ),
                   ),

@@ -11,11 +11,15 @@ class Member {
   final String branch;
   final String? encounter;
 
+  /// Pregações que a pessoa faz, dos 18 temas do cronograma diocesano.
+  final List<String> lectures;
+
   Member({
     required this.name,
     required this.role,
     required this.branch,
     this.encounter,
+    this.lectures = const [],
   });
 
   /// Funções de fundação carregam o sufixo na própria tag da planilha,
@@ -28,7 +32,10 @@ class Member {
 
   bool get isPriest => roleLabel == priestRole;
 
-  bool get isPreacher => roleLabel == preacherRole;
+  /// Pregador é quem tem palestra na coluna Palestras. A função Palestrante
+  /// ainda conta, para quem foi cadastrado antes da coluna existir.
+  bool get isPreacher => lectures.isNotEmpty || roleLabel == preacherRole;
 
-  bool get isCoordination => !isPriest && !isPreacher;
+  bool get isCoordination =>
+      !isPriest && roleLabel != preacherRole;
 }

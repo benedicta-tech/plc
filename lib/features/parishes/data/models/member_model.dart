@@ -8,12 +8,14 @@ class MemberModel extends EntityModel<Member> {
   final String role;
   final String branch;
   final String? encounter;
+  final List<String> lectures;
 
   MemberModel({
     required this.name,
     required this.role,
     required this.branch,
     this.encounter,
+    this.lectures = const [],
   });
 
   /// Nome sozinho não identifica a linha: quem é coordenador e pregador
@@ -41,6 +43,11 @@ class MemberModel extends EntityModel<Member> {
       role: texto('Função'),
       branch: ramo.isNotEmpty ? ramo : defaultBranch,
       encounter: encontro.isNotEmpty ? encontro : null,
+      lectures: texto('Palestras')
+          .split(',')
+          .map((l) => l.trim())
+          .where((l) => l.isNotEmpty)
+          .toList(),
     );
   }
 
@@ -50,6 +57,7 @@ class MemberModel extends EntityModel<Member> {
         'Função': role,
         'Ramo': branch,
         'Encontro': encounter,
+        'Palestras': lectures.join(', '),
       };
 
   @override
@@ -58,5 +66,6 @@ class MemberModel extends EntityModel<Member> {
         role: role,
         branch: branch,
         encounter: encounter,
+        lectures: lectures,
       );
 }

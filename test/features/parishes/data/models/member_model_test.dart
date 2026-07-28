@@ -6,8 +6,15 @@ Map<String, dynamic> row({
   String funcao = 'Coordenador',
   String ramo = 'Masculino',
   String encontro = '',
+  String palestras = '',
 }) =>
-    {'Nome': nome, 'Função': funcao, 'Ramo': ramo, 'Encontro': encontro};
+    {
+      'Nome': nome,
+      'Função': funcao,
+      'Ramo': ramo,
+      'Encontro': encontro,
+      'Palestras': palestras,
+    };
 
 void main() {
   group('MemberModel.fromJson', () {
@@ -67,6 +74,50 @@ void main() {
       expect(coordenador.isPreacher, isFalse);
       expect(coordenador.isCoordination, isTrue);
       expect(pregador.isCoordination, isFalse);
+    });
+
+    test('sem palestras a lista é vazia', () {
+      expect(MemberModel.fromJson(row()).lectures, isEmpty);
+    });
+
+    test('coluna Palestras ausente não quebra', () {
+      final sem = row()..remove('Palestras');
+
+      expect(MemberModel.fromJson(sem).lectures, isEmpty);
+    });
+
+    test('uma palestra', () {
+      final m = MemberModel.fromJson(row(palestras: 'Biblia'));
+
+      expect(m.lectures, ['Biblia']);
+    });
+
+    test('várias palestras separadas por vírgula', () {
+      final m = MemberModel.fromJson(
+          row(palestras: 'O Ideal, Fé, Perdão'));
+
+      expect(m.lectures, ['O Ideal', 'Fé', 'Perdão']);
+    });
+
+    test('tolera espaço sobrando e vírgula sobrando', () {
+      final m = MemberModel.fromJson(row(palestras: ' Zaqueu ,,Confissão, '));
+
+      expect(m.lectures, ['Zaqueu', 'Confissão']);
+    });
+
+    test('quem tem palestra é pregador mesmo sendo Coordenador', () {
+      // é o caso do Emerson em Pocrane: coordenador que prega Bíblia
+      final m = MemberModel.fromJson(
+          row(funcao: 'Coordenador', palestras: 'Biblia'));
+
+      expect(m.isPreacher, isTrue);
+      expect(m.isCoordination, isTrue);
+    });
+
+    test('coordenador sem palestra não é pregador', () {
+      final m = MemberModel.fromJson(row(funcao: 'Coordenador'));
+
+      expect(m.isPreacher, isFalse);
     });
 
     test('Pároco não conta como coordenação nem como pregador', () {
