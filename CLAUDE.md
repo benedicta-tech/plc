@@ -66,7 +66,7 @@ Corpo -> body
 
 ### Date Handling
 - `date` is a `DateTime`; today's reading is matched with `DateUtils.isSameDay` (never compare it to a `String`)
-- Falls back to first reading if today's not found
+- No reading for today means the home card renders nothing (no fallback to the first row)
 - Displays date as "{Day of week}, {day} de {Month} de {year}" in Portuguese
 
 ### DI Registration

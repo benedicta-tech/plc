@@ -22,13 +22,13 @@ class _DailyReadingCardState extends State<DailyReadingCard> {
   }
 
   DailyReading? _getTodayReading(List<DailyReading> readings) {
-    if (readings.isEmpty) return null;
-
     final today = DateTime.now();
-    return readings.firstWhere(
-      (reading) => DateUtils.isSameDay(reading.date, today),
-      orElse: () => readings.first,
-    );
+
+    for (final reading in readings) {
+      if (DateUtils.isSameDay(reading.date, today)) return reading;
+    }
+
+    return null;
   }
 
   @override

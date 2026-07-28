@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plc/features/daily_reading/presentation/widgets/daily_reading_card.dart';
+import 'package:plc/features/daily_reading/presentation/widgets/liturgy_header.dart';
 
 import '../../daily_reading_fixtures.dart';
 
@@ -29,13 +30,15 @@ void main() {
   });
 
   testWidgets('renderiza data, observação e leituras do html', (tester) async {
+    final today = DateTime.now();
+
     await pumpWithBloc(
       tester,
-      [buildReading(date: DateTime(2026, 7, 26), details: sundayDetailsHtml)],
+      [buildReading(date: today, details: sundayDetailsHtml)],
       const Scaffold(body: DailyReadingCard()),
     );
 
-    expect(find.text('Domingo, 26 de Julho de 2026'), findsOneWidget);
+    expect(find.text(formatLiturgyDate(today)), findsOneWidget);
     expect(
       find.text('Hoje, omite-se a Memória de Santos Joaquim e Ana'),
       findsOneWidget,
@@ -52,7 +55,7 @@ void main() {
       tester,
       [
         buildReading(
-          date: DateTime(2026, 7, 11),
+          date: DateTime.now(),
           color: 'branco',
           details: saintDetailsHtml,
         ),
@@ -78,6 +81,22 @@ void main() {
 
   testWidgets('não renderiza nada quando não há leituras', (tester) async {
     await pumpWithBloc(tester, [], const Scaffold(body: DailyReadingCard()));
+
+    expect(find.byType(Card), findsNothing);
+  });
+
+  testWidgets('não renderiza nada quando a leitura de hoje não chegou',
+      (tester) async {
+    await pumpWithBloc(
+      tester,
+      [
+        buildReading(
+          date: DateTime.now().subtract(const Duration(days: 1)),
+          details: sundayDetailsHtml,
+        ),
+      ],
+      const Scaffold(body: DailyReadingCard()),
+    );
 
     expect(find.byType(Card), findsNothing);
   });
