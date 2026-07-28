@@ -1,0 +1,9 @@
+## Correções de problemas
+### Mostra Liturgia Diária corretamente
+Antes o aplicativa mostrava a ultima liturgia salva, mesmo quando não era a do dia, agora quando não tem uma do dia ele não mostra nada
+
+### paróquias sem foto agora aparecem com o ícone da igreja
+A paróquia que ainda não tem foto cadastrada mostrava um espaço quebrado
+no lugar da imagem. Agora aparece o ícone da igreja, tanto na lista de
+paróquias quanto na tela de cada uma. O mesmo passa a valer quando a foto
+está cadastrada mas não consegue carregar.

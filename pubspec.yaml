@@ -2,7 +2,7 @@
 name: plc
 description: A new Flutter project.
 publish_to: none
-version: 1.4.0+13
+version: 1.4.1+14
 environment:
   sdk: ">=3.6.2 <4.0.0"
   flutter: 3.35.5
