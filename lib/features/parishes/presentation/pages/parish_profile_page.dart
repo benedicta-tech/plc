@@ -44,21 +44,32 @@ class _ParishProfilePageState extends State<ParishProfilePage> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(150),
-                    child: Image.network(
-                      parish.imageUrl!,
-                      width: 150,
-                      height: 150,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Icon(
-                          Icons.church,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 18,
-                        );
-                      },
-                    ),
+                    child: parish.imageUrl != null
+                        ? Image.network(
+                            parish.imageUrl!,
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Icon(
+                                Icons.church,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 18,
+                              );
+                            },
+                            errorBuilder: (context, error, stackTrace) => Icon(
+                              Icons.church,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 150,
+                            ),
+                          )
+                        : Icon(
+                            Icons.church,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 150,
+                          ),
                   ),
                   const SizedBox(height: 16),
                   Text(

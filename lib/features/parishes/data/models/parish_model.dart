@@ -22,6 +22,7 @@ class ParishModel extends EntityModel<Parish> {
   factory ParishModel.fromJson(Map<String, dynamic> json) {
     final order = int.tryParse(json['Ordem']?.toString() ?? '') ?? 0;
     final id = json['Identificação'] as String? ?? '';
+    final imagem = json['Imagem'] as String?;
 
     return ParishModel(
       id: json['Identificação'] as String? ?? '',
@@ -31,7 +32,7 @@ class ParishModel extends EntityModel<Parish> {
           id: id,
           male: json['Perseverança Masculina'],
           female: json['Perseverança Feminina']),
-      imageUrl: json['Imagem'] as String?,
+      imageUrl: imagem != null && imagem.isNotEmpty ? imagem : null,
       order: order,
     );
   }
