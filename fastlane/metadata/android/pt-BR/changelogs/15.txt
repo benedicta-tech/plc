@@ -1,0 +1,3 @@
+Novidades
+• a página da paróquia agora mostra quem faz o PLC ali
+Ao abrir uma paróquia você vê o pároco, a coordenação masculina e a feminina, com o cargo de cada pessoa, e quem prega e quais pregações faz. Verde marca o ramo masculino e rosa o feminino, no horário da perseverança e na coordenação, para dar de bater o olho e achar o que procura. Cada bloco só aparece quando existe: paróquia sem coordenação feminina cadastrada não mostra um espaço vazio no lugar dela.
