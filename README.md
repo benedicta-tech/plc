@@ -145,13 +145,25 @@ environment `android-production` for aprovado, promove para produção.
 
 `generate_changelog` (em `fastlane/actions/`) pega os commits entre a última
 tag e o `HEAD` e mantém só os tipos `feat:`, `fix:`, `perf:` e `security:`,
-agrupados sob "Funcionalidades", "Correções de problemas", "Melhorias de
-Performance" e "Correções de Segurança".
+agrupados sob "Novidades", "Correções", "Desempenho" e "Segurança".
 
 O título do commit vira o item da lista. Quando o commit tem corpo, o corpo é
-publicado logo abaixo do título. Escreva esses commits para quem usa o app:
-nada de nome de arquivo, de função ou de decisão de implementação. O que for
-técnico vai em `chore:`, `refactor:`, `test:` ou `docs:`, que o gerador ignora.
+publicado logo abaixo do título, com as quebras de linha desfeitas. Escreva
+esses commits para quem usa o app: nada de nome de arquivo, de função ou de
+decisão de implementação. O que for técnico vai em `chore:`, `refactor:`,
+`test:` ou `docs:`, que o gerador ignora.
+
+O campo de novidades da Play Store é texto puro, sem markdown nem HTML, e
+aceita no máximo 500 caracteres. Quando o changelog passa disso, o gerador
+descarta os corpos dos commits mais antigos e, se ainda não couber, os itens
+mais antigos, listando no terminal o que ficou de fora. O texto vai para a
+loja como está no arquivo, então revise antes do push.
+
+Para conferir o formatador sem rodar o lane inteiro:
+
+```bash
+ruby fastlane/actions/generate_changelog.rb
+```
 
 ### Versões da toolchain
 

@@ -1,76 +1,157 @@
+require 'yaml'
+require 'fileutils'
 
+# As notas de versão da Play Store são texto puro: markdown e HTML não são
+# renderizados, quebras de linha aparecem exatamente como escritas e o limite
+# é de 500 caracteres por idioma (acima disso a API recusa o envio).
+module ChangelogFormat
+  LIMIT = 500
+
+  SECTIONS = [
+    ['feat', 'Novidades'],
+    ['fix', 'Correções'],
+    ['perf', 'Desempenho'],
+    ['security', 'Segurança']
+  ].freeze
+
+  CONVENTIONAL = /\A(feat|fix|perf|security):\s+(.+)\z/
+
+  def self.parse(log)
+    log.split('$b>').filter_map do |commit|
+      title, notes = commit.split('$r>').map(&:strip)
+      match = CONVENTIONAL.match(title.to_s)
+      next unless match
+
+      { type: match[1], title: match[2], notes: unwrap(notes) }
+    end
+  end
+
+  # Corpo de commit vem quebrado em 72 colunas e a loja preserva a quebra, o
+  # que vira parágrafo torto no celular.
+  # ponytail: parágrafos do corpo viram um só, cabe melhor nos 500 caracteres.
+  def self.unwrap(text)
+    text.to_s.gsub('\n', ' ').gsub(/\s+/, ' ').strip
+  end
+
+  # Para caber no limite, primeiro descarta os corpos e só depois itens
+  # inteiros, sempre do commit mais antigo para o mais recente.
+  def self.build(items)
+    kept = items.map(&:dup)
+    text = render(kept)
+    return [text, []] if text.length <= LIMIT
+
+    kept.reverse_each do |item|
+      break if text.length <= LIMIT
+      next if item[:notes].empty?
+
+      item[:notes] = ''
+      text = render(kept)
+    end
+
+    dropped = []
+    while text.length > LIMIT && kept.size > 1
+      dropped.unshift(kept.pop)
+      text = render(kept)
+    end
+
+    [text, dropped]
+  end
+
+  def self.render(items)
+    SECTIONS.filter_map do |type, heading|
+      group = items.select { |item| item[:type] == type }
+      next if group.empty?
+
+      entries = group.map { |item| entry(item) }
+      separator = entries.any? { |text| text.include?("\n") } ? "\n\n" : "\n"
+      "#{heading}\n#{entries.join(separator)}"
+    end.join("\n\n")
+  end
+
+  def self.entry(item)
+    item[:notes].empty? ? "• #{item[:title]}" : "• #{item[:title]}\n#{item[:notes]}"
+  end
+end
+
+# `ruby fastlane/actions/generate_changelog.rb` roda o self-check e sai.
+if $PROGRAM_NAME == __FILE__
+  items = ChangelogFormat.parse(
+    "$b>fix: Liturgia certa$r>Antes o app mostrava\na liturgia salva.\n" \
+    "$b>feat: Leitura do dia$r>\n" \
+    "$b>chore: mexe no CI$r>não vai para a loja\n"
+  )
+  raise 'só feat/fix/perf/security entram' unless items.map { |i| i[:type] } == %w[fix feat]
+  raise 'corpo precisa virar uma linha só' unless items[0][:notes] == 'Antes o app mostrava a liturgia salva.'
+
+  text, dropped = ChangelogFormat.build(items)
+  raise 'markdown não renderiza na loja' if text.include?('#')
+  raise 'novidades vêm antes das correções' unless text.index('Novidades') < text.index('Correções')
+  raise 'nada deveria ser descartado' unless dropped.empty?
+  raise "formato inesperado:\n#{text}" unless text == <<~EXPECTED.strip
+    Novidades
+    • Leitura do dia
+
+    Correções
+    • Liturgia certa
+    Antes o app mostrava a liturgia salva.
+  EXPECTED
+
+  verbose = (1..6).map { |i| { type: 'fix', title: "Correção número #{i}", notes: 'Explicação do problema com um tamanho parecido com o corpo de um commit real do projeto.' } }
+  text, dropped = ChangelogFormat.build(verbose)
+  raise 'estourou o limite' if text.length > ChangelogFormat::LIMIT
+  raise 'corpos deveriam sair antes dos itens' unless text.include?('Correção número 6') && dropped.empty?
+  raise 'corpo do item mais recente deveria ficar' unless text.start_with?("Correções\n• Correção número 1\nExplicação")
+  raise 'corpo do item mais antigo deveria sair' unless text.end_with?("\n• Correção número 6")
+  raise 'build não pode alterar a lista recebida' if verbose.any? { |item| item[:notes].empty? }
+
+  many = (1..30).map { |i| { type: 'feat', title: "Novidade número #{i} com título longo", notes: '' } }
+  text, dropped = ChangelogFormat.build(many)
+  raise 'estourou o limite' if text.length > ChangelogFormat::LIMIT
+  raise 'itens descartados precisam ser reportados' if dropped.empty?
+  raise 'descarta do mais antigo para o mais recente' unless dropped.last[:title] == 'Novidade número 30 com título longo'
+
+  puts 'ok'
+  exit
+end
 
 module Fastlane
   module Actions
-    module SharedValues
-      GENERATE_CHANGELOG_CUSTOM_VALUE = :GENERATE_CHANGELOG_CUSTOM_VALUE
-    end
-
     class GenerateChangelogAction < Action
       def self.run(params)
-        pubspec = YAML.load(File.read("pubspec.yaml"))
-        version_name, version_code = pubspec["version"].split("+")
+        pubspec = YAML.load(File.read('pubspec.yaml'))
+        _version_name, version_code = pubspec['version'].split('+')
 
         from = Actions.last_git_tag_name(true, nil)
         UI.verbose("Found the last Git tag: #{from}")
         to = 'HEAD'
-        
+
         UI.success("Collecting Git commits between #{from} and #{to}")
-        
-        Dir.chdir('./') do
-          changelog = Actions
-            .git_log_between('format:$b>%s%n$r>%b', from, to, 'include_merges', nil, false,nil)
-            .split("$b>")
-            .filter { |line| line.length > 0 }
-            .map { |i| i.split("$r>").map { |ni| ni.strip } }
-            .map { |i| { title: i[0], notes: i[1].to_s.gsub("\\n", "\n") .gsub("\n\n", "\n") } }
-            .filter do |release_item|
-              release_item[:title].length > 0 && (
-                release_item[:title].start_with?("feat: ") ||
-                release_item[:title].start_with?("fix: ") ||
-                release_item[:title].start_with?("perf: ") ||
-                release_item[:title].start_with?("security: ")
-              )
-            end
-            .map do |release_item|
-              {
-                type: release_item[:title].split(":")[0],
-                title: release_item[:title].gsub("feat: ", "").gsub("fix: ", "").gsub("perf: ", "").gsub("security: ", ""),
-                notes: release_item[:notes]
-              }
-            end
-            .group_by { |release_item| release_item[:type] }
-            .flat_map do |type, items|
-              [
-                case(type)
-                when "feat"
-                  "## Funcionalidades"
-                when "fix"
-                  "## Correções de problemas"
-                when "perf"
-                  "## Melhorias de Performance"
-                when "security"
-                  "## Correções de Segurança"
-                end, 
-                items.map do |item| 
-                  has_notes = item[:notes].size > 0
-                  notes = has_notes ? "\n#{item[:notes]}" : ""
-                  has_notes ? "### #{item[:title]}#{notes}\n" : "- #{item[:title]}"
-                end.join("\n")
-              ] 
-            end.join("\n")
 
-          Actions.lane_context[SharedValues::FL_CHANGELOG] = changelog
+        log = Actions.git_log_between('format:$b>%s%n$r>%b', from, to, 'include_merges', nil, false, nil)
+        changelog, dropped = ChangelogFormat.build(ChangelogFormat.parse(log))
 
-          puts("")
-          puts(changelog)
-          puts("")
+        Actions.lane_context[SharedValues::FL_CHANGELOG] = changelog
 
-          Dir.mkdir("fastlane/metadata/android/pt-BR/changelogs") unless Dir.exist?("fastlane/metadata/android/pt-BR/changelogs")
-          File.write("fastlane/metadata/android/pt-BR/changelogs/#{version_code}.txt", changelog)
+        puts('')
+        puts(changelog)
+        puts('')
 
-          changelog
+        UI.message("Changelog com #{changelog.length} de #{ChangelogFormat::LIMIT} caracteres")
+
+        unless dropped.empty?
+          UI.important('Changelog maior que o limite da Play Store, ficaram de fora:')
+          dropped.each { |item| UI.important("  #{item[:title]}") }
         end
+
+        if changelog.length > ChangelogFormat::LIMIT
+          UI.important("Changelog ainda acima de #{ChangelogFormat::LIMIT} caracteres, edite o arquivo antes do push")
+        end
+
+        path = 'fastlane/metadata/android/pt-BR/changelogs'
+        FileUtils.mkdir_p(path)
+        File.write("#{path}/#{version_code}.txt", changelog)
+
+        changelog
       end
 
       #####################################################
@@ -86,12 +167,11 @@ module Fastlane
       end
 
       def self.available_options
-        [
-        ]
+        []
       end
 
       def self.return_value
-        "Returns a String containing your formatted git commits"
+        'Returns a String containing your formatted git commits'
       end
 
       def self.return_type
@@ -99,9 +179,7 @@ module Fastlane
       end
 
       def self.output
-        [
-          ['GENERATE_CHANGELOG_CUSTOM_VALUE', 'A description of what this value contains']
-        ]
+        []
       end
 
       def self.authors

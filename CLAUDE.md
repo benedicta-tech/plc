@@ -87,9 +87,14 @@ Full steps in the "Release" section of README.md. Short version:
 `main`, review the generated changelog, `git push --follow-tags`, then
 `gh workflow run release.yaml`. Nothing is triggered automatically.
 
-`feat:`, `fix:`, `perf:` and `security:` commits are published verbatim in the
-Play Store changelog, **title and body**. Keep implementation detail out of
-them; use `chore:`/`refactor:`/`test:`/`docs:` for that.
+`feat:`, `fix:`, `perf:` and `security:` commits are published in the Play Store
+changelog, **title and body**. Keep implementation detail out of them; use
+`chore:`/`refactor:`/`test:`/`docs:` for that.
+
+The Play Store "what's new" field is plain text (no markdown, no HTML) capped at
+500 characters. `generate_changelog` renders bullets, unwraps commit bodies and,
+when the text is too long, drops the oldest bodies and then the oldest items,
+printing what was left out. Keep commit bodies short so they survive.
 
 Run `flutter pub get` with the version pinned in `environment.flutter`
 (`pubspec.yaml`) — that is what CI uses. Another version rewrites
